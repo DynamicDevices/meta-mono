@@ -1,6 +1,6 @@
 1) Intro
 2) Dependencies
-3) Maintainer(s)
+3) Maintainer(s) & Patch policy
 4) Copyright
 5) Current State - x86
 6) Current State - ARM
@@ -22,17 +22,26 @@ more info on OpenEmbedded, see OE's website.
 
 2) Dependencies
 
+On the host:
 The host system must have the following packges:
 gcc g++ patch diffstat texi2html texinfo cvs subversion gawk
 chrpath make libgl1-mesa-dev libglu1-mesa-dev libsdl1.2-dev
 git libxml-parser-perl bison gettext flex unzip rpm2cpio
 
+On the target:
+So far, Windows Forms applications have been tested under Sato.
+Mono does not require Sato, it does require X if you want to run
+Windows Forms applications. While mono can run w/o X, that recipe
+is not supported currently. It is unlikely to be supported.
 
 
-3) Maintainer(s)
+
+3) Maintainer(s) & Patch policy
 
 Autif Khan (autif.mlist@gmail.com)
 autif on #yocto on freenode
+
+Send a patch or tar.gz file as attachment to the maintainer.
 
 
 
@@ -83,9 +92,10 @@ When qemu provided by Yocto supports one of these machines, the
 maintainer will support these architectures.
 
 
+
 10) TODO
 
-10.1) see is mono works for amd64, seems like qemux86-64 is available
+10.1) see if mono works for amd64, seems like qemux86-64 is available
 10.2) investigate why windows forms apps dont run on MIPS
 10.2) investigate why compilation fails for PPC
 10.3) run mono runtime tests for ARM
@@ -98,4 +108,5 @@ maintainer will support these architectures.
 10.10) write recipes to create packages for mscorlib library tests
 10.11) write recipes to create packages for System.dll library tests
 10.12) try mono on beagleboard (email maintainer when you do this, he will thank you)
+10.13) write a recipe for windows forms app
 
