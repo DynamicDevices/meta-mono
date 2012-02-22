@@ -9,14 +9,93 @@
 9) Current State - alpha, amd64, hppa, ia64, s390 & sparc
 10) TODO
 
+
+
 1) Intro
+
+meta-mono is an OpenEmbedded layer that builds mono runtime and mono
+libraries to allow users to run .NET applications under linux built
+using OE. For more info about mono, see mono project's website. For
+more info on OpenEmbedded, see OE's website.
+
+
+
 2) Dependencies
+
+The host system must have the following packges:
+gcc g++ patch diffstat texi2html texinfo cvs subversion gawk
+chrpath make libgl1-mesa-dev libglu1-mesa-dev libsdl1.2-dev
+git libxml-parser-perl bison gettext flex unzip rpm2cpio
+
+
+
 3) Maintainer(s)
+
+Autif Khan (autif.mlist@gmail.com)
+autif on #yocto on freenode
+
+
+
 4) Copyright
-5) Current State - x86
-6) Current State - ARM
-7) Current State - MIPS
-8) Current State - PPC
-9) Current State - alpha, amd64, hppa, ia64, s390 & sparc
+
+MIT/GPLv2 - following the lead of libgdiplus and mono
+
+
+
+5) Current State - x86: Works
+
+Maintainer uses Yocto/OE/Poky as his build environment. He has built
+core-image-mono and core-image-mono-sdk for qemux86 and crownbay. The
+maintainer has also tested mono using all the runtime tests and
+few library tests that come with mono. The maintainer has also tested
+one Windows Forms application.
+
+
+
+6) Current State - ARM: Works
+
+Maintainer uses Yocto/OE/Poky as his build environment. He has built
+core-image-mono for qemuarm. The maintainer has tested one Windows
+Forms application.
+
+
+
+7) Current State - MIPS: Minor issues need to be resolved
+
+Maintainer uses Yocto/OE/Poky as his build environment. He has built
+core-image-mono for qemumips. A Windows Forms application fails to
+execute. More investigation is needed, if there is an interest in getting
+mono to work perfectly on MIPS, please contact the maintainer.
+
+
+
+8) Current State - PPC: Does not build
+
+Maintainer uses Yocto/OE/Poky as his build environment. The build for
+core-image-mono for qemuppc fails. If there is an interest in getting
+mono to work perfectly on PPC, please contact the maintainer.
+
+
+
+9) Current State - alpha, amd64, hppa, ia64, s390 & sparc: Unknown
+
+When qemu provided by Yocto supports one of these machines, the
+maintainer will support these architectures.
+
+
 10) TODO
+
+10.1) see is mono works for amd64, seems like qemux86-64 is available
+10.2) investigate why windows forms apps dont run on MIPS
+10.2) investigate why compilation fails for PPC
+10.3) run mono runtime tests for ARM
+10.4) run mono runtime tests for MIPS
+10.5) run mono runtime tests for PPC
+10.6) run mono library tests for ARM
+10.7) run mono library tests for MIPS
+10.8) run mono library tests for PPC
+10.9) write recipes to create packages for runtime tests
+10.10) write recipes to create packages for mscorlib library tests
+10.11) write recipes to create packages for System.dll library tests
+10.12) try mono on beagleboard (email maintainer when you do this, he will thank you)
 
