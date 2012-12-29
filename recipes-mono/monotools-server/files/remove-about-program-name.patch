@@ -1,0 +1,14 @@
+diff -ur monotools-server-2.0.org/MonoTools.GuiServer/GuiServer.cs monotools-server-2.0/MonoTools.GuiServer/GuiServer.cs
+--- monotools-server-2.0.org/MonoTools.GuiServer/GuiServer.cs	2012-12-26 09:15:36.096580035 +0000
++++ monotools-server-2.0/MonoTools.GuiServer/GuiServer.cs	2012-12-26 09:16:05.752581111 +0000
+@@ -151,7 +151,7 @@
+ 			about.Logo = new Pixbuf (Assembly.GetExecutingAssembly (), "monotools.png");
+ 			about.Icon = about.Logo;
+ 			about.Version = Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
+-			about.ProgramName = Catalog.GetString ("MonoTools");
++			//about.ProgramName = Catalog.GetString ("MonoTools");
+ 			about.Website = "http://www.go-mono.com/monovs/";
+ 			about.WebsiteLabel = Catalog.GetString ("Visit Homepage");
+ 			about.Copyright = Catalog.GetString ("Copyright \xa9 2010 Novell, Inc.");
+Only in monotools-server-2.0/build: pixmaps
+Only in monotools-server-2.0/build: templates

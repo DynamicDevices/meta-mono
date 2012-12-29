@@ -1,0 +1,271 @@
+diff -ur monotools-server.org/Makefile.include monotools-server/Makefile.include
+--- monotools-server.org/Makefile.include	2012-12-26 16:01:52.459996111 +0000
++++ monotools-server/Makefile.include	2012-12-26 16:02:11.971995691 +0000
+@@ -62,7 +62,8 @@
+ CLEANFILES += $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources) $(build_satellite_assembly_list)
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+ 
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglibdir = ${pkglibdir}
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ 
+ linuxdesktopapplicationsdir = @datadir@/applications
+diff -ur monotools-server.org/Mono.Packager/Mono.Packager/Makefile.in monotools-server/Mono.Packager/Mono.Packager/Makefile.in
+--- monotools-server.org/Mono.Packager/Mono.Packager/Makefile.in	2012-12-26 16:01:52.459996111 +0000
++++ monotools-server/Mono.Packager/Mono.Packager/Makefile.in	2012-12-26 16:03:39.527997939 +0000
+@@ -49,7 +49,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -288,7 +288,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -370,10 +370,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -384,7 +384,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
+diff -ur monotools-server.org/Mono.Ssdp/Makefile.in monotools-server/Mono.Ssdp/Makefile.in
+--- monotools-server.org/Mono.Ssdp/Makefile.in	2012-12-26 16:01:52.455996304 +0000
++++ monotools-server/Mono.Ssdp/Makefile.in	2012-12-26 16:04:20.555998899 +0000
+@@ -49,7 +49,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -263,7 +263,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -335,10 +335,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -349,7 +349,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
+diff -ur monotools-server.org/MonoTools.Client/Makefile.in monotools-server/MonoTools.Client/Makefile.in
+--- monotools-server.org/MonoTools.Client/Makefile.in	2012-12-26 16:01:52.455996304 +0000
++++ monotools-server/MonoTools.Client/Makefile.in	2012-12-26 16:04:41.960001995 +0000
+@@ -50,7 +50,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -272,7 +272,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -348,10 +348,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -362,7 +362,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
+diff -ur monotools-server.org/MonoTools.GuiServer/Makefile.in monotools-server/MonoTools.GuiServer/Makefile.in
+--- monotools-server.org/MonoTools.GuiServer/Makefile.in	2012-12-26 16:01:52.463995987 +0000
++++ monotools-server/MonoTools.GuiServer/Makefile.in	2012-12-26 16:05:04.780001364 +0000
+@@ -50,7 +50,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -373,7 +373,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -462,10 +462,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -476,7 +476,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
+diff -ur monotools-server.org/MonoTools.Server/Makefile.in monotools-server/MonoTools.Server/Makefile.in
+--- monotools-server.org/MonoTools.Server/Makefile.in	2012-12-26 16:01:52.463995987 +0000
++++ monotools-server/MonoTools.Server/Makefile.in	2012-12-26 16:05:30.256000766 +0000
+@@ -49,7 +49,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -359,7 +359,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -447,10 +447,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -461,7 +461,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
+diff -ur monotools-server.org/MonoTools.WebServer/Makefile.in monotools-server/MonoTools.WebServer/Makefile.in
+--- monotools-server.org/MonoTools.WebServer/Makefile.in	2012-12-26 16:01:52.459996111 +0000
++++ monotools-server/MonoTools.WebServer/Makefile.in	2012-12-26 16:05:52.312001487 +0000
+@@ -50,7 +50,7 @@
+ 	"$(DESTDIR)$(programfilestemplatesdir)"
+ binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+ pkglibSCRIPT_INSTALL = $(INSTALL_SCRIPT)
+-SCRIPTS = $(bin_SCRIPTS) $(pkglib_SCRIPTS)
++SCRIPTS = $(bin_SCRIPTS) $(mt_pkglib_SCRIPTS)
+ SOURCES =
+ DIST_SOURCES =
+ am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+@@ -269,7 +269,7 @@
+ rm_actual = test -z '$1' || rm -f '$2'
+ rm = $(call rm_actual,$(call s2q2s,$1),$(call s2q2s,$2)/$(shell basename '$(call s2q2s,$1)'))
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+-pkglib_SCRIPTS = $(ASSEMBLY)
++mt_pkglib_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ linuxdesktopapplicationsdir = @datadir@/applications
+ linuxdesktopapplications_DATA = $(LINUX_DESKTOPAPPLICATIONS)
+@@ -346,10 +346,10 @@
+ 	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+ 	done
+-install-pkglibSCRIPTS: $(pkglib_SCRIPTS)
++install-pkglibSCRIPTS: $(mt_pkglib_SCRIPTS)
+ 	@$(NORMAL_INSTALL)
+ 	test -z "$(pkglibdir)" || $(MKDIR_P) "$(DESTDIR)$(pkglibdir)"
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+ 	  if test -f $$d$$p; then \
+ 	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+@@ -360,7 +360,7 @@
+ 
+ uninstall-pkglibSCRIPTS:
+ 	@$(NORMAL_UNINSTALL)
+-	@list='$(pkglib_SCRIPTS)'; for p in $$list; do \
++	@list='$(mt_pkglib_SCRIPTS)'; for p in $$list; do \
+ 	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
+ 	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
+ 	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \

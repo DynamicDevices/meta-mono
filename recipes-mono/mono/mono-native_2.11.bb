@@ -15,3 +15,7 @@ do_configure_prepend() {
 	sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i eglib/acinclude.m4
 }
 
+#
+# Add patch to remove armv6 define() in atomic.h (breaks compiler for armv6)
+#
+SRC_URI += "file://patch-mono-native-atomic-armv6.patch"

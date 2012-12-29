@@ -28,3 +28,17 @@ FILES_${PN} += "${libdir}/libMonoSupportW.so"
 
 INSANE_SKIP_${PN} = "arch dev-so debug-files"
 
+#
+# Add patch to remove armv6 define() in atomic.h (breaks compiler for armv6)
+#
+SRC_URI += " file://patch-mono-atomic-armv6.patch"
+
+#
+# GNU hash missing error / Error stripping / Wrong architecture
+#
+# TODO: This needs fixing properly and needs to be revisited
+#
+INHIBIT_PACKAGE_STRIP = "1"
+INSANE_SKIP_${PN} += "ldflags"
+TARGET_CC_ARCH += "${LDFLAGS}"
+

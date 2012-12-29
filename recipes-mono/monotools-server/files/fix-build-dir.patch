@@ -1,0 +1,96 @@
+diff -ru monotools-server-2.0.org/Mono.Ssdp/Makefile.am monotools-server-2.0/Mono.Ssdp/Makefile.am
+--- monotools-server-2.0.org/Mono.Ssdp/Makefile.am	2012-12-26 10:01:21.004629117 +0000
++++ monotools-server-2.0/Mono.Ssdp/Makefile.am	2012-12-26 10:01:49.064630015 +0000
+@@ -10,7 +10,7 @@
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+ COMPILE_TARGET = library
+ PROJECT_REFERENCES = 
+-BUILD_DIR = bin/Debug/
++BUILD_DIR = bin/Debug
+ 
+ MONO_SSDP_DLL_MDB_SOURCE=bin/Debug/Mono.Ssdp.dll.mdb
+ MONO_SSDP_DLL_MDB=$(BUILD_DIR)/Mono.Ssdp.dll.mdb
+@@ -24,7 +24,7 @@
+ ASSEMBLY_MDB = 
+ COMPILE_TARGET = library
+ PROJECT_REFERENCES = 
+-BUILD_DIR = bin/Release/
++BUILD_DIR = bin/Release
+ 
+ MONO_SSDP_DLL_MDB=
+ 
+diff -ru monotools-server-2.0.org/MonoTools.Client/Makefile.am monotools-server-2.0/MonoTools.Client/Makefile.am
+--- monotools-server-2.0.org/MonoTools.Client/Makefile.am	2012-12-26 10:01:21.008629117 +0000
++++ monotools-server-2.0/MonoTools.Client/Makefile.am	2012-12-26 10:03:34.708631126 +0000
+@@ -10,7 +10,7 @@
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+ COMPILE_TARGET = library
+ PROJECT_REFERENCES = 
+-BUILD_DIR = bin/Debug/
++BUILD_DIR = bin/Debug
+ 
+ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../MonoVS/lib/ICSharpCode.SharpZipLib.dll
+ MONOTOOLS_CLIENT_DLL_MDB_SOURCE=bin/Debug/MonoTools.Client.dll.mdb
+@@ -25,7 +25,7 @@
+ ASSEMBLY_MDB = 
+ COMPILE_TARGET = library
+ PROJECT_REFERENCES = 
+-BUILD_DIR = bin/Release/
++BUILD_DIR = bin/Release
+ 
+ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../MonoVS/lib/ICSharpCode.SharpZipLib.dll
+ MONOTOOLS_CLIENT_DLL_MDB=
+diff -ru monotools-server-2.0.org/MonoTools.GuiServer/Makefile.am monotools-server-2.0/MonoTools.GuiServer/Makefile.am
+--- monotools-server-2.0.org/MonoTools.GuiServer/Makefile.am	2012-12-26 10:01:21.036629118 +0000
++++ monotools-server-2.0/MonoTools.GuiServer/Makefile.am	2012-12-26 10:03:18.680630993 +0000
+@@ -13,7 +13,7 @@
+ 	../Mono.Ssdp/bin/Debug/Mono.Ssdp.dll \
+ 	../MonoTools.Client/bin/Debug/MonoTools.Client.dll \
+ 	../Mono.Packager/bin/Debug/Mono.Packager.dll
+-BUILD_DIR = ../build/
++BUILD_DIR = ../build
+ 
+ MONOTOOLS_PNG_SOURCE=Resources/monotools.png
+ MONOTOOLS_GUI_SERVER_DESKTOP_SOURCE=app.desktop
+@@ -48,7 +48,7 @@
+ 	../Mono.Ssdp/bin/Release/Mono.Ssdp.dll \
+ 	../MonoTools.Client/bin/Release/MonoTools.Client.dll \
+ 	../Mono.Packager/bin/Release/Mono.Packager.dll
+-BUILD_DIR = ../build/
++BUILD_DIR = ../build
+ 
+ MONOTOOLS_PNG_SOURCE=Resources/monotools.png
+ MONOTOOLS_GUI_SERVER_DESKTOP_SOURCE=app.desktop
+diff -ru monotools-server-2.0.org/MonoTools.Server/Makefile.am monotools-server-2.0/MonoTools.Server/Makefile.am
+--- monotools-server-2.0.org/MonoTools.Server/Makefile.am	2012-12-26 10:01:21.036629118 +0000
++++ monotools-server-2.0/MonoTools.Server/Makefile.am	2012-12-26 10:04:06.372632086 +0000
+@@ -14,7 +14,7 @@
+ 	../Mono.Ssdp/bin/Debug/Mono.Ssdp.dll \
+ 	../build/MonoTools.WebServer.exe \
+ 	../MonoTools.Client/bin/Debug/MonoTools.Client.dll
+-BUILD_DIR = ../build/
++BUILD_DIR = ../build
+ 
+ MONOTOOLS_SERVER_EXE_CONFIG_SOURCE=MonoTools.Server.exe.config
+ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../MonoVS/lib/ICSharpCode.SharpZipLib.dll
+@@ -53,7 +53,7 @@
+ 	../Mono.Ssdp/bin/Release/Mono.Ssdp.dll \
+ 	../MonoTools.WebServer/bin/Release/MonoTools.WebServer.exe \
+ 	../MonoTools.Client/bin/Release/MonoTools.Client.dll
+-BUILD_DIR = ../build/
++BUILD_DIR = ../build
+ 
+ MONOTOOLS_SERVER_EXE_CONFIG_SOURCE=MonoTools.Server.exe.config
+ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../MonoVS/lib/ICSharpCode.SharpZipLib.dll
+diff -ru monotools-server-2.0.org/MonoTools.WebServer/Makefile.am monotools-server-2.0/MonoTools.WebServer/Makefile.am
+--- monotools-server-2.0.org/MonoTools.WebServer/Makefile.am	2012-12-26 10:01:21.020629117 +0000
++++ monotools-server-2.0/MonoTools.WebServer/Makefile.am	2012-12-26 10:04:28.028633044 +0000
+@@ -11,7 +11,7 @@
+ COMPILE_TARGET = exe
+ PROJECT_REFERENCES =  \
+ 	../MonoTools.Client/bin/Debug/MonoTools.Client.dll
+-BUILD_DIR = ../build/
++BUILD_DIR = ../build
+ 
+ MONOTOOLS_CLIENT_DLL_SOURCE=../MonoTools.Client/bin/Debug/MonoTools.Client.dll
+ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../MonoVS/lib/ICSharpCode.SharpZipLib.dll

@@ -1,0 +1,19 @@
+diff -u monotools-server-2.0.org/Makefile.include monotools-server-2.0/Makefile.include
+--- monotools-server-2.0.org/Makefile.include	2012-12-24 11:46:45.617652335 +0000
++++ monotools-server-2.0/Makefile.include	2012-12-24 11:47:18.277653536 +0000
+@@ -62,7 +62,7 @@
+ CLEANFILES += $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources) $(build_satellite_assembly_list)
+ DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
+ 
+-pkglib_SCRIPTS = $(ASSEMBLY)
++pkgdata_SCRIPTS = $(ASSEMBLY)
+ bin_SCRIPTS = $(BINARIES)
+ 
+ linuxdesktopapplicationsdir = @datadir@/applications
+@@ -121,4 +121,4 @@
+ install-satellite-assemblies: $(install_satellite_assembly_list)
+ 	
+ uninstall-satellite-assemblies:
+-	rm -rf $(install_satellite_assembly_list)
+\ No newline at end of file
++	rm -rf $(install_satellite_assembly_list)
