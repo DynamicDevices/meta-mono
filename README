@@ -67,10 +67,11 @@ Maintainer uses Yocto/OE/Poky as his build environment. He has built
 core-image-mono for qemuarm. The maintainer has tested one Windows
 Forms application.
 
-Alex J Lennon has tested a Yocto/OE/Poky build on the Raspberry Pi 
-Model B, with a simple console application and a simple Windows Forms
-application. He has also tested that remote debugging of applications
-is possible from Visual Studio 2010 using monotools-server.
+Alex J Lennon (ajlennon@dynamicdevices.co.uk) has tested a Yocto/OE/Poky 
+build on the Raspberry Pi Model B, with a simple console application 
+and a simple Windows Forms application. He has also tested that remote 
+debugging of applications is possible from Visual Studio 2010 using 
+monotools-server.
 
 7) Current State - MIPS: Minor issues need to be resolved
 
