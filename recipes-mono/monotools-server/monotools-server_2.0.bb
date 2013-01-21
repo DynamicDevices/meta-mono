@@ -22,8 +22,6 @@ SRC_URI += " \
 	file://fix-pkglib_SCRIPTS.patch \
 	"
 
-#	file://Makefile-pkglib.patch \
-
 DEPENDS = "mono-xsp gtk-sharp"
 
 S = "${WORKDIR}/${PN}"
