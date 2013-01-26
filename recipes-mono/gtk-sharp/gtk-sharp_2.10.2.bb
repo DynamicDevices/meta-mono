@@ -92,3 +92,10 @@ gtk-sharp2-glue-staticdev glade-sharp2-glue-staticdev glib-sharp2-glue-staticdev
 SRC_URI[md5sum] = "7d509a677c58b2e6a8c85db51d0b1451"
 SRC_URI[sha256sum] = "8dc7f6180109a529b3216b6527f34a01e1e4484e42ebbd28d551e8f6ce0c243d"
 
+# There is a race condition in the gtk-sharp build which seems to result in failure to
+# properly sign assemblies (e.g. policy-2.4-foo.dll). We then fail installing those to
+# the GAC as they are delay signed rather than strong named as they should be. Until 
+# the race condition is identified and patched a workaround is to disable parallel make
+# tasks for this recipe (AJL 26/01/13)
+PARALLEL_MAKE=""
+
