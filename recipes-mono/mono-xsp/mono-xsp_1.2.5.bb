@@ -7,7 +7,6 @@ SECTION = "devel/mono"
 #  - scripts in /usr/bin contain the wrong paths
 #
 
-
 PR = "r5"
 
 DEPENDS = "mono"
@@ -21,16 +20,14 @@ SRC_URI = "http://go-mono.com/sources/xsp/xsp-${PV}.tar.bz2"
 
 S = "${WORKDIR}/xsp-${PV}"
 
-PACKAGES = "${PN}-dbg \
+PACKAGES += "\
 	libmono-webserver1.0-cil \
 	libmono-webserver2.0-cil \
 	mono-xsp \
-	mono-xsp2 \
-	mono-xsp-test \
+	${PN}2 \
+	${PN}-test \
 	mono-mod-mono-server \
 	mono-mod-mono-server2 \
-	mono-xsp-doc \
-	mono-xsp-dev \
 	"
 
 FILES_libmono-webserver1.0-cil-dbg += " \
@@ -91,11 +88,11 @@ FILES_mono-mod-mono-server2 = "\
 	/usr/lib/mono/2.0/mod-mono-server2.exe \
 	/usr/bin/mod-mono-server2 \
 	"
-FILES_mono-xsp-dev = "\
+FILES_${PN}-dev = "\
 	/usr/lib/pkgconfig/xsp.pc \
 	/usr/lib/pkgconfig/xsp-2.pc \
 	"
-FILES_mono-xsp-test = " \
+FILES_${PN}-test = " \
 	/usr/lib/xsp/test/1.1/authtest/index.aspx \
 	/usr/lib/xsp/test/1.1/authtest/login.aspx \
 	/usr/lib/xsp/test/1.1/authtest/web.config \
@@ -227,8 +224,6 @@ FILES_mono-xsp-test = " \
 	/usr/lib/xsp/test/2.0/masterpages/content1.aspx \
 	/usr/lib/xsp/test/2.0/masterpages/content2.aspx \
 	"
-
-
 
 SRC_URI[md5sum] = "adb7871e5ebeefcf8ed959523442c0fb"
 SRC_URI[sha256sum] = "25c246b7ed3e82a5f3562c2c15db551332830de4c238a53e3260ab7d40cd015a"
