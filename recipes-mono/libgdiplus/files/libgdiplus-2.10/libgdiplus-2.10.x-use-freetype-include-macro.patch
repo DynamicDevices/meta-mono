@@ -1,0 +1,14 @@
+diff -ur libgdiplus-2.10.8.org/src/gdiplus-private.h libgdiplus-2.10.8/src/gdiplus-private.h
+--- libgdiplus-2.10.8.org/src/gdiplus-private.h 2014-02-05 17:50:30.979205246 +0000
++++ libgdiplus-2.10.8/src/gdiplus-private.h     2014-02-05 17:51:54.519205465 +0000
+@@ -30,7 +30,8 @@
+ #include <stdio.h>
+ #include <math.h>
+ #include <glib.h>
+-#include <freetype/tttables.h>
++#include <ft2build.h>
++#include FT_TRUETYPE_TABLES_H
+ #include <pthread.h>
+ #include <unistd.h>
+
+
