@@ -1,18 +1,19 @@
-require mono-2.11.inc
+require mono-${PV}.inc
 
-inherit autotools pkgconfig
+inherit pkgconfig
 
 DEPENDS =+ "mono-native libgdiplus"
 
-PR = "r0"
+PR = "r1"
 
-EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-tls=pthread --with-sigaltstack=no --with-mcs-docs=no"
+EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
 do_configure_prepend() {
-	autoreconf -Wcross --verbose --install --force || bbnote "mono failed to autoreconf"
+	${S}/autogen.sh --verbose || bbnote "mono-native failed to autogen.sh"
+
 	sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i acinclude.m4
-	sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i libgc/acinclude.m4
-	sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i eglib/acinclude.m4
+	sed -e "s/slash\}libtool/slash\}..\/${HOST_SYS}-libtool/" -i libgc/acinclude.m4
+    	sed -e "s/slash\}libtool/slash\}..\/${HOST_SYS}-libtool/" -i eglib/acinclude.m4
 }
 
 do_install_append() {
@@ -22,6 +23,9 @@ do_install_append() {
 	cp -af ${STAGING_DIR_NATIVE}/usr/lib/mono  ${D}/usr/lib/
 	# AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
 	find ${D}/usr/lib/ -name *.dll.so -o -name *.exe.so | xargs -i rm {} 
+        # AJL - Remove extraneous files (might want to package these elsewhere in future?)
+        rm -Rf ${D}/usr/share/mono-2.0
+        rm -Rf ${D}/usr/share/libgc-mono
 }
 
 FILES_${PN} += "${libdir}/libikvm-native.so"
@@ -30,8 +34,4 @@ FILES_${PN} += "${libdir}/libMonoSupportW.so"
 
 INSANE_SKIP_${PN} = "arch dev-so debug-files"
 
-#
-# Add patch to remove armv6 define() in atomic.h (breaks compiler for armv6)
-#
-SRC_URI += " file://patch-mono-atomic-armv6.patch"
 
