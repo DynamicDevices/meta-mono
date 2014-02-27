@@ -1,0 +1,11 @@
+diff -ur monotools-server.org/Mono.Packager/Mono.Packager/FileProperties.cs monotools-server/Mono.Packager/Mono.Packager/FileProperties.cs
+--- monotools-server.org/Mono.Packager/Mono.Packager/FileProperties.cs	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/Mono.Packager/Mono.Packager/FileProperties.cs	2014-02-27 14:52:46.673440482 +0000
+@@ -1,6 +1,5 @@
+-﻿using System;
++using System;
+ using System.Collections.Generic;
+-using System.Linq;
+ using System.Text;
+ using System.Xml.Serialization;
+ using System.ComponentModel;
