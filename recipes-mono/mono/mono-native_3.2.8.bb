@@ -2,8 +2,6 @@ require mono-${PV}.inc
 
 inherit native
 
-PR = "r1"
-
 EXTRA_OECONF += "mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
 do_configure_prepend() {

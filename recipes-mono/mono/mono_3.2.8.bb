@@ -4,8 +4,6 @@ inherit pkgconfig
 
 DEPENDS =+ "mono-native libgdiplus"
 
-PR = "r1"
-
 EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
 do_configure_prepend() {
