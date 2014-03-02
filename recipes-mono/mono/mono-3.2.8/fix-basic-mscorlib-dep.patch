@@ -1,0 +1,11 @@
+--- 3.2.8-r0/mcs/build/profiles/basic.make.org	2014-03-01 17:51:52.904670729 +0000
++++ 3.2.8-r0/mcs/build/profiles/basic.make	2014-03-01 17:46:50.476669939 +0000
+@@ -12,7 +12,7 @@
+ PROFILE_RUNTIME = $(with_mono_path_monolite) $(RUNTIME)
+ BOOTSTRAP_MCS = $(PROFILE_RUNTIME) $(RUNTIME_FLAGS) $(MONOLITE_MCS) -sdk:2
+ else
+-PROFILE_RUNTIME = $(EXTERNAL_RUNTIME)
++PROFILE_RUNTIME = ${with_mono_path) $(EXTERNAL_RUNTIME)
+ BOOTSTRAP_MCS = $(EXTERNAL_MCS)
+ endif
+ 
