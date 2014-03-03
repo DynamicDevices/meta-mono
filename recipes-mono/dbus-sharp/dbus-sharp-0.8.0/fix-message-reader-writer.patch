@@ -1,0 +1,29 @@
+diff -ur dbus-sharp-0.8.org/src/Protocol/MessageReader.cs dbus-sharp-0.8/src/Protocol/MessageReader.cs
+--- dbus-sharp-0.8.org/src/Protocol/MessageReader.cs	2014-03-03 13:37:15.777082234 +0000
++++ dbus-sharp-0.8/src/Protocol/MessageReader.cs	2014-03-03 13:38:28.253082420 +0000
+@@ -576,8 +576,8 @@
+ 			int sof = Marshal.SizeOf (fis[0].FieldType);
+ 
+ 			unsafe {
+-				byte* pVal = (byte*)&val;
+-				DirectCopy (sof, (uint)(fis.Length * sof), (IntPtr)pVal);
++				GCHandle valueHandle = GCHandle.Alloc(val);
++ 				DirectCopy (sof, (uint)(fis.Length * sof), (IntPtr)valueHandle);
+ 			}
+ 
+ 			return val;
+diff -ur dbus-sharp-0.8.org/src/Protocol/MessageWriter.cs dbus-sharp-0.8/src/Protocol/MessageWriter.cs
+--- dbus-sharp-0.8.org/src/Protocol/MessageWriter.cs	2014-03-03 13:37:21.661082245 +0000
++++ dbus-sharp-0.8/src/Protocol/MessageWriter.cs	2014-03-03 13:38:56.325082508 +0000
+@@ -428,9 +428,8 @@
+ 			if (MessageReader.IsEligibleStruct (typeof (T), fis)) {
+ 				byte[] buffer = new byte[Marshal.SizeOf (fis[0].FieldType) * fis.Length];
+ 				unsafe {
+-					byte* pVal = (byte*)&value;
+-					Marshal.Copy ((IntPtr)pVal, buffer, 0, buffer.Length);
+-				}
++					GCHandle valueHandle = GCHandle.Alloc(value);
++ 					Marshal.Copy ((IntPtr) valueHandle, buffer, 0, buffer.Length);				}
+ 				stream.Write (buffer, 0, buffer.Length);
+ 				return;
+ 			}
