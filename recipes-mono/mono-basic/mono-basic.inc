@@ -10,29 +10,15 @@ inherit autotools
 SRC_URI = "http://download.mono-project.com/sources/mono-basic/mono-basic-${PV}.tar.bz2"
 
 FILES_${PN} += " \
-  ${libdir}/mono/2.0/*.dll \
-  ${libdir}/mono/4.0/*.dll \
-  ${libdir}/mono/4.0/*.exe \
-  ${libdir}/mono/4.0/*.rsp \
-  ${libdir}/mono/4.5/* \
-  ${libdir}/mono/gac/Mono.Cecil.VB \
-  ${libdir}/mono/gac/Microsoft.VisualBasic \
-  ${libdir}/mono/gac/Mono.Cecil.VB.Pdb/0.9.3.0__0738eb9f132ed756/*.dll \
-  ${libdir}/mono/gac/Microsoft.VisualBasic/10.0.0.0__b03f5f7f11d50a3a/*.dll \
-  ${libdir}/mono/gac/Microsoft.VisualBasic/8.0.0.0__b03f5f7f11d50a3a/*.dll \
-  ${libdir}/mono/gac/Mono.Cecil.VB.Mdb/0.9.3.0__0738eb9f132ed756/*.dll \
-  ${libdir}/mono/gac/Mono.Cecil.VB/0.9.3.0__0738eb9f132ed756/*.dll \
+  ${libdir}/mono/*/* \
+  ${libdir}/mono/gac/*/*/*.dll \
 "
 
 FILES_${PN}-dbg += " \
-  ${libdir}/mono/4.0/*.mdb \
-  ${libdir}/mono/gac/*.Pdb \
-  ${libdir}/mono/gac/*.Mdb \
-  ${libdir}/mono/gac/Mono.Cecil.VB.Pdb/0.9.3.0__0738eb9f132ed756/*.mdb \
-  ${libdir}/mono/gac/Microsoft.VisualBasic/10.0.0.0__b03f5f7f11d50a3a/*.mdb \
-  ${libdir}/mono/gac/Microsoft.VisualBasic/8.0.0.0__b03f5f7f11d50a3a/*.mdb \
-  ${libdir}/mono/gac/Mono.Cecil.VB.Mdb/0.9.3.0__0738eb9f132ed756/*.mdb \
-  ${libdir}/mono/gac/Mono.Cecil.VB/0.9.3.0__0738eb9f132ed756/*.mdb \
+  ${libdir}/mono/*/*.mdb \
+  ${libdir}/mono/*/*.Pdb \
+  ${libdir}/mono/*/*.Mdb \
+  ${libdir}/mono/*/*/*/*.mdb \
 "
 
 do_compile_prepend() {

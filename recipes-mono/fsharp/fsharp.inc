@@ -11,33 +11,46 @@ inherit autotools
 # therefore use some variables for the directory and extension
 SRC_URI = "https://github.com/fsharp/fsharp/archive/${PV}.tar.gz"
 
-# AJL - Could split out mdb debugging files into -dbg package in future?
 FILES_${PN} += "\
   ${libdir}/mono/* \  
+  ${libdir}/mono/4.0/* \
+  ${libdir}/mono/2.0/* \
   ${libdir}/mono/xbuild/Microsoft/VisualStudio/* \
   ${libdir}/mono/Microsoft F#/v4.0/* \
   ${libdir}/mono/Microsoft SDKs/F#/3.0/* \
   ${libdir}/mono/Microsoft SDKs/F#/3.1/* \
-  ${libdir}/mono/2.0/* \
-  ${libdir}/lib/mono/gac/* \
-  ${libdir}/mono/gac/FSharp.Compiler.Interactive.Settings/4.3.1.0__f536804aa0eb945b/* \
-  ${libdir}/mono/gac/FSharp.Compiler.Server.Shared/4.3.1.0__f536804aa0eb945b/* \
-  ${libdir}/mono/gac/FSharp.Data.TypeProviders/4.3.1.0__f536804aa0eb945b/* \
-  ${libdir}/mono/gac/policy.2.3.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/policy.2.3.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/policy.4.0.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/policy.3.3.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/policy.3.3.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/policy.2.0.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Core/2.3.98.1__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Core/2.3.1.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Core/4.3.1.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Core/2.3.99.1__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Compiler/4.3.1.0__f536804aa0eb945b/* \
-  ${libdir}/mono/gac/policy.4.3.FSharp.Core/0.0.0.0__b03f5f7f11d50a3a/* \
-  ${libdir}/mono/gac/FSharp.Build/* \
-  ${libdir}/mono/4.0/* \
+  ${libdir}/mono/gac/* \
+  ${libdir}/mono/gac/*/* \
+  ${libdir}/mono/gac/*/*/* \
   ${libdir}/mono/monotouch/* \
   ${libdir}/mono/monodroid/* \
+"
+
+FILES_${PN}-dbg += "\
+  ${libdir}/mono/*.mdb \  
+  ${libdir}/mono/4.0/*.mdb \
+  ${libdir}/mono/4.0/*.optdata \
+  ${libdir}/mono/4.0/*.sigdatadata \
+  ${libdir}/mono/2.0/*.mdb \
+  ${libdir}/mono/2.0/*.optdata \
+  ${libdir}/mono/2.0/*.sigdata \
+  ${libdir}/mono/xbuild/Microsoft/VisualStudio/*.mdb \
+  ${libdir}/mono/Microsoft F#/v4.0/*.mdb \
+  ${libdir}/mono/Microsoft SDKs/F#/3.0/*.mdb \
+  ${libdir}/mono/Microsoft SDKs/F#/3.1/*.mdb \
+  ${libdir}/mono/gac/*.mdb \
+  ${libdir}/mono/gac/*/*.mdb \
+  ${libdir}/mono/gac/*/*/*.mdb \
+  ${libdir}/mono/gac/*/*/*.xml \
+  ${libdir}/mono/gac/*/*/*.optdata \
+  ${libdir}/mono/gac/*/*/*.sigdata \
+  ${libdir}/mono/monotouch/*.mdb \
+  ${libdir}/mono/monotouch/*.xml \
+  ${libdir}/mono/monotouch/*.sigdata \
+  ${libdir}/mono/monotouch/*.optdata \
+  ${libdir}/mono/monodroid/*.mdb \
+  ${libdir}/mono/monodroid/*.xml \
+  ${libdir}/mono/monodroid/*.optdata \
+  ${libdir}/mono/monodroid/*.sigdata \
 "
 

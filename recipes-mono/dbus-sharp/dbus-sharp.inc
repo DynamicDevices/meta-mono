@@ -21,11 +21,11 @@ FILESPATH =. "${FILE_DIRNAME}/${PN}-${PV}:"
 
 FILES_${PN} += " \
   ${libdir}/mono/dbus-sharp-2.0/* \
-  ${libdir}/mono/gac/dbus-sharp/2.0.0.0__5675b0c3093115b5/dbus-sharp.dll.config \
-  ${libdir}/mono/gac/dbus-sharp/2.0.0.0__5675b0c3093115b5/dbus-sharp.dll \
+  ${libdir}/mono/gac/dbus-sharp/*/*.dll \
+  ${libdir}/mono/gac/dbus-sharp/*/*.config \
 "
 
 FILES_${PN}-dbg += " \
-  ${libdir}/mono/gac/dbus-sharp/2.0.0.0__5675b0c3093115b5/dbus-sharp.dll.mdb \
+  ${libdir}/mono/gac/dbus-sharp/*/*.mdb \
 "
 

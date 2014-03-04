@@ -20,13 +20,13 @@ S = "${WORKDIR}/${PN}-${SDIRVER}"
 FILESPATH =. "${FILE_DIRNAME}/${PN}-${PV}:"
 
 FILES_${PN} += " \
-  ${libdir}/mono/gac/dbus-sharp-glib/2.0.0.0__5675b0c3093115b5/dbus-sharp-glib.dll.config \
-  ${libdir}/mono/gac/dbus-sharp-glib/2.0.0.0__5675b0c3093115b5/dbus-sharp-glib.dll \
   ${libdir}/mono/dbus-sharp-glib-2.0/dbus-sharp-glib.dll \
+  ${libdir}/mono/gac/dbus-sharp-glib/*/*.config \
+  ${libdir}/mono/gac/dbus-sharp-glib/*/*dll \
 "
 
 FILES_${PN}-dbg += " \
-  ${libdir}/mono/gac/dbus-sharp-glib/2.0.0.0__5675b0c3093115b5/dbus-sharp-glib.dll.mdb \
+  ${libdir}/mono/gac/dbus-sharp-glib/*/*.mdb \
 "
 
 do_configure_prepend() {
