@@ -8,6 +8,7 @@ SRC_URI += "file://fix-basic-mscorlib-dep.patch"
 
 do_configure_prepend() {
     ${S}/autogen.sh --verbose || bbnote "mono-native failed to autogen.sh"
+    sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i acinclude.m4
 }
 
 do_compile() {
