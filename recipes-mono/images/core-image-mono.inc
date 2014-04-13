@@ -1,2 +1,2 @@
-IMAGE_INSTALL += "libgdiplus mono"
+IMAGE_INSTALL += "libgdiplus mono mono-helloworld"
 
