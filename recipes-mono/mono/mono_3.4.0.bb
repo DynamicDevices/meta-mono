@@ -15,21 +15,16 @@ do_configure_prepend() {
 }
 
 do_install_append() {
-	mkdir -p ${D}/etc/
-	mkdir -p ${D}/usr/lib/
-	cp -af ${STAGING_DIR_NATIVE}/etc/mono ${D}/etc/
-	cp -af ${STAGING_DIR_NATIVE}/usr/lib/mono  ${D}/usr/lib/
+	cp -af ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}/${PN}
+	cp -af ${STAGING_DIR_NATIVE}${libdir}/${PN}  ${D}${libdir}/${PN}
 	# AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
-	find ${D}/usr/lib/ -name *.dll.so -o -name *.exe.so | xargs -i rm {} 
-        # AJL - Remove extraneous files (might want to package these elsewhere in future?)
-        rm -Rf ${D}/usr/share/mono-2.0
-        rm -Rf ${D}/usr/share/libgc-mono
+	find ${D}${libdir}/${PN} -name *.dll.so -o -name *.exe.so | xargs -i rm {} 
 }
 
-FILES_${PN} += "${libdir}/libikvm-native.so"
-FILES_${PN} += "${libdir}/libMonoPosixHelper.so"
-FILES_${PN} += "${libdir}/libMonoSupportW.so"
+FILES_${PN} += " ${libdir}/libikvm-native.so"
+FILES_${PN} += " ${libdir}/libMonoPosixHelper.so"
+FILES_${PN} += " ${libdir}/libMonoSupportW.so"
+FILES_${PN}-doc += " ${datadir}/libgc-mono/*"
+FILES_${PN}-dbg += " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml"
 
-INSANE_SKIP_${PN} = "arch dev-so debug-files"
-
-
+PACKAGES = "${PN} ${PN}-dbg ${PN}-doc ${PN}-dev ${PN}-staticdev ${PN}-locale"

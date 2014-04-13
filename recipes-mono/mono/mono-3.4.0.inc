@@ -11,10 +11,10 @@ inherit autotools
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 	   file://dllmap-config.in.diff \
-	   file://Makefile.am.diff \
+ 	   file://Microsoft.Portable.Common.targets.diff \
 	  "
 
-SRC_URI[md5sum] = "1075f99bd8a69890af9e30309728e684"
-SRC_URI[sha256sum] = "fdb48cad26149288dcb99a3d9b4ec89735706000242c50bdc21ce657af201a40"
+SRC_URI[md5sum] = "698024a40ee0721c2a24c45be2e39f28"
+SRC_URI[sha256sum] = "fd4cadc6a849896c6a4382321f06ce9f224326affd2c8aaa47ba7218c0d951d4"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
