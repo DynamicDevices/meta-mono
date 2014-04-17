@@ -2,6 +2,8 @@ require mono-${PV}.inc
 
 inherit native
 
+DEPENDS =+ "libgdiplus"
+
 EXTRA_OECONF += "mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
 SRC_URI += "file://fix-basic-mscorlib-dep.patch"
