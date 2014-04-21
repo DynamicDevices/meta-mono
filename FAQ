@@ -1,0 +1,26 @@
+FAQ
+===
+
+Q. How do I create a recipe to build a Mono/.NET application within Yocto/OpenEmbedded
+
+See mono-hellowworld example recipes
+
+http://git.yoctoproject.org/cgit/cgit.cgi/meta-mono/tree/recipes-mono/mono-helloworld
+
+- mono-helloworld is based on the Mono example, mono-skel, and provides files needed to build with autotools
+- mono-helloworld-xbuild uses a Visual Studio solution and project files with Mono xbuild
+
+Q. How do I set the version of Mono that I wish to build?
+
+A. Modify your conf/local.conf file to include the following
+
+For Mono 3.2.8
+
+PREFERRED_VERSION_mono = "3.2.8"
+PREFERRED_VERSION_mono-native = "3.2.8"
+
+For Mono 3.4.0 
+
+PREFERRED_VERSION_mono = "3.4.0"
+PREFERRED_VERSION_mono-native = "3.4.0"
+
