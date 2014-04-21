@@ -24,3 +24,19 @@ For Mono 3.4.0
 PREFERRED_VERSION_mono = "3.4.0"
 PREFERRED_VERSION_mono-native = "3.4.0"
 
+Q. How do I include Mono in an image?
+
+Ideally you would wish to create an image recipe that inherits a base image recipe,
+or .bbappends to a base image recipe, possibly in a new layer.
+
+The core-image-mono in recipes-mono/images shows how to do this. In core-image-mono.bb
+we require core-image-sato (i.e. base our mono image on the sato image) and in addition
+we require core-image-mono.inc. In the include file we add Mono to the output image
+
+IMAGE_INSTALL += "libgdiplus mono mono-helloworld"
+
+So you can modify your own image recipe(s) in this manner. However in the simplest case 
+for testing you can add the following to your conf/local.conf to add packages to every 
+image built
+
+IMAGE_INSTALL_append = " mono"
