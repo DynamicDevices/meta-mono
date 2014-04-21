@@ -2,6 +2,8 @@ require gtk-sharp.inc
 
 inherit pkgconfig
 
+DEPENDS = "mono gtk+ atk pango cairo glib-2.0 libglade "
+
 LIC_FILES_CHKSUM = "files://COPYING;md5=f14599a2f089f6ff8c97e2baa4e3d575"
 
 SRC_URI[md5sum] = "2e892f265877fe5c16f41b771edb7618"

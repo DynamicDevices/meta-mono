@@ -14,7 +14,7 @@ SRC_URI = "https://github.com/mono/libgdiplus/archive/${PV}.tar.gz \
 
 inherit autotools pkgconfig native
 
-DEPENDS =+ "cairo freetype fontconfig libxft libpng pango"
+DEPENDS =+ "cairo-native freetype-native fontconfig-native libxft-native libpng-native pango-native"
 
 SRC_URI[md5sum] = "6fd45bbb9843f5a8851b5f44e2a5dd04"
 SRC_URI[sha256sum] = "45c533dc72af0a24d1d3a8097873f5fe1670107fe7e6d08fb71ae586c87a0f1d"

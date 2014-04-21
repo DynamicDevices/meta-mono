@@ -2,7 +2,7 @@ require mono-${PV}.inc
 
 inherit native
 
-DEPENDS =+ "libgdiplus"
+DEPENDS =+ "libgdiplus-native"
 
 EXTRA_OECONF += "mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 

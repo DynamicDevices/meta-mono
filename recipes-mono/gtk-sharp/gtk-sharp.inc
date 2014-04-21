@@ -2,7 +2,6 @@ SUMMARY = "GUI toolkit for Mono"
 DESCRIPTION = "GTK+ bindings for Mono"
 SECTION = "devel/mono"
 BUGTRACKER = "http://bugzilla.xamarin.com"
-DEPENDS = "mono mono-native gtk+ atk pango cairo glib-2.0 libglade "
 RDEPENDS_${PN} = "mono"
 LICENSE = "LGPL-2.1"
 
