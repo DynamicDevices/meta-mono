@@ -1,14 +1,15 @@
 1) Intro
 2) Dependencies
-3) Maintainer(s) & Patch policy
-4) Copyright
-5) Current State - x86
-6) Current State - ARM vfp
-7) Current State - ARM hardfp
-8) Current State - MIPS
-9) Current State - PPC
-10) Current State - alpha, amd64, hppa, ia64, s390 & sparc
-11) TODO
+3) Examples
+4) Maintainer(s) & Patch policy
+5) Copyright
+6) Current State - x86
+7) Current State - ARM vfp
+8) Current State - ARM hardfp
+9) Current State - MIPS
+10) Current State - PPC
+11) Current State - alpha, amd64, hppa, ia64, s390 & sparc
+12) TODO
 
 1) Intro
 
@@ -17,11 +18,12 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.2.8 
+This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0
 
 For Mono release notes please see:
 
 http://www.mono-project.com/Release_Notes_Mono_3.2
+http://www.mono-project.com/Release_Notes_Mono_3.4
 
 NOTE: That as of Mono 3.2.7 there is initial support for the ARM hardfp ABI
       which should enable us to use hardfp builds of e.g. Yocto/Poky
@@ -40,7 +42,24 @@ Mono does not require Sato, it does require X if you want to run
 Windows Forms applications. While mono can run w/o X, that recipe
 is not supported currently. It is unlikely to be supported.
 
-3) Maintainer(s) & Patch policy
+3) Build Examples
+
+There are mono-helloworld and a mono-helloworld-xbuild recipes in recipes-mono
+
+These show two ways of building C# projects for deployment to the target. Each
+downloads a tarball release from a git repository, although they could just as
+easily download and checkout a commit from the git repository.
+
+mono-helloworld then implements the recommended autotools files for build with
+autoconf. This is based on the Mono example, mono-skel.
+
+For details see: http://mono-project.com/Guidelines:Application_Deployment
+
+mono-helloworld-xbuild implements a Visual Studio 2010 solution and projects
+which allow us to checkout and build using Visual Studio on a Windows host,
+or alternatively using Mono xbuild within a Yocto/OpenEmbedded recipe.
+
+4) Maintainer(s) & Patch policy
 
 Alex J Lennon (ajlennon@dynamicdevices.co.uk)
 
@@ -54,11 +73,11 @@ http://www.yoctoproject.org/docs/1.4.2/dev-manual/dev-manual.html#how-to-submit-
 Use the create-pull-request and send-pull-request scripts details in 3.9.1. Send 
 to the maintainer and to yocto@yoctoproject.org
 
-4) Copyright
+5) Copyright
 
 MIT/GPLv2 - following the lead of libgdiplus and mono
 
-5) Current State - x86: Works
+6) Current State - x86: Works
 
 25/02/2014
 
@@ -66,7 +85,7 @@ Alex J Lennon (ajlennon@dynamicdevices.co.uk) has tested a Poky
 build on a qemux86 platform, with a simple console application 
 and a simple Windows Forms application. 
 
-6) Current State - ARM vfp: Works
+7) Current State - ARM vfp: Works
 
 25/02/2014
 
@@ -74,26 +93,26 @@ Alex J Lennon (ajlennon@dynamicdevices.co.uk) has tested a Poky
 build on a Freescale i.MX6 platform, with a simple console application 
 and a simple Windows Forms application. 
 
-7) Current State - ARM hardfp: Builds
+8) Current State - ARM hardfp: Builds
 
 Builds for i.MX6 platform with hardfp enabled. Needs testing.
 
-7) Current State - MIPS: Unknown
+9) Current State - MIPS: Unknown
 
 More investigation is needed, if there is an interest in getting
 mono to work perfectly on MIPS, please contact the maintainer.
 
-8) Current State - PPC
+10) Current State - PPC
 
 More investigation is needed, if there is an interest in getting
 mono to work perfectly on PPC, please contact the maintainer.
 
-9) Current State - alpha, amd64, hppa, ia64, s390 & sparc: Unknown
+11) Current State - alpha, amd64, hppa, ia64, s390 & sparc: Unknown
 
 When qemu provided by Yocto supports one of these machines, the
 maintainer will support these architectures.
 
-10) TODO
+12) TODO
 
 10.1) see if mono works for amd64, seems like qemux86-64 is available
 10.2) investigate why windows forms apps dont run on MIPS
