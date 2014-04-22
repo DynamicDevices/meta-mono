@@ -93,9 +93,11 @@ Alex J Lennon (ajlennon@dynamicdevices.co.uk) has tested a Poky
 build on a Freescale i.MX6 platform, with a simple console application 
 and a simple Windows Forms application. 
 
-8) Current State - ARM hardfp: Builds
+8) Current State - ARM hardfp: Works
 
-Builds for i.MX6 platform with hardfp enabled. Needs testing.
+22/04/2014
+
+Builds and runs on i.MX6 platform with hardfp enabled. 
 
 9) Current State - MIPS: Unknown
 
@@ -127,5 +129,5 @@ maintainer will support these architectures.
 10.10) write recipes to create packages for mscorlib library tests
 10.11) write recipes to create packages for System.dll library tests
 10.12) try mono on beagleboard (email maintainer when you do this, he will thank you)
-10.13) write a recipe for windows forms app
+10.13) write a recipe for windows forms app (DONE)
 
