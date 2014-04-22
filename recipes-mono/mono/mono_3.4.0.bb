@@ -15,7 +15,7 @@ do_configure_prepend() {
 }
 
 do_install_append() {
-	cp -af ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}/${PN}
+	cp -af ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}
 	cp -af ${STAGING_DIR_NATIVE}${libdir}/${PN}  ${D}${libdir}/${PN}
 	# AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
 	find ${D}${libdir}/${PN} -name *.dll.so -o -name *.exe.so | xargs -i rm {} 
