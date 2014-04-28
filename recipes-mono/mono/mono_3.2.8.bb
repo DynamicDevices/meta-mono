@@ -6,14 +6,6 @@ DEPENDS =+ "mono-native libgdiplus"
 
 EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
-do_configure_prepend() {
-	${S}/autogen.sh --verbose || bbnote "mono-native failed to autogen.sh"
-
-	sed -e "s/slash\}libtool/slash\}${HOST_SYS}-libtool/" -i acinclude.m4
-	sed -e "s/slash\}libtool/slash\}..\/${HOST_SYS}-libtool/" -i libgc/acinclude.m4
-    	sed -e "s/slash\}libtool/slash\}..\/${HOST_SYS}-libtool/" -i eglib/acinclude.m4
-}
-
 do_install_append() {
 	mkdir -p ${D}/etc/
 	mkdir -p ${D}/usr/lib/
