@@ -3,7 +3,11 @@ FAQ
 
 Q. How do I create a recipe to build a Mono/.NET application within Yocto/OpenEmbedded
 
-See mono-hellowworld example recipes
+See wiki instructions
+
+https://wiki.yoctoproject.org/wiki/Building_and_running_embedded_Linux_.NET_applications_from_first_principles
+
+Also see mono-hellowworld example recipes
 
 http://git.yoctoproject.org/cgit/cgit.cgi/meta-mono/tree/recipes-mono/mono-helloworld
 
