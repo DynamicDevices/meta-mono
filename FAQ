@@ -44,3 +44,9 @@ for testing you can add the following to your conf/local.conf to add packages to
 image built
 
 IMAGE_INSTALL_append = " mono"
+
+Q. How do I use Mono 3.4.0 on Windows?
+
+A. See the article here on building the Mono sources under Windows
+ 
+http://www.codeproject.com/Articles/769292/How-to-build-Mono-on-Windows

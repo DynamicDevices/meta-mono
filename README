@@ -27,6 +27,11 @@ and for details on how to build example .NET projects for inclusion and executio
 
 https://wiki.yoctoproject.org/wiki/Building_and_running_embedded_Linux_.NET_applications_from_first_principles
 
+For instructions on how to build Mono 3.4.0 and Mono git from sources for execution on Windows,
+e.g. to remote debug with same host framework as target framework, see
+
+http://www.codeproject.com/Articles/769292/How-to-build-Mono-on-Windows
+
 2) Introduction
 
 This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0
