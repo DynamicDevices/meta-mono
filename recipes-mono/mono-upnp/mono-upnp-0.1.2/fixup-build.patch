@@ -1,0 +1,55 @@
+Only in git: Makefile
+diff -ur git.org/Makefile.am git/Makefile.am
+--- git.org/Makefile.am	2014-05-17 17:18:41.627941046 +0100
++++ git/Makefile.am	2014-05-17 17:23:49.583941850 +0100
+@@ -5,10 +5,10 @@
+ 
+ #Warning: This is an automatically generated file, do not edit!
+ if ENABLE_DEBUG
+- SUBDIRS =  src/Mono.Ssdp/Mono.Ssdp src/Mono.Upnp src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1 tests
++ SUBDIRS =  src/Mono.Ssdp/Mono.Ssdp src/Mono.Upnp src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1 
+ endif
+ if ENABLE_RELEASE
+- SUBDIRS =  src/Mono.Ssdp/Mono.Ssdp src/Mono.Upnp src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1 tests
++ SUBDIRS =  src/Mono.Ssdp/Mono.Ssdp src/Mono.Upnp src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1 
+ endif
+ 
+ .PHONY: test
+diff -ur git.org/configure.ac git/configure.ac
+--- git.org/configure.ac	2014-05-17 17:18:41.627941046 +0100
++++ git/configure.ac	2014-05-17 17:33:15.271943329 +0100
+@@ -5,6 +5,8 @@
+ AM_INIT_AUTOMAKE([foreign tar-ustar])
+ AM_MAINTAINER_MODE
+ 
++AC_PREFIX_DEFAULT(/usr)
++
+ dnl pkg-config
+ AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+ if test "x$PKG_CONFIG" = "xno"; then
+@@ -51,7 +53,7 @@
+ PKG_CHECK_MODULES([GLADE_SHARP_20], [glade-sharp-2.0])
+ PKG_CHECK_MODULES([MONO_ADDINS], [mono-addins])
+ PKG_CHECK_MODULES([TAGLIB_SHARP], [taglib-sharp])
+-PKG_CHECK_MODULES([NUNIT], [nunit])
++#PKG_CHECK_MODULES([NUNIT], [nunit])
+ 
+ AC_PATH_PROG(NUNIT_CMD, nunit-console2, nunit-console)
+ AC_SUBST(NUNIT_CMD)
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am	2014-05-17 17:18:41.635941046 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am	2014-05-17 17:21:47.595941564 +0100
+@@ -97,7 +97,6 @@
+ REFERENCES =  \
+ 	../../../../bin/Mono.Upnp.Dcp.MediaServer1.dll \
+ 	../../../../bin/Mono.Upnp.dll \
+-	-pkg:taglib-sharp \
+ 	System
+ 
+ DLL_REFERENCES = 
+@@ -122,4 +121,4 @@
+ 
+ $(ASSEMBLY): $(build_sources) $(build_resources) $(build_datafiles) $(DLL_REFERENCES) $(PROJECT_REFERENCES) $(build_xamlg_list) $(build_satellite_assembly_list)
+ 	mkdir -p $(shell dirname $(ASSEMBLY))
+-	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref)
++	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref) $(TAGLIB_SHARP_LIBS)
