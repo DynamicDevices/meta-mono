@@ -6,7 +6,7 @@ SECTION = "mono/applications"
 PRIORITY = "optional"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4e024d772d8266e3ff9747185842ca82"
-DEPENDS = "mono"
+DEPENDS = "mono gtk-sharp"
 
 SRCREV = "64a45d96f39d4714ec85adf0fe04b68ec7273ae1"
 SRCBRANCH = "master"
