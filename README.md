@@ -42,6 +42,10 @@ easily download and checkout a commit from the git repository.
 mono-helloworld then implements the recommended autotools files for build with
 autoconf. This is based on the Mono example, mono-skel.
 
+For a walkthrough on building .NET recipes from first principles see:
+
+* [Building and running embedded Linux .NET applications from first principles](https://wiki.yoctoproject.org/wiki/Building_and_running_embedded_Linux_.NET_applications_from_first_principles)
+
 For details see: 
 
 * [Mono Application Deployment Guidelines](http://mono-project.com/Guidelines:Application_Deployment)
