@@ -9,7 +9,6 @@ IMAGE_INSTALL += "mono-upnp \
 		  gtk-sharp \
 		  mono-helloworld \
 		  mono-xsp \
-		  mono-addins \
 		  monotools-server \
 		  taglib-sharp \
 		  fsharp \
