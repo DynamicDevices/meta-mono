@@ -24,4 +24,4 @@ FILES_${PN} += "${libdir}/libMonoSupportW.so"
 
 INSANE_SKIP_${PN} = "arch dev-so debug-files"
 
-
+RDEPENDS_${PN} += "libgdiplus"

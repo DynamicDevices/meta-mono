@@ -20,3 +20,5 @@ FILES_${PN}-doc += " ${datadir}/libgc-mono/*"
 FILES_${PN}-dbg += " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml"
 
 PACKAGES = "${PN} ${PN}-dbg ${PN}-doc ${PN}-dev ${PN}-staticdev ${PN}-locale"
+
+RDEPENDS_${PN} += "libgdiplus"
