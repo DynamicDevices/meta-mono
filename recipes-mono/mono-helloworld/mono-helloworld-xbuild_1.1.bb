@@ -15,10 +15,8 @@ do_compile() {
 }
 
 do_install() {
-        mkdir -p ${D}${bindir}
-        mkdir -p ${D}${libdir}/helloworld
-        mkdir -p ${D}${libdir}/helloworld/.debug
-
+        install -d "${D}${bindir}"
+	install -d "${D}${libdir}/helloworld/.debug"
         install -m 0755 ${S}/bin/${CONFIGURATION}/*.mdb ${D}${libdir}/helloworld/.debug
         install -m 0755 ${S}/bin/${CONFIGURATION}/*.exe ${D}${libdir}/helloworld
 
