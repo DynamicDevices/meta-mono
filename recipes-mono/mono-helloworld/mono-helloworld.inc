@@ -17,3 +17,5 @@ FILES_${PN} = "${libdir}/helloworld/helloworld.exe \
         	${libdir}/helloworld/helloworldform.exe \
 		${bindir}/helloworldform \
 "
+
+RDEPENDS_${PN} += "mono"
