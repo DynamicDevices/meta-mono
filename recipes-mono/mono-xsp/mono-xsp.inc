@@ -5,7 +5,7 @@ RDEPENDS_${PN} = "mono"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;md5=84b17f6d63c3c28399d0f3786831d40c"
 
-inherit autotools 
+inherit autotools-brokensep
 
 SRC_URI = "http://download.mono-project.com/sources/xsp/xsp-${PV}.tar.bz2"
 
