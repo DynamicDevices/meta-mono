@@ -27,7 +27,7 @@ DEPENDS = "mono-xsp gtk-sharp"
 
 S = "${WORKDIR}/${PN}"
 
-inherit autotools gettext 
+inherit autotools-brokensep gettext 
 
 do_configure_prepend() {
     # Doesn't seem to be picked up by pkgconfig so override it
