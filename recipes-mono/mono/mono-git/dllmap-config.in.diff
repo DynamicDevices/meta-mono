@@ -1,14 +1,23 @@
 diff -ur git.org/data/config.in git/data/config.in
 --- git.org/data/config.in	2014-07-15 19:16:11.863084724 +0100
-+++ git/data/config.in	2014-07-15 19:21:48.487083050 +0100
++++ git/data/config.in	2014-07-28 16:25:35.498163088 +0100
+@@ -10,7 +10,7 @@
+ 	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
+ 	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
+ 	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
+-	<dllmap dll="MonoPosixHelper" target="@prefix@/lib/libMonoPosixHelper@libsuffix@" os="!windows" />
++	<dllmap dll="MonoPosixHelper" target="/usr/lib/libMonoPosixHelper.so" os="!windows" />
+ 	<dllmap dll="i:msvcrt" target="@LIBC@" os="!windows"/>
+ 	<dllmap dll="i:msvcrt.dll" target="@LIBC@" os="!windows"/>
+ 	<dllmap dll="sqlite" target="@SQLITE@" os="!windows"/>
 @@ -29,8 +29,8 @@
  		<dllentry dll="__Internal" name="MoveMemory" target="mono_win32_compat_MoveMemory"/>
  		<dllentry dll="__Internal" name="ZeroMemory" target="mono_win32_compat_ZeroMemory"/>
  	</dllmap>
 -	<dllmap dll="gdiplus" target="@libgdiplus_install_loc@" os="!windows"/>
 -	<dllmap dll="gdiplus.dll" target="@libgdiplus_install_loc@"  os="!windows"/>
-+	<dllmap dll="gdiplus" target="libgdiplus.so.0" os="!windows"/>
-+	<dllmap dll="gdiplus.dll" target="libgdiplus.so.0"  os="!windows"/>
++	<dllmap dll="gdiplus" target="/usr/lib/libgdiplus.so.0" os="!windows"/>
++	<dllmap dll="gdiplus.dll" target="/usr/lib/libgdiplus.so.0"  os="!windows"/>
  	<dllmap dll="gdi32" target="@libgdiplus_install_loc@" os="!windows"/>
  	<dllmap dll="gdi32.dll" target="@libgdiplus_install_loc@" os="!windows"/>
  </configuration>
