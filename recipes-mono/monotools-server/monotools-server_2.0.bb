@@ -14,7 +14,7 @@ SRC_URI[sha256sum] = "dd0bc56e25f96e8c8525f327154940729fba2585de5d74b68a69d2ea30
 SRC_REV = "47d89ae"
 SRC_URI = "hg://bitbucket.org/jdluzen;rev=${SRC_REV};module=monotools-server;protocol=https" 
 
-FILESEXTRAPATHS := "${THISDIR}/monotools-server-${PV}"
+FILESEXTRAPATHS_prepend := "${THISDIR}/monotools-server-${PV}:"
 
 SRC_URI += " \
 	file://remove-about-program-name.patch \
