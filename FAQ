@@ -28,6 +28,11 @@ For Mono 3.4.0
 PREFERRED_VERSION_mono = "3.4.0"
 PREFERRED_VERSION_mono-native = "3.4.0"
 
+For Mono 3.8.0 
+
+PREFERRED_VERSION_mono = "3.8.0"
+PREFERRED_VERSION_mono-native = "3.8.0"
+
 Q. How do I include Mono in an image?
 
 A. Ideally you would wish to create an image recipe that inherits a base image recipe,
@@ -45,7 +50,7 @@ image built
 
 IMAGE_INSTALL_append = " mono"
 
-Q. How do I use Mono 3.4.0 on Windows?
+Q. How do I use Mono 3.x.x on Windows?
 
 A. See the article here on building the Mono sources under Windows
  

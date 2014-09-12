@@ -5,15 +5,23 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0
+This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0 / 3.8.0
 
 For Mono release notes please see:
 
-* [Mono 3.2 Release Notes](http://www.mono-project.com/Release_Notes_Mono_3.2)
-* [Mono 3.4 Release Notes](http://www.mono-project.com/Release_Notes_Mono_3.4)
+* [Mono 3.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.2.8/)
+* [Mono 3.4 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.4.0/)
+* [Mono 3.8 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.8.0/)
 
-NOTE: That since Mono 3.2.7 there is initial support for the ARM hardfp ABI 
-which should enable us to use hardfp builds of e.g. Yocto/Poky
+NOTE: ARM hardfp support
+
+Since Mono 3.2.7 there is initial support for the ARM hardfp ABI which should 
+enable us to use hardfp builds of e.g. Yocto/Poky. However there are issues with 
+using this, namely exceptions when using Windows Forms components. For details see:
+
+https://bugzilla.xamarin.com/show_bug.cgi?id=20239
+
+For now the recommendation is to use softfp only when using Mono.
 
 ## Dependencies
 
@@ -29,7 +37,8 @@ On the target:
 So far, Windows Forms applications have been tested under Sato.
 Mono does not require Sato, it does require X if you want to run
 Windows Forms applications. While mono can run w/o X, that recipe
-is not supported currently. It is unlikely to be supported.
+is not supported currently. It is unlikely to be supported in the
+near future.
 
 ## Build Examples
 
@@ -79,11 +88,15 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - ARM vfp: Works
 
+#### 19/09/2014
+
+* Maintainer has tested a Poky build on a Freescale i.MX6 platform with a relatively complex commercial application.
+
 #### 25/02/2014
 
 * Maintainer has tested a Poky build on a Freescale i.MX6 platform, with a simple console application and a simple Windows Forms application. 
 
-## Current State - ARM hardfp: Works
+## Current State - ARM hardfp: Works / Issues with Windows Forms components
 
 #### 22/04/2014
 
