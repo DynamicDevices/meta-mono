@@ -5,13 +5,14 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0 / 3.8.0
+This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0 / 3.8.0 / 3.10.0
 
 For Mono release notes please see:
 
 * [Mono 3.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.2.8/)
 * [Mono 3.4 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.4.0/)
 * [Mono 3.8 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.8.0/)
+* [Mono 3.10 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.10.0/)
 
 NOTE: ARM hardfp support
 
@@ -22,6 +23,9 @@ using this, namely exceptions when using Windows Forms components. For details s
 https://bugzilla.xamarin.com/show_bug.cgi?id=20239
 
 For now the recommendation is to use softfp only when using Mono.
+
+There may be a solution to this issue in Mono 3.10.0 but this is as yet untested.
+Feedback on testing with armhf would be appreciated and incorporated into this README.
 
 ## Dependencies
 
@@ -82,13 +86,17 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86: Works
 
-#### 25/02/2014
+#### 25/10/2014
+
+3.10.0
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
 ## Current State - ARM vfp: Works
 
 #### 19/09/2014
+
+3.8.0
 
 * Maintainer has tested a Poky build on a Freescale i.MX6 platform with a relatively complex commercial application.
 

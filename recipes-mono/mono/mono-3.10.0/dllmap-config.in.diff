@@ -1,6 +1,12 @@
 --- mono-3.8.0/data/config.in	2014-08-28 17:22:10.000000000 +0100
-+++ mono-3.8.0.new/data/config.in	2014-09-10 14:48:48.277662763 +0100
-@@ -15,7 +15,7 @@
++++ mono-3.8.0.new/data/config.in	2014-09-10 17:17:44.229642998 +0100
+@@ -10,12 +10,12 @@
+ 	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
+ 	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
+ 	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
+-	<dllmap dll="MonoPosixHelper" target="@prefix@/lib/libMonoPosixHelper@libsuffix@" os="!windows" />
++	<dllmap dll="MonoPosixHelper" target="libMonoPosixHelper.so" os="!windows" />
+ 	<dllmap dll="i:msvcrt" target="@LIBC@" os="!windows"/>
  	<dllmap dll="i:msvcrt.dll" target="@LIBC@" os="!windows"/>
  	<dllmap dll="sqlite" target="@SQLITE@" os="!windows"/>
  	<dllmap dll="sqlite3" target="@SQLITE3@" os="!windows"/>
