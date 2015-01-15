@@ -13,6 +13,7 @@ For Mono release notes please see:
 * [Mono 3.4 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.4.0/)
 * [Mono 3.8 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.8.0/)
 * [Mono 3.10 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.10.0/)
+* [Mono 3.12 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.0/)
 
 NOTE: ARM hardfp support
 
@@ -24,7 +25,7 @@ https://bugzilla.xamarin.com/show_bug.cgi?id=20239
 
 For now the recommendation is to use softfp only when using Mono.
 
-There may be a solution to this issue in Mono 3.10.0 but this is as yet untested.
+There may be a solution to this issue in Mono 3.10.0 / 3.12.0 but this is as yet untested.
 Feedback on testing with armhf would be appreciated and incorporated into this README.
 
 ## Dependencies
@@ -86,9 +87,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86: Works
 
-#### 25/10/2014
+#### 15/01/2015
 
-3.10.0
+3.12.0
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
