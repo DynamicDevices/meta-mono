@@ -68,6 +68,10 @@ mono-helloworld-xbuild implements a Visual Studio 2010 solution and projects
 which allow us to checkout and build using Visual Studio on a Windows host, 
 or alternatively using Mono xbuild within a Yocto/OpenEmbedded recipe.
 
+For a walkthrough on building Mono for Raspberry Pi see:
+
+* [Getting Mono Running on a Raspberry Pi Using Yocto](http://www.codeproject.com/Articles/840489/Getting-Mono-Running-on-a-Raspberry-Pi-Using-Yocto)
+
 ## Maintainer(s) & Patch policy
 
 * [Alex J Lennon](mailto://ajlennon@dynamicdevices.co.uk)
