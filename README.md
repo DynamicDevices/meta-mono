@@ -5,7 +5,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.2.8 / 3 4.0 / 3.8.0 / 3.10.0
+This README pertains to meta-mono layer support for Mono 3.2.8 - 3.12.1
 
 For Mono release notes please see:
 
@@ -98,6 +98,12 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
 ## Current State - ARM vfp: Works
+
+#### 09/03/2015
+
+3.12.1
+
+* Maintainer has tested a Poky build on a Freescale i.MX6 platform with console helloworld and Matchbox UI helloworldform
 
 #### 19/09/2014
 
