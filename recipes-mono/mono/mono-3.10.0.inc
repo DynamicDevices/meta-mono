@@ -11,6 +11,9 @@ inherit autotools-brokensep
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 	   file://dllmap-config.in.diff \
+           file://remove-the-client-side-SSLv2-fallback.patch \
+           file://TLS-protocol-add-handshake-state-validation.patch \
+           file://remove-the-export-ciphers-andrelated-code-path.patch \
 	  "
 
 

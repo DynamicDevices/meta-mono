@@ -4,6 +4,12 @@ inherit pkgconfig
 
 DEPENDS =+ "mono-native libgdiplus"
 
+SRC_URI += " \
+           file://remove-the-client-side-SSLv2-fallback.patch \
+           file://TLS-protocol-add-handshake-state-validation.patch \
+           file://remove-the-export-ciphers-andrelated-code-path.patch \
+          "
+
 EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
 do_install_append() {
