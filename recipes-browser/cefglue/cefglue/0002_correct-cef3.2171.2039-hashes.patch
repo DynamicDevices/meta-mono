@@ -1,0 +1,44 @@
+#
+# For some reason checkout of Xilium.CefGlue tag v3.2171.3039 which is for CEF3 for Chromium 39.0.2171.95 has different 
+# hashes. This takes the hashes from CEF3 checkout #9be541e and patches them into CefGlue
+#
+
+diff -ur xilium-xilium.cefglue-4caf9b2bb5b5.org/CefGlue/Interop/version.g.cs xilium-xilium.cefglue-4caf9b2bb5b5/CefGlue/Interop/version.g.cs
+--- xilium-xilium.cefglue-4caf9b2bb5b5.org/CefGlue/Interop/version.g.cs	2015-03-30 18:44:08.000000000 +0100
++++ xilium-xilium.cefglue-4caf9b2bb5b5/CefGlue/Interop/version.g.cs	2015-04-27 18:40:43.185141426 +0100
+@@ -18,10 +18,10 @@
+         public const int CHROME_VERSION_BUILD = 2171;
+         public const int CHROME_VERSION_PATCH = 95;
+         
+-        public const string CEF_API_HASH_UNIVERSAL = "45820f043326b9ef42f6cb68dc257c0f91442428";
++        public const string CEF_API_HASH_UNIVERSAL = "57751848166c7d2851f40d99a86d6d0603ae342d";
+         
+-        public const string CEF_API_HASH_PLATFORM_WIN = "1051c471f09e2ad841a331540a5ccd583e4b4704";
+-        public const string CEF_API_HASH_PLATFORM_MACOSX = "c2d2321d0bd2f7cf0023a407e13df0c42c478d34";
+-        public const string CEF_API_HASH_PLATFORM_LINUX = "e3e43a5d2801816451413dbe70dc361a615867c7";
++        public const string CEF_API_HASH_PLATFORM_WIN = "3a6aacea0432f086401b05fe37e2ab494093c62b";
++        public const string CEF_API_HASH_PLATFORM_MACOSX = "2191cd040f29e875703dd3008d75c0499013e52f";
++        public const string CEF_API_HASH_PLATFORM_LINUX = "600d8c84b1cefb9f5b4cd9d8f8b8c2a8a09102a8";
+     }
+ }
+diff -ur xilium-xilium.cefglue-4caf9b2bb5b5.org/CefGlue.Interop.Gen/include/cef_version.h xilium-xilium.cefglue-4caf9b2bb5b5/CefGlue.Interop.Gen/include/cef_version.h
+--- xilium-xilium.cefglue-4caf9b2bb5b5.org/CefGlue.Interop.Gen/include/cef_version.h	2015-03-30 18:44:08.000000000 +0100
++++ xilium-xilium.cefglue-4caf9b2bb5b5/CefGlue.Interop.Gen/include/cef_version.h	2015-04-27 18:39:29.825142438 +0100
+@@ -61,13 +61,13 @@
+ // universal hash value will change if any platform is affected whereas the
+ // platform hash values will change only if that particular platform is
+ // affected.
+-#define CEF_API_HASH_UNIVERSAL "45820f043326b9ef42f6cb68dc257c0f91442428"
++#define CEF_API_HASH_UNIVERSAL "57751848166c7d2851f40d99a86d6d0603ae342d"
+ #if defined(OS_WIN)
+-#define CEF_API_HASH_PLATFORM "1051c471f09e2ad841a331540a5ccd583e4b4704"
++#define CEF_API_HASH_PLATFORM "3a6aacea0432f086401b05fe37e2ab494093c62b"
+ #elif defined(OS_MACOSX)
+-#define CEF_API_HASH_PLATFORM "c2d2321d0bd2f7cf0023a407e13df0c42c478d34"
++#define CEF_API_HASH_PLATFORM "2191cd040f29e875703dd3008d75c0499013e52f"
+ #elif defined(OS_LINUX)
+-#define CEF_API_HASH_PLATFORM "e3e43a5d2801816451413dbe70dc361a615867c7"
++#define CEF_API_HASH_PLATFORM "600d8c84b1cefb9f5b4cd9d8f8b8c2a8a09102a8"
+ #endif
+ 
+ ///
