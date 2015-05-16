@@ -12,6 +12,7 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
           "
 
 FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
+FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
 inherit autotools-brokensep
 inherit pkgconfig
