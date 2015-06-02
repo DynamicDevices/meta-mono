@@ -13,7 +13,7 @@ SRC_URI = "https://bitbucket.org/xilium/xilium.cefglue/get/v${PV}.tar.bz2 \
 	   file://0001_disable_wpf_gtk_projects.patch \
           "
 
-inherit autotools-brokensep
+inherit autotools
 
 do_configure() {
   cp -f ${WORKDIR}/build_4.0_client_profile.sh ${S}
