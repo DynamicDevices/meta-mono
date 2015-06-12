@@ -5,7 +5,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.4.0 - 4.0.1
+This README pertains to meta-mono layer support for Mono 3.4.0 - 4.0.2
 
 For Mono release notes please see:
 
@@ -13,6 +13,7 @@ For Mono release notes please see:
 * [Mono 3.8 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.8.0/)
 * [Mono 3.10 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.10.0/)
 * [Mono 3.12 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.0/)
+* [Mono 4.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.4.0, 3.8.0, 3.10.0, 3.12.0 are patched against this. 
                                 3.12.1+ includes the fix in the release archive.
