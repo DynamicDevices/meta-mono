@@ -68,3 +68,6 @@ FILES_${PN}-dbg 			+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/m
 FILES_${PN}-staticdev 			+= " ${libdir}/*.a"
 
 RDEPENDS_${PN} =+ "bash" 
+
+# Workaround for observed race in `make install`
+PARALLEL_MAKE=""
