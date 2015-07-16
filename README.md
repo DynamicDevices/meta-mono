@@ -77,6 +77,15 @@ For a walkthrough on building Mono for Raspberry Pi see:
 
 * [Getting Mono Running on a Raspberry Pi Using Yocto](http://www.codeproject.com/Articles/840489/Getting-Mono-Running-on-a-Raspberry-Pi-Using-Yocto)
 
+## Contributors
+
+* Alex J Lennon
+* Autif Khan
+* Chris Morgan
+* Enric Balletbo i Serra
+* Khem Raj
+* Richard Tollerton
+
 ## Maintainer(s) & Patch policy
 
 * [Alex J Lennon](mailto://ajlennon@dynamicdevices.co.uk)
