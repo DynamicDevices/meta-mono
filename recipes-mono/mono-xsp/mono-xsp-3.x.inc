@@ -3,11 +3,11 @@ SECTION = "devel/mono"
 DEPENDS = "mono"
 RDEPENDS_${PN} = "mono"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://COPYING;md5=84b17f6d63c3c28399d0f3786831d40c"
+LIC_FILES_CHKSUM = "file://COPYING;md5=9e1603e27acd337015fdfa7f7ff936c7"
 
 inherit autotools-brokensep
 
-SRC_URI = "http://download.mono-project.com/sources/xsp/xsp-${PV}.tar.bz2"
+SRC_URI = "https://github.com/mono/xsp/archive/${PV}.tar.gz"
 
 S = "${WORKDIR}/xsp-${PV}"
 
