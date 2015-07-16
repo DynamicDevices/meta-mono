@@ -9,6 +9,17 @@ inherit autotools-brokensep
 
 SRC_URI = "https://github.com/mono/xsp/archive/${PV}.tar.gz"
 
+do_configure () {
+    set +e
+    ${CACHED_CONFIGUREVARS} ${S}/autogen.sh --verbose ${CONFIGUREOPTS} ${EXTRA_OECONF}
+    if [ "$?" != "0" ]; then
+	echo "Configure failed. The contents of all config.log files follows to aid debugging"
+	find ${S} -name config.log -print -exec cat {} \;
+	bbfatal "oe_runconf failed"
+    fi
+    set -e
+}
+
 S = "${WORKDIR}/xsp-${PV}"
 
 PACKAGES += "${PN}-test \
