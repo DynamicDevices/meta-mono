@@ -6,20 +6,9 @@ LICENSE = "LGPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d8c5dc22eb6f25667cf8d96f603635e7"
 
 inherit autotools 
+inherit mono
 
 SRC_URI = "https://github.com/mono/mono-basic/archive/${PV}.tar.gz"
-
-FILES_${PN} += " \
-  ${libdir}/mono/*/* \
-  ${libdir}/mono/gac/*/*/*.dll \
-"
-
-FILES_${PN}-dbg += " \
-  ${libdir}/mono/*/*.mdb \
-  ${libdir}/mono/*/*.Pdb \
-  ${libdir}/mono/*/*.Mdb \
-  ${libdir}/mono/*/*/*/*.mdb \
-"
 
 do_compile_prepend() {
   sed -e "s|\$(prefix)|${STAGING_DIR_NATIVE}/usr|" -i build/profiles/net_4_0.make
