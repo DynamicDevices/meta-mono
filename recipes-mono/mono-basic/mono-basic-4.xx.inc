@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=d8c5dc22eb6f25667cf8d96f603635e7"
 
 inherit autotools 
 
-SRC_URI = "http://download.mono-project.com/sources/mono-basic/mono-basic-${PV}.tar.bz2"
+SRC_URI = "https://github.com/mono/mono-basic/archive/${PV}.tar.gz"
 
 FILES_${PN} += " \
   ${libdir}/mono/*/* \
@@ -22,8 +22,8 @@ FILES_${PN}-dbg += " \
 "
 
 do_compile_prepend() {
-  sed -e "s|\$(prefix)|${STAGING_DIR_NATIVE}/usr|" -i build/profiles/net_2_0.make
   sed -e "s|\$(prefix)|${STAGING_DIR_NATIVE}/usr|" -i build/profiles/net_4_0.make
+  sed -e "s|\$(prefix)|${STAGING_DIR_NATIVE}/usr|" -i build/profiles/net_4_5.make
 }
 
 do_install_append() {
