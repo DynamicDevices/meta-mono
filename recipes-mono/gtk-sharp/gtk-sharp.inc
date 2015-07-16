@@ -2,11 +2,11 @@ SUMMARY = "GUI toolkit for Mono"
 DESCRIPTION = "GTK+ bindings for Mono"
 SECTION = "devel/mono"
 BUGTRACKER = "http://bugzilla.xamarin.com"
-RDEPENDS_${PN} = "mono"
 LICENSE = "LGPL-2.1"
 RDEPENDS_${PN}-dev += "perl"
 
 inherit autotools
+inherit mono
 
 # For some reason the URL template changes from version to version,
 # therefore use some variables for the directory and extension
@@ -21,22 +21,7 @@ def gtk_sharp_download_version(d):
 
 FILESPATH =. "${FILE_DIRNAME}/gtk-sharp-${PV}:"
 
-FILES_${PN} = "\
-  ${bindir}/* \
-  ${libdir}/* \
+FILES_${PN}-dev += "\
+  ${libdir}/${PN}*/* \
+  ${datadir}/* \
 "
-
-FILES_${PN}-dbg = "\
-    ${libdir}/.debug \
-    ${datadir}/* \
-    /usr/src/* \
-"
-
-FILES_${PN}-doc = "\
-    ${libdir}/monodoc/* \
-"
-
-FILES_${PN}-dev = "\
-    ${libdir}/pkgconfig \
-"
-
