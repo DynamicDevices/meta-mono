@@ -5,7 +5,7 @@ DEPENDS = "mono"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "files://LICENSE;md5=512efb9375da0bd2fee9e2b9352c08af"
 
-inherit autotools
+inherit autotools-brokensep
 
 # For some reason the URL template changes from version to version,
 # therefore use some variables for the directory and extension
