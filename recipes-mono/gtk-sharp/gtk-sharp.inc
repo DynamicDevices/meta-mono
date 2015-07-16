@@ -4,6 +4,7 @@ SECTION = "devel/mono"
 BUGTRACKER = "http://bugzilla.xamarin.com"
 RDEPENDS_${PN} = "mono"
 LICENSE = "LGPL-2.1"
+RDEPENDS_${PN}-dev += "perl"
 
 inherit autotools
 
