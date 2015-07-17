@@ -30,3 +30,5 @@ FILES_${PN}-dev += "\
 FILES_${PN}-doc += "\
   ${libdir}/monodoc/* \
 "
+
+export MONO_CFG_DIR="${STAGING_ETCDIR_NATIVE}"
