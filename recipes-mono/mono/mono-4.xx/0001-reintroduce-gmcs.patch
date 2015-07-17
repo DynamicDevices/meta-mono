@@ -1,0 +1,73 @@
+diff -ur mono-4.0.2.org/mono-core.spec.in mono-4.0.2/mono-core.spec.in
+--- mono-4.0.2.org/mono-core.spec.in	2015-05-08 16:22:57.000000000 +0100
++++ mono-4.0.2/mono-core.spec.in	2015-07-17 18:57:46.416364781 +0100
+@@ -179,6 +179,7 @@
+ %_bindir/dmcs
+ %_bindir/gacutil
+ %_bindir/gacutil2
++%_bindir/gmcs
+ %_bindir/ikdasm
+ %_bindir/mcs
+ %_bindir/mono
+diff -ur mono-4.0.2.org/runtime/Makefile.am mono-4.0.2/runtime/Makefile.am
+--- mono-4.0.2.org/runtime/Makefile.am	2015-05-08 16:22:57.000000000 +0100
++++ mono-4.0.2/runtime/Makefile.am	2015-07-17 18:59:32.200366259 +0100
+@@ -87,7 +87,7 @@
+ 
+ endif BUILD_MCS
+ 
+-TEST_SUPPORT_FILES = $(tmpinst)/bin/mono $(tmpinst)/bin/ilasm $(tmpinst)/bin/mcs $(tmpinst)/bin/dmcs $(tmpinst)/bin/al2 $(tmpinst)/bin/al
++TEST_SUPPORT_FILES = $(tmpinst)/bin/mono $(tmpinst)/bin/ilasm $(tmpinst)/bin/mcs $(tmpinst)/bin/gmcs $(tmpinst)/bin/dmcs $(tmpinst)/bin/al2 $(tmpinst)/bin/al
+ 
+ mcs-do-test-profiles:
+ 	cd $(mcs_topdir) && $(MAKE) NO_DIR_CHECK=1 PROFILES='$(test_profiles)' test-profiles
+@@ -167,6 +167,12 @@
+ 	echo 'exec "'"$$r/$(tmpinst)/bin/mono"'" "'"$$m/class/lib/build/mcs.exe"'" "$$@"' >> $@ ; \
+ 	chmod +x $@
+ 
++$(tmpinst)/bin/gmcs: $(tmpinst)/bin/mono Makefile
++	echo '#! /bin/sh' > $@ ; \
++	r=`pwd`; m=`cd $(mcs_topdir) && pwd`; \
++	echo 'exec "'"$$r/$(tmpinst)/bin/mono"'" "'"$$m/class/lib/build/mcs.exe -sdk:2"'" "$$@"' >> $@ ; \
++	chmod +x $@
++
+ $(tmpinst)/bin/dmcs: $(tmpinst)/bin/mono Makefile
+ 	echo '#! /bin/sh' > $@ ; \
+ 	r=`pwd`; m=`cd $(mcs_topdir) && pwd`; \
+diff -ur mono-4.0.2.org/scripts/Makefile.am mono-4.0.2/scripts/Makefile.am
+--- mono-4.0.2.org/scripts/Makefile.am	2015-05-08 16:22:57.000000000 +0100
++++ mono-4.0.2/scripts/Makefile.am	2015-07-17 19:00:37.828367175 +0100
+@@ -36,6 +36,7 @@
+ 	mono-test-install	\
+ 	peverify			\
+ 	mcs					\
++	gmcs					\
+ 	mono-heapviz		\
+ 	$(scripts_mono_configuration_crypto)
+ 
+@@ -153,6 +154,7 @@
+ 	xbuild.in			\
+ 	update_submodules		\
+ 	mcs.in				\
++	gmcs.in				\
+ 	dmcs.in				\
+ 	mono-test-install	\
+ 	mono-heapviz		\
+@@ -201,6 +203,10 @@
+ 	$(REWRITE_COMMON) $(srcdir)/mcs.in > $@.tmp
+ 	mv -f $@.tmp $@
+ 
++gmcs: gmcs.in Makefile
++	$(REWRITE_COMMON) $(srcdir)/gmcs.in > $@.tmp
++	mv -f $@.tmp $@
++
+ dmcs: dmcs.in Makefile
+ 	$(REWRITE_COMMON) $(srcdir)/dmcs.in > $@.tmp
+ 	mv -f $@.tmp $@
+diff -urN mono-4.0.2.org/scripts/gmcs.in mono-4.0.2/scripts/gmcs.in
+--- mono-4.0.2.org/scripts/gmcs.in      1970-01-01 01:00:00.000000000 +0100
++++ mono-4.0.2/scripts/gmcs.in  2015-07-17 19:22:54.468385847 +0100
+@@ -0,0 +1,2 @@
++#!/bin/sh
++exec @bindir@/mono $MONO_OPTIONS @mono_instdir@/4.5/mcs.exe "$@"
+
