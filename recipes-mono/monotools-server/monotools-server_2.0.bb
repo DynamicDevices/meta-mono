@@ -21,6 +21,7 @@ SRC_URI += " \
 	file://fix-build-dir.patch \
 	file://fix-pkglib_SCRIPTS.patch \
  	file://fix-linq-reference.patch \
+	file://0001-monotools-webserver-use-backlog.patch \
 	"
 
 DEPENDS = "mono-xsp gtk-sharp"

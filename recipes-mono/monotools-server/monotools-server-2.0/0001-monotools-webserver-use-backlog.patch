@@ -1,0 +1,21 @@
+diff -ur monotools-server.org/MonoTools.WebServer/Main.cs monotools-server/MonoTools.WebServer/Main.cs
+--- monotools-server.org/MonoTools.WebServer/Main.cs	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/MonoTools.WebServer/Main.cs	2015-07-17 17:05:29.144270669 +0100
+@@ -8,6 +8,8 @@
+ {
+ 	class MainClass
+ 	{
++		private const int backlog = 5;
++
+ 		public static void Main (string[] args)
+ 		{
+ 			XmlDocument doc = new XmlDocument ();
+@@ -27,7 +29,7 @@
+ 			XspResult result;
+ 
+ 			try {
+-				if (server.Start (false)) {
++				if (server.Start (false,backlog)) {
+ 					result = new XspResult (source.EndPoint);
+ 				} else {
+ 					result = new XspResult ("Cannot start xsp.");
