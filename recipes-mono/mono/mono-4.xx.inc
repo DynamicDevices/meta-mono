@@ -11,11 +11,22 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
            file://dllmap-config.in.diff \
           "
 
+python __anonymous () {
+    versionparts = d.getVar('PV',d,1).split('.')
+    d.setVar('MONO_MAJOR', versionparts[0])
+    d.setVar('MONO_MINOR', versionparts[1])
+    d.setVar('MONO_REVISION', versionparts[2])
+}
+
+S = "${WORKDIR}/mono-${MONO_MAJOR}.${MONO_MINOR}.${MONO_REVISION}"
+
 FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
 inherit autotools-brokensep
 inherit pkgconfig
+
+EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure_prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
