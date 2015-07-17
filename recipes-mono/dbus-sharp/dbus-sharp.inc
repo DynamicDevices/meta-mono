@@ -4,7 +4,7 @@ SECTION = "devel/mono"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "files://COPYING;md5=09d60852216ea29fdba9ea146513336c"
 
-inherit autotools
+inherit autotools-brokensep
 inherit mono
 
 def dbus_sharp_download_version(d):
