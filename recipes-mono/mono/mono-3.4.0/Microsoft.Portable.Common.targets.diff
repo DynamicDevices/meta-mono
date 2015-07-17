@@ -1,9 +1,0 @@
-diff -Nru mono-3.4.0.org/mcs/tools/xbuild/targets/Microsoft.Portable.Common.targets mono-3.4.0/mcs/tools/xbuild/targets/Microsoft.Portable.Common.targets
---- mono-3.4.0.org/mcs/tools/xbuild/targets/Microsoft.Portable.Common.targets	1970-01-01 01:00:00.000000000 +0100
-+++ mono-3.4.0/mcs/tools/xbuild/targets/Microsoft.Portable.Common.targets	2014-04-10 10:18:42.621652964 +0100
-@@ -0,0 +1,5 @@
-+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-+<Import Project="..\Microsoft.Portable.Core.props" />
-+<Import Project="..\Microsoft.Portable.Core.targets" />
-+</Project>
-+
