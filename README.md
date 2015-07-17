@@ -5,18 +5,17 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.4.0 - 4.0.2
+This README pertains to meta-mono layer support for Mono 3.12.1 - 4.0.2
 
 For Mono release notes please see:
 
-* [Mono 3.4 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.4.0/)
-* [Mono 3.8 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.8.0/)
-* [Mono 3.10 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.10.0/)
-* [Mono 3.12 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.0/)
+* [Mono 3.12.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.0/)
+* [Mono 3.12.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.1/)
 * [Mono 4.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.0/)
+* [Mono 4.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.1/)
+* [Mono 4.0.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.2/)
 
-NOTE: Mono TLS vulnerabilities. 3.4.0, 3.8.0, 3.10.0, 3.12.0 are patched against this. 
-                                3.12.1+ includes the fix in the release archive.
+NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
 http://www.mono-project.com/news/2015/03/07/mono-tls-vulnerability/
 
@@ -30,7 +29,7 @@ https://bugzilla.xamarin.com/show_bug.cgi?id=20239
 
 For now the recommendation is to use softfp only when using Mono.
 
-There may be a solution to this issue in Mono 3.10.0 / 3.12.0 but this is as yet untested.
+There may be a solution to this issue in Mono 3.10.0 / 3.12.0+ but this is as yet untested.
 Feedback on testing with armhf would be appreciated and incorporated into this README.
 
 ## Dependencies
@@ -124,12 +123,6 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 3.12.1
 
 * Maintainer has tested a Poky build on a Freescale i.MX6 platform with console helloworld and Matchbox UI helloworldform
-
-#### 19/09/2014
-
-3.8.0
-
-* Maintainer has tested a Poky build on a Freescale i.MX6 platform with a relatively complex commercial application.
 
 #### 25/02/2014
 
