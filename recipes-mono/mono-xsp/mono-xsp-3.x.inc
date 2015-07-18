@@ -33,6 +33,7 @@ FILES_${PN}-doc += "${libdir}/monodoc/*"
 
 # AJL - For now we are going to parcel up the different XSP hosting (mod_mono, fastcgi, xsp) together. More granular packages in future
 FILES_${PN} = "${bindir}/* \
+        ${libdir}/* \
 	${libdir}/mono/* \
 	${libdir}/xsp/2.0/* \
 	${libdir}/xsp/4.0/* \
