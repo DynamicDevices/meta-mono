@@ -22,6 +22,7 @@ SRC_URI += " \
 	file://fix-pkglib_SCRIPTS.patch \
  	file://fix-linq-reference.patch \
 	file://0001-monotools-webserver-use-backlog.patch \
+	file://0002-configure-use-mcs.patch \
 	"
 
 DEPENDS = "mono-xsp gtk-sharp"
@@ -32,5 +33,5 @@ inherit autotools-brokensep gettext pkgconfig
 
 do_configure_prepend() {
     # Doesn't seem to be picked up by pkgconfig so override it
-    export XSP_2_LIBS="${STAGING_LIBDIR}/mono/2.0/Mono.WebServer2.dll"
+    export XSP_2_LIBS="${STAGING_LIBDIR}/mono/4.5/Mono.WebServer2.dll"
 }

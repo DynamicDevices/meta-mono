@@ -1,0 +1,389 @@
+monotools-server: use mcs instead of gmcs for build
+
+as gmcs not available in recent mono releases.
+
+Upstream-status: Pending
+
+Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+
+diff -ur monotools-server.org/Makefile.in monotools-server/Makefile.in
+--- monotools-server.org/Makefile.in	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/Makefile.in	2015-07-20 12:55:48.827682131 +0100
+@@ -81,7 +81,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+diff -ur monotools-server.org/Mono.Packager/Mono.Packager/Makefile.am monotools-server/Mono.Packager/Mono.Packager/Makefile.am
+--- monotools-server.org/Mono.Packager/Mono.Packager/Makefile.am	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/Mono.Packager/Mono.Packager/Makefile.am	2015-07-20 12:51:45.167678728 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../bin/Debug/Mono.Packager.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -25,7 +25,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
+ ASSEMBLY = ../bin/Release/Mono.Packager.dll
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/Mono.Packager/Mono.Packager/Makefile.in monotools-server/Mono.Packager/Mono.Packager/Makefile.in
+--- monotools-server.org/Mono.Packager/Mono.Packager/Makefile.in	2015-07-20 12:56:33.803682759 +0100
++++ monotools-server/Mono.Packager/Mono.Packager/Makefile.in	2015-07-20 12:52:18.151679188 +0100
+@@ -80,7 +80,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -155,8 +155,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize-
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = ../bin/Debug/Mono.Packager.dll
+diff -ur monotools-server.org/Mono.Ssdp/Makefile.am monotools-server/Mono.Ssdp/Makefile.am
+--- monotools-server.org/Mono.Ssdp/Makefile.am	2015-07-20 12:56:33.711682758 +0100
++++ monotools-server/Mono.Ssdp/Makefile.am	2015-07-20 12:52:30.031679354 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG" "-keyfile:mono-ssdp.snk"
+ ASSEMBLY = bin/Debug/Mono.Ssdp.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -18,7 +18,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE" "-keyfile:mono-ssdp.snk"
+ ASSEMBLY = bin/Release/Mono.Ssdp.dll
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/Mono.Ssdp/Makefile.in monotools-server/Mono.Ssdp/Makefile.in
+--- monotools-server.org/Mono.Ssdp/Makefile.in	2015-07-20 12:56:33.807682760 +0100
++++ monotools-server/Mono.Ssdp/Makefile.in	2015-07-20 12:52:43.415679541 +0100
+@@ -80,7 +80,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -155,8 +155,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG" "-keyfile:mono-ssdp.snk"
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE" "-keyfile:mono-ssdp.snk"
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/Mono.Ssdp.dll
+diff -ur monotools-server.org/MonoTools.Client/Makefile.am monotools-server/MonoTools.Client/Makefile.am
+--- monotools-server.org/MonoTools.Client/Makefile.am	2015-07-20 12:56:33.715682758 +0100
++++ monotools-server/MonoTools.Client/Makefile.am	2015-07-20 12:52:55.939679716 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:TRACE;DEBUG;NET_2_0" "-keyfile:Key.snk"
+ ASSEMBLY = bin/Debug/MonoTools.Client.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -19,7 +19,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:TRACE;NET_2_0" "-keyfile:Key.snk"
+ ASSEMBLY = bin/Release/MonoTools.Client.dll
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/MonoTools.Client/Makefile.in monotools-server/MonoTools.Client/Makefile.in
+--- monotools-server.org/MonoTools.Client/Makefile.in	2015-07-20 12:56:33.807682760 +0100
++++ monotools-server/MonoTools.Client/Makefile.in	2015-07-20 12:53:08.823679896 +0100
+@@ -81,7 +81,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -156,8 +156,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:TRACE;DEBUG;NET_2_0" "-keyfile:Key.snk"
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:TRACE;NET_2_0" "-keyfile:Key.snk"
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = bin/Debug/MonoTools.Client.dll
+diff -ur monotools-server.org/MonoTools.GuiServer/Makefile.am monotools-server/MonoTools.GuiServer/Makefile.am
+--- monotools-server.org/MonoTools.GuiServer/Makefile.am	2015-07-20 12:56:33.715682758 +0100
++++ monotools-server/MonoTools.GuiServer/Makefile.am	2015-07-20 12:53:26.363680141 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ ASSEMBLY = ../build/MonoTools.GuiServer.exe
+ ASSEMBLY_MDB = 
+@@ -39,7 +39,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ ASSEMBLY = ../build/MonoTools.GuiServer.exe
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/MonoTools.GuiServer/Makefile.in monotools-server/MonoTools.GuiServer/Makefile.in
+--- monotools-server.org/MonoTools.GuiServer/Makefile.in	2015-07-20 12:56:33.807682760 +0100
++++ monotools-server/MonoTools.GuiServer/Makefile.in	2015-07-20 12:53:37.107680291 +0100
+@@ -81,7 +81,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -156,8 +156,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = ../build/MonoTools.GuiServer.exe
+diff -ur monotools-server.org/MonoTools.Server/Makefile.am monotools-server/MonoTools.Server/Makefile.am
+--- monotools-server.org/MonoTools.Server/Makefile.am	2015-07-20 12:56:33.715682758 +0100
++++ monotools-server/MonoTools.Server/Makefile.am	2015-07-20 12:53:58.075680584 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../build/MonoTools.Server.exe
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -43,7 +43,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ ASSEMBLY = ../build/MonoTools.Server.exe
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/MonoTools.Server/Makefile.in monotools-server/MonoTools.Server/Makefile.in
+--- monotools-server.org/MonoTools.Server/Makefile.in	2015-07-20 12:56:33.807682760 +0100
++++ monotools-server/MonoTools.Server/Makefile.in	2015-07-20 12:54:06.487680702 +0100
+@@ -80,7 +80,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -155,8 +155,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize- -debug "-define:DEBUG"
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -unsafe -warn:4 -optimize-
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = ../build/MonoTools.Server.exe
+diff -ur monotools-server.org/MonoTools.Server/Options.cs monotools-server/MonoTools.Server/Options.cs
+--- monotools-server.org/MonoTools.Server/Options.cs	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/MonoTools.Server/Options.cs	2015-07-20 12:54:22.707680928 +0100
+@@ -27,8 +27,8 @@
+ //
+ 
+ // Compile With:
+-//   gmcs -debug+ -r:System.Core Options.cs -o:NDesk.Options.dll
+-//   gmcs -debug+ -d:LINQ -r:System.Core Options.cs -o:NDesk.Options.dll
++//   mcs -debug+ -r:System.Core Options.cs -o:NDesk.Options.dll
++//   mcs -debug+ -d:LINQ -r:System.Core Options.cs -o:NDesk.Options.dll
+ //
+ // The LINQ version just changes the implementation of
+ // OptionSet.Parse(IEnumerable<string>), and confers no semantic changes.
+diff -ur monotools-server.org/MonoTools.WebServer/Makefile.am monotools-server/MonoTools.WebServer/Makefile.am
+--- monotools-server.org/MonoTools.WebServer/Makefile.am	2015-07-20 12:56:33.715682758 +0100
++++ monotools-server/MonoTools.WebServer/Makefile.am	2015-07-20 12:54:37.935681141 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../build/MonoTools.WebServer.exe
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -23,7 +23,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
+ ASSEMBLY = bin/Release/MonoTools.WebServer.exe
+ ASSEMBLY_MDB = 
+diff -ur monotools-server.org/MonoTools.WebServer/Makefile.in monotools-server/MonoTools.WebServer/Makefile.in
+--- monotools-server.org/MonoTools.WebServer/Makefile.in	2015-07-20 12:56:33.807682760 +0100
++++ monotools-server/MonoTools.WebServer/Makefile.in	2015-07-20 12:54:52.787681348 +0100
+@@ -81,7 +81,7 @@
+ ECHO_T = @ECHO_T@
+ GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
+ GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+-GMCS = @GMCS@
++MCS = @MCS@
+ GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
+ GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
+ INSTALL = @INSTALL@
+@@ -156,8 +156,8 @@
+ 	$(DATA_FILES) $(build_culture_res_files)
+ 
+ # Warning: This is an automatically generated file, do not edit!
+-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
++@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
++@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+ @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -optimize-
+ @ENABLE_DEBUG_TRUE@ASSEMBLY = ../build/MonoTools.WebServer.exe
+diff -ur monotools-server.org/configure monotools-server/configure
+--- monotools-server.org/configure	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/configure	2015-07-20 12:55:28.527681848 +0100
+@@ -610,7 +610,7 @@
+ ENABLE_RELEASE_TRUE
+ ENABLE_DEBUG_FALSE
+ ENABLE_DEBUG_TRUE
+-GMCS
++MCS
+ expanded_datadir
+ expanded_bindir
+ expanded_libdir
+@@ -2487,16 +2487,16 @@
+ test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
+ 
+ 
+-# Extract the first word of "gmcs", so it can be a program name with args.
+-set dummy gmcs; ac_word=$2
++# Extract the first word of "mcs", so it can be a program name with args.
++set dummy mcs; ac_word=$2
+ { $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+ $as_echo_n "checking for $ac_word... " >&6; }
+-if test "${ac_cv_path_GMCS+set}" = set; then
++if test "${ac_cv_path_MCS+set}" = set; then
+   $as_echo_n "(cached) " >&6
+ else
+-  case $GMCS in
++  case $MCS in
+   [\\/]* | ?:[\\/]*)
+-  ac_cv_path_GMCS="$GMCS" # Let the user override the test with a path.
++  ac_cv_path_MCS="$MCS" # Let the user override the test with a path.
+   ;;
+   *)
+   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+@@ -2506,7 +2506,7 @@
+   test -z "$as_dir" && as_dir=.
+   for ac_exec_ext in '' $ac_executable_extensions; do
+   if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+-    ac_cv_path_GMCS="$as_dir/$ac_word$ac_exec_ext"
++    ac_cv_path_MCS="$as_dir/$ac_word$ac_exec_ext"
+     $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+     break 2
+   fi
+@@ -2514,23 +2514,23 @@
+ done
+ IFS=$as_save_IFS
+ 
+-  test -z "$ac_cv_path_GMCS" && ac_cv_path_GMCS="no"
++  test -z "$ac_cv_path_MCS" && ac_cv_path_MCS="no"
+   ;;
+ esac
+ fi
+-GMCS=$ac_cv_path_GMCS
+-if test -n "$GMCS"; then
+-  { $as_echo "$as_me:$LINENO: result: $GMCS" >&5
+-$as_echo "$GMCS" >&6; }
++MCS=$ac_cv_path_MCS
++if test -n "$MCS"; then
++  { $as_echo "$as_me:$LINENO: result: $MCS" >&5
++$as_echo "$MCS" >&6; }
+ else
+   { $as_echo "$as_me:$LINENO: result: no" >&5
+ $as_echo "no" >&6; }
+ fi
+ 
+ 
+-if test "x$GMCS" = "xno"; then
+-        { { $as_echo "$as_me:$LINENO: error: gmcs Not found" >&5
+-$as_echo "$as_me: error: gmcs Not found" >&2;}
++if test "x$MCS" = "xno"; then
++        { { $as_echo "$as_me:$LINENO: error: mcs Not found" >&5
++$as_echo "$as_me: error: mcs Not found" >&2;}
+    { (exit 1); exit 1; }; }
+ fi
+ 
+diff -ur monotools-server.org/configure.ac monotools-server/configure.ac
+--- monotools-server.org/configure.ac	2013-09-21 10:45:53.000000000 +0100
++++ monotools-server/configure.ac	2015-07-20 12:55:37.475681973 +0100
+@@ -17,9 +17,9 @@
+ 
+ AC_PROG_INSTALL
+ 
+-AC_PATH_PROG(GMCS, gmcs, no)
+-if test "x$GMCS" = "xno"; then
+-        AC_MSG_ERROR([gmcs Not found])
++AC_PATH_PROG(MCS, mcs, no)
++if test "x$MCS" = "xno"; then
++        AC_MSG_ERROR([mcs Not found])
+ fi
+ 
+ 
