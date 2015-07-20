@@ -1,0 +1,309 @@
+mono-upnp: use mcs instead of gmcs
+
+as gmcs not present in recent mono releases
+
+Upstream-status: Submitted [https://github.com/mono/mono-upnp/pull/7]
+
+diff -ur git.org/configure.ac git/configure.ac
+--- git.org/configure.ac	2015-07-20 16:03:01.899839044 +0100
++++ git/configure.ac	2015-07-20 15:53:30.311831060 +0100
+@@ -19,9 +19,9 @@
+ 
+ AC_PROG_INSTALL
+ 
+-AC_PATH_PROG(GMCS, gmcs, no)
+-if test "x$GMCS" = "xno"; then
+-        AC_MSG_ERROR([gmcs Not found])
++AC_PATH_PROG(MCS, mcs, no)
++if test "x$MCS" = "xno"; then
++        AC_MSG_ERROR([mcs Not found])
+ fi
+ 
+ 
+diff -ur git.org/src/Mono.Ssdp/Mono.Ssdp/Mono.Ssdp.make git/src/Mono.Ssdp/Mono.Ssdp/Mono.Ssdp.make
+--- git.org/src/Mono.Ssdp/Mono.Ssdp/Mono.Ssdp.make	2015-07-20 16:03:01.643839040 +0100
++++ git/src/Mono.Ssdp/Mono.Ssdp/Mono.Ssdp.make	2015-07-20 16:00:33.111836966 +0100
+@@ -3,7 +3,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG" "-keyfile:$(srcdir)/mono-ssdp.snk"
+ ASSEMBLY = ../../../bin/Mono.Ssdp.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -17,7 +17,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-keyfile:$(srcdir)/mono-ssdp.snk"
+ ASSEMBLY = ../../../bin/Mono.Ssdp.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp/Mono.Upnp/Makefile.am git/src/Mono.Upnp/Mono.Upnp/Makefile.am
+--- git.org/src/Mono.Upnp/Mono.Upnp/Makefile.am	2015-07-20 16:03:01.655839041 +0100
++++ git/src/Mono.Upnp/Mono.Upnp/Makefile.am	2015-07-20 15:59:35.871836166 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug -define:DEBUG "-define:DEBUG,TRACE" "-keyfile:$(srcdir)/mono-upnp.snk"
+ ASSEMBLY = ../../../bin/Mono.Upnp.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -21,7 +21,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-keyfile:$(srcdir)/mono-upnp.snk"
+ ASSEMBLY = ../../../bin/Mono.Upnp.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp/Mono.Upnp.GtkClient/Makefile.am git/src/Mono.Upnp/Mono.Upnp.GtkClient/Makefile.am
+--- git.org/src/Mono.Upnp/Mono.Upnp.GtkClient/Makefile.am	2015-07-20 16:03:01.651839041 +0100
++++ git/src/Mono.Upnp/Mono.Upnp.GtkClient/Makefile.am	2015-07-20 16:00:10.099836644 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../../bin/Mono.Upnp.GtkClient.exe
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -25,7 +25,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = ../../../bin/Mono.Upnp.GtkClient.exe
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MSMediaReceiverRegistrar1/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MSMediaReceiverRegistrar1/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MSMediaReceiverRegistrar1/Makefile.am	2015-07-20 16:03:01.643839040 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MSMediaReceiverRegistrar1/Makefile.am	2015-07-20 15:57:59.783834824 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MSMediaReceiverRegistrar1.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -25,7 +25,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = MSMediaServerRegistrar1.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1/Makefile.am	2015-07-20 16:03:01.647839040 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1/Makefile.am	2015-07-20 15:58:18.259835082 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug -define:DEBUG "-define:DEBUG,TRACE" "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1.snk"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -25,7 +25,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1.snk"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am	2015-07-20 16:03:01.899839044 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem/Makefile.am	2015-07-20 15:59:15.927835887 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG" "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1-filesystem.snk"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -29,7 +29,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1-filesystem.snk"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Makefile.am	2015-07-20 16:03:01.643839040 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Makefile.am	2015-07-20 15:57:06.727834083 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer.exe
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -39,7 +39,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer.exe
+ ASSEMBLY_MDB = 
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Options.cs git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Options.cs
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Options.cs	2015-07-20 16:03:01.643839040 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Mono.Upnp.Dcp.MediaServer1.FileSystem.ConsoleServer/Options.cs	2015-07-20 15:57:35.123834479 +0100
+@@ -27,8 +27,8 @@
+ //
+ 
+ // Compile With:
+-//   gmcs -debug+ -r:System.Core Options.cs -o:NDesk.Options.dll
+-//   gmcs -debug+ -d:LINQ -r:System.Core Options.cs -o:NDesk.Options.dll
++//   mcs -debug+ -r:System.Core Options.cs -o:NDesk.Options.dll
++//   mcs -debug+ -d:LINQ -r:System.Core Options.cs -o:NDesk.Options.dll
+ //
+ // The LINQ version just changes the implementation of
+ // OptionSet.Parse(IEnumerable<string>), and confers no semantic changes.
+diff -ur git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.GtkClient/Makefile.am git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.GtkClient/Makefile.am
+--- git.org/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.GtkClient/Makefile.am	2015-07-20 16:03:01.647839040 +0100
++++ git/src/Mono.Upnp.Dcp/Mono.Upnp.Dcp.MediaServer1/Mono.Upnp.Dcp.MediaServer1.GtkClient/Makefile.am	2015-07-20 15:58:53.499835574 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.GtkClient.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -33,7 +33,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
+ ASSEMBLY = ../../../../bin/Mono.Upnp.Dcp.MediaServer1.GtkClient.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/tests/Mono.Ssdp.Tests/Makefile.am git/tests/Mono.Ssdp.Tests/Makefile.am
+--- git.org/tests/Mono.Ssdp.Tests/Makefile.am	2015-07-20 16:03:01.659839041 +0100
++++ git/tests/Mono.Ssdp.Tests/Makefile.am	2015-07-20 15:55:44.635832936 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../bin/Mono.Ssdp.Tests.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -22,7 +22,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = ../../bin/Mono.Ssdp.Tests.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/tests/Mono.Ssdp.Tests/Mono.Ssdp.Tests.make git/tests/Mono.Ssdp.Tests/Mono.Ssdp.Tests.make
+--- git.org/tests/Mono.Ssdp.Tests/Mono.Ssdp.Tests.make	2015-07-20 16:03:01.659839041 +0100
++++ git/tests/Mono.Ssdp.Tests/Mono.Ssdp.Tests.make	2015-07-20 15:55:58.115833124 +0100
+@@ -3,7 +3,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = Mono.Ssdp.Tests.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -21,7 +21,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = Mono.Ssdp.Tests.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/tests/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests/Makefile.am git/tests/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests/Makefile.am
+--- git.org/tests/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests/Makefile.am	2015-07-20 16:03:01.659839041 +0100
++++ git/tests/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests/Makefile.am	2015-07-20 15:54:00.895831487 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -33,7 +33,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = ../../bin/Mono.Upnp.Dcp.MediaServer1.FileSystem.Tests.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/tests/Mono.Upnp.Dcp.MediaServer1.Tests/Makefile.am git/tests/Mono.Upnp.Dcp.MediaServer1.Tests/Makefile.am
+--- git.org/tests/Mono.Upnp.Dcp.MediaServer1.Tests/Makefile.am	2015-07-20 16:03:01.659839041 +0100
++++ git/tests/Mono.Upnp.Dcp.MediaServer1.Tests/Makefile.am	2015-07-20 15:54:27.879831864 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG" "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1-tests.snk"
+ ASSEMBLY = ../../bin/Mono.Upnp.Dcp.MediaServer1.Tests.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -29,7 +29,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- "-keyfile:$(srcdir)/mono-upnp-dcp-mediaserver1-tests.snk"
+ ASSEMBLY = ../../bin/Mono.Upnp.Dcp.MediaServer1.Tests.dll
+ ASSEMBLY_MDB = 
+diff -ur git.org/tests/Mono.Upnp.Tests/Makefile.am git/tests/Mono.Upnp.Tests/Makefile.am
+--- git.org/tests/Mono.Upnp.Tests/Makefile.am	2015-07-20 16:03:01.659839041 +0100
++++ git/tests/Mono.Upnp.Tests/Makefile.am	2015-07-20 15:56:33.203833614 +0100
+@@ -4,7 +4,7 @@
+ # Warning: This is an automatically generated file, do not edit!
+ 
+ if ENABLE_DEBUG
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ ASSEMBLY = ../../bin/Mono.Upnp.Tests.dll
+ ASSEMBLY_MDB = $(ASSEMBLY).mdb
+@@ -26,7 +26,7 @@
+ endif
+ 
+ if ENABLE_RELEASE
+-ASSEMBLY_COMPILER_COMMAND = gmcs
++ASSEMBLY_COMPILER_COMMAND = mcs
+ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ ASSEMBLY = ../../bin/Mono.Upnp.Tests.dll
+ ASSEMBLY_MDB = 
