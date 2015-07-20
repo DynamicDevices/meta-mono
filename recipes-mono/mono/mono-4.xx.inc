@@ -18,14 +18,11 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 #	   file://0001-reintroduce-gmcs.patch \
 #
 
-python __anonymous () {
-    versionparts = d.getVar('PV',d,1).split('.')
-    d.setVar('MONO_MAJOR', versionparts[0])
-    d.setVar('MONO_MINOR', versionparts[1])
-    d.setVar('MONO_REVISION', versionparts[2])
-}
+def mono_workspace_version (d):
+    pvsplit = d.getVar('PV',d,1).split('.')
+    return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
 
-S = "${WORKDIR}/mono-${MONO_MAJOR}.${MONO_MINOR}.${MONO_REVISION}"
+S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
