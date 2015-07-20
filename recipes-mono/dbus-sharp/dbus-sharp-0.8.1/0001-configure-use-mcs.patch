@@ -1,0 +1,45 @@
+build: Use mcs instead of gmcs as gmcs not available in latest Mono
+
+Submitted https://github.com/mono/dbus-sharp/pull/48
+
+Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+
+diff -ur dbus-sharp-0.8.1.org/configure.ac dbus-sharp-0.8.1/configure.ac
+--- dbus-sharp-0.8.1.org/configure.ac	2014-06-24 18:10:54.000000000 +0100
++++ dbus-sharp-0.8.1/configure.ac	2015-07-20 12:13:31.059646682 +0100
+@@ -23,11 +23,11 @@
+ MONO_REQ_VERSION=1.1.13
+ PKG_CHECK_MODULES(MONO, mono >= $MONO_REQ_VERSION)
+ 
+-AC_PATH_PROG(GMCS, gmcs, no)
+-if test "x$GMCS" = "xno"; then
+-	AC_MSG_ERROR([You need to install gmcs])
++AC_PATH_PROG(MCS, mcs, no)
++if test "x$MCS" = "xno"; then
++	AC_MSG_ERROR([You need to install mcs])
+ fi
+-AC_SUBST(GMCS)
++AC_SUBST(MCS)
+ 
+ AC_PATH_PROG(GACUTIL, gacutil, no)
+ if test "x$GACUTIL" = "xno"; then
+diff -ur dbus-sharp-0.8.1.org/src/daemon.mk dbus-sharp-0.8.1/src/daemon.mk
+--- dbus-sharp-0.8.1.org/src/daemon.mk	2014-06-24 18:10:54.000000000 +0100
++++ dbus-sharp-0.8.1/src/daemon.mk	2015-07-20 12:13:06.267646335 +0100
+@@ -1,4 +1,4 @@
+-CSC=gmcs
++CSC=mcs
+ 
+ SRCS=Daemon.cs Server.cs ServerBus.cs
+ 
+diff -ur dbus-sharp-0.8.1.org/tools/tools.mk dbus-sharp-0.8.1/tools/tools.mk
+--- dbus-sharp-0.8.1.org/tools/tools.mk	2014-06-24 18:10:54.000000000 +0100
++++ dbus-sharp-0.8.1/tools/tools.mk	2015-07-20 12:13:16.267646475 +0100
+@@ -1,6 +1,6 @@
+ all: dbus-monitor.exe
+ 
+-CSC=gmcs
++CSC=mcs
+ CSFLAGS=-debug
+ 
+ dbus-monitor.exe: Monitor.cs

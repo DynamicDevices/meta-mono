@@ -5,16 +5,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "files://COPYING;md5=09d60852216ea29fdba9ea146513336c"
 
 inherit autotools-brokensep
+inherit pkgconfig
 inherit mono
 
-def dbus_sharp_download_version(d):
-    pvsplit = d.getVar('PV', True).split('.')
-    return pvsplit[0] + '.' + pvsplit[1]
-
-SDIRVER = "${@dbus_sharp_download_version(d)}"
-
-SRC_URI = "https://github.com/mono/dbus-sharp/archive/v${SDIRVER}.tar.gz"
-
-S = "${WORKDIR}/${PN}-${SDIRVER}"
-
-FILESPATH =. "${FILE_DIRNAME}/${PN}-${PV}:"
+SRC_URI = "https://github.com/mono/dbus-sharp/archive/v${PV}.tar.gz"
