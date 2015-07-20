@@ -1,4 +1,3 @@
-Only in git: Makefile
 diff -ur git.org/Makefile.am git/Makefile.am
 --- git.org/Makefile.am	2014-05-17 17:18:41.627941046 +0100
 +++ git/Makefile.am	2014-05-17 17:23:49.583941850 +0100

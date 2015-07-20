@@ -14,7 +14,6 @@ SRCBRANCH = "master"
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI = "git://github.com/mono/mono-upnp.git;branch=${SRCBRANCH} \
-	   file://fixup-build.patch \
 "
 
 S = "${WORKDIR}/git"
