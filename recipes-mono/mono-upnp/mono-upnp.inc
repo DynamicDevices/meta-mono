@@ -23,7 +23,7 @@ inherit autotools-brokensep pkgconfig
 
 do_configure () {
   export TAGLIB_SHARP_LIBS="-r:${STAGING_DIR_TARGET}/usr/lib/pkgconfig/../../lib/mono/taglib-sharp/taglib-sharp.dll"
-  ./autogen.sh || bbnote "Autogen failed"
+  ./autogen.sh 
 }
 
 FILES_${PN}-dbg += " \
