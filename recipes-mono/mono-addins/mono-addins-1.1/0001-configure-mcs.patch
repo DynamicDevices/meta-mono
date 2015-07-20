@@ -1,0 +1,12 @@
+diff -ur git.org/configure.ac git/configure.ac
+--- git.org/configure.ac	2015-07-20 11:50:50.151627671 +0100
++++ git/configure.ac	2015-07-20 11:51:28.275628204 +0100
+@@ -18,7 +18,7 @@
+ 
+ AC_PROG_INSTALL
+ 
+-AC_PATH_PROG(MCS, gmcs, no)
++AC_PATH_PROG(MCS, mcs, no)
+ if test "x$MCS" = "xno"; then
+         AC_MSG_ERROR([mcs Not found])
+ fi
