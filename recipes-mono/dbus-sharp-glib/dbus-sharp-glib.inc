@@ -6,6 +6,7 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "files://COPYING;md5=ea73672fbe49f67f1c1b44a7e763dab4"
 
 inherit autotools
+inherit pkgconfig
 inherit mono
 
 def dbus_sharp_glib_download_version(d):

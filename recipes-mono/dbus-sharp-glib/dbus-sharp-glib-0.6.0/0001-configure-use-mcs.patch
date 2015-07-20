@@ -1,0 +1,39 @@
+build: Use mcs instead of gmcs as gmcs not available in latest Mono
+
+Submitted https://github.com/mono/dbus-sharp-glib/pull/3
+
+Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+
+diff --git dbus-sharp-glib-0.6.org/configure.ac dbus-sharp-glib-0.6/configure.ac
+index 81c1839..912fae6 100644
+--- dbus-sharp-glib-0.6.org/configure.ac
++++ dbus-sharp-glib-0.6/configure.ac
+@@ -23,11 +23,11 @@ AC_SUBST(PKG_CONFIG)
+ MONO_REQ_VERSION=1.1.13
+ PKG_CHECK_MODULES(MONO, mono >= $MONO_REQ_VERSION)
+ 
+-AC_PATH_PROG(GMCS, gmcs, no)
+-if test "x$GMCS" = "xno"; then
+-	AC_MSG_ERROR([You need to install gmcs])
++AC_PATH_PROG(MCS, mcs, no)
++if test "x$MCS" = "xno"; then
++	AC_MSG_ERROR([You need to install mcs])
+ fi
+-AC_SUBST(GMCS)
++AC_SUBST(MCS)
+ 
+ AC_PATH_PROG(GACUTIL, gacutil, no)
+ if test "x$GACUTIL" = "xno"; then
+diff --git dbus-sharp-glib-0.6.org/src/Makefile.am dbus-sharp-glib-0.6/src/Makefile.am
+index 2f1f7bd..b656006 100644
+--- dbus-sharp-glib-0.6.org/src/Makefile.am
++++ dbus-sharp-glib-0.6/src/Makefile.am
+@@ -14,7 +14,7 @@ CSFILES = \
+ all: $(TARGET)
+ 
+ $(TARGET): $(CSFILES) AssemblyInfo.cs
+-	$(GMCS) -out:$@ $(CSFLAGS) $(LIBFLAGS) $^
++	$(MCS) -out:$@ $(CSFLAGS) $(LIBFLAGS) $^
+ 
+ install-data-local:
+ 	@if test -n '$(TARGET)'; then                       \
