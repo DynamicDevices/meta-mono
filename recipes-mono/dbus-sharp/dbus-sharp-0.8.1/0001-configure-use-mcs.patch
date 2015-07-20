@@ -1,6 +1,6 @@
 build: Use mcs instead of gmcs as gmcs not available in latest Mono
 
-Submitted https://github.com/mono/dbus-sharp/pull/48
+Upstream-Status: Submitted https://github.com/mono/dbus-sharp/pull/48
 
 Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
 
