@@ -1,0 +1,20 @@
+build: use mcs instead of gmcs
+
+as gmcs not available in current mono releases
+
+Upstream-Status: Submitted [https://github.com/mono/taglib-sharp/pull/24]
+
+Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+
+diff -ur git.org/configure.ac git/configure.ac
+--- git.org/configure.ac	2015-07-20 18:04:15.975940654 +0100
++++ git/configure.ac	2015-07-20 18:04:32.635940887 +0100
+@@ -24,7 +24,7 @@
+ AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+ 
+ dnl Check for Mono
+-AC_PATH_PROG(MCS, gmcs)
++AC_PATH_PROG(MCS, mcs)
+ if test x$MCS = x; then
+ 	AC_MSG_ERROR(You need mcs)
+ fi
