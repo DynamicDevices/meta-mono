@@ -9,7 +9,8 @@ LIC_FILES_CHKSUM = "file://COPYING.LIB;md5=80862f3fd0e11a5fa0318070c54461ce"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
            file://dllmap-config.in.diff \
-          "
+	   file://0002-prevent-threadpool-exception5-test-hanging.patch \
+"
 
 # Add this patch into SRC_URI when testing projects
 # that fail to compile due to lack of gmcs in recent
