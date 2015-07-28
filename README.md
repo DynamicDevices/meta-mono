@@ -103,7 +103,7 @@ Send to the maintainer and to [Yocto mailing list](mailto://yocto@yoctoproject.o
 
 MIT/GPLv2 - following the lead of libgdiplus and mono
 
-## Current State - x86: Works
+## Current State - x86 emulation: Works
 
 #### 25/07/2015
 
@@ -111,9 +111,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
-#### 15/01/2015
+#### 28/07/2015
 
-3.12.0
+3.12.1
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
