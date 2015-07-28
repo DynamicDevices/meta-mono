@@ -1,0 +1,5 @@
+require mono-helloworld.inc
+
+SRCREV = "${AUTOREV}"
+SRC_URI =  "git://github.com/DynamicDevices/mono-helloworld.git" 
+S = "${WORKDIR}/git"

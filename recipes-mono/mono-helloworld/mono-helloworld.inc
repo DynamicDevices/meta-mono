@@ -12,8 +12,29 @@ SRC_URI = "https://github.com/DynamicDevices/mono-helloworld/archive/v${PV}.tar.
 inherit autotools
 inherit mono
 
+DEPENDS_${PN} = "mono"
+RDEPENDS_${PN} = "mono"
+
+EDEPENDS_X11 = "libgdiplus"
+ERDEPENDS_X11 = "libgdiplus"
+EDEPENDS_GTK = "gtk-sharp"
+ERDEPENDS_GTK = "gtk-sharp"
+EDEPENDS_WAYLAND = "wayland"
+ERDEPENDS_WAYLAND = "wayland"
+
+PACKAGECONFIG[x11] = "--enable-winformdemo=yes,,${EDEPENDS_X11},${ERDEPENDS_X11}"
+PACKAGECONFIG[wayland] = ",,${EDEPENDS_WAYLAND},${ERDEPENDS_WAYLAND}"
+PACKAGECONFIG[gtk] = "--enable-gtkdemo=yes,,${EDEPENDS_GTK},${ERDEPENDS_GTK}"
+
+# Default configuration, distros might want to override
+PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'x11', 'x11 gtk', '', d)} \
+		   ${@base_contains('DISTRO_FEATURES', 'wayland', 'wayland gtk', '', d)} \
+"
+
 FILES_${PN} = "${libdir}/helloworld/helloworld.exe \
 		${bindir}/helloworld \
         	${libdir}/helloworld/helloworldform.exe \
 		${bindir}/helloworldform \
+        	${libdir}/helloworld/helloworldgtk.exe \
+		${bindir}/helloworldgtk \
 "
