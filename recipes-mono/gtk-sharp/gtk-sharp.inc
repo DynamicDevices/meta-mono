@@ -21,7 +21,13 @@ def gtk_sharp_download_version(d):
 
 FILESPATH =. "${FILE_DIRNAME}/gtk-sharp-${PV}:"
 
-FILES_${PN}-dev += "\
+FILES_${PN} += "\
+  ${libdir}/*.so \
+"
+
+FILES_${PN}-dev = "\
+  ${libdir}/*.la \
+  ${libdir}/pkgconfig/* \
   ${libdir}/${PN}*/* \
   ${datadir}/* \
 "
