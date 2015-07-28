@@ -117,6 +117,18 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application and a simple Windows Forms application. 
 
+## Current State - ARM emulation: Works
+
+#### 28/07/2015
+
+4.0.3.19
+
+* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application and a simple Windows Forms application.
+
+3.12.1
+
+* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application and a simple Windows Forms application.
+
 ## Current State - ARM vfp: Works
 
 #### 27/04/2014
