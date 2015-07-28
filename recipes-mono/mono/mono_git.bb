@@ -2,7 +2,7 @@ require mono-git.inc
 
 inherit pkgconfig
 
-DEPENDS =+ "mono-native libgdiplus"
+DEPENDS += "mono-native libgdiplus"
 
 EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
