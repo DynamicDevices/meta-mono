@@ -12,31 +12,25 @@ Also see mono-hellowworld example recipes
 http://git.yoctoproject.org/cgit/cgit.cgi/meta-mono/tree/recipes-mono/mono-helloworld
 
 - mono-helloworld is based on the Mono example, mono-skel, and provides files needed to build with autotools
+
+This recipe now provides a console "hello world" demo and if "x11" is in DISTRO_FEATURES in
+the configuration it will also build a Windows Forms demo, and a GTK# demo
+
 - mono-helloworld-xbuild uses a Visual Studio solution and project files with Mono xbuild
 
 Q. How do I set the version of Mono that I wish to build?
 
 A. Modify your conf/local.conf file to include the following
 
-For Mono 3.2.8
+For Mono 3.12.1
 
-PREFERRED_VERSION_mono = "3.10.0"
-PREFERRED_VERSION_mono-native = "3.10.0"
+PREFERRED_VERSION_mono = "3.12.1"
+PREFERRED_VERSION_mono-native = "3.12.1"
 
-For Mono 3.2.8
+For Mono 4.0.3.19
 
-PREFERRED_VERSION_mono = "3.2.8"
-PREFERRED_VERSION_mono-native = "3.2.8"
-
-For Mono 3.4.0 
-
-PREFERRED_VERSION_mono = "3.4.0"
-PREFERRED_VERSION_mono-native = "3.4.0"
-
-For Mono 3.8.0 
-
-PREFERRED_VERSION_mono = "3.8.0"
-PREFERRED_VERSION_mono-native = "3.8.0"
+PREFERRED_VERSION_mono = "4.0.3.19"
+PREFERRED_VERSION_mono-native = "4.0.3.19"
 
 Q. How do I include Mono in an image?
 
