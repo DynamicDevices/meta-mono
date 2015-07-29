@@ -46,9 +46,7 @@ On the target:
 
 So far, Windows Forms applications have been tested under Sato.
 Mono does not require Sato, it does require X if you want to run
-Windows Forms applications. While mono can run w/o X, that recipe
-is not supported currently. It is unlikely to be supported in the
-near future.
+Windows Forms applications. 
 
 ## Build Examples
 
