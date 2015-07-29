@@ -89,7 +89,6 @@ For a walkthrough on building Mono for Raspberry Pi see:
 ## Maintainer(s) & Patch policy
 
 * [Alex J Lennon](mailto://ajlennon@dynamicdevices.co.uk)
-* [Autif Khan](mailto://autif.mlist@gmail.com), autif on #yocto on freenode
 
 Follow Yocto change submission policy, detailed here:
 
