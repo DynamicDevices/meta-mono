@@ -7,7 +7,7 @@ PRIORITY = "optional"
 LICENSE = "GPLv3"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=783b7e40cdfb4a1344d15b1f7081af66"
 
-SRC_URI = "https://github.com/DynamicDevices/mono-helloworld/archive/v${PV}.tar.gz"
+SRC_URI = "https://github.com/DynamicDevices/mono-helloworld/releases/download/v${PV}/mono-helloworld-${PV}.tar.gz"
 
 inherit autotools
 inherit mono
