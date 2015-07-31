@@ -33,5 +33,5 @@ inherit autotools-brokensep gettext pkgconfig
 
 do_configure_prepend() {
     # Doesn't seem to be picked up by pkgconfig so override it
-    export XSP_2_LIBS="${STAGING_LIBDIR}/mono/4.5/Mono.WebServer2.dll"
+    export XSP_2_LIBS="${STAGING_LIBDIR}/mono/4.5/Mono.WebServer2.dll ${STAGING_LIBDIR}/mono/4.5/xsp4.exe"
 }
