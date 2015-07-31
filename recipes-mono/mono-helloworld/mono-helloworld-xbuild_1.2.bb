@@ -1,7 +1,7 @@
 require mono-helloworld.inc
 
-SRC_URI[md5sum] = "79b0ba0044689789a54e3d55ec400fc0"
-SRC_URI[sha256sum] = "56388435f29ce94007155acc39593c900b6d3248a7f281e83ed2101a6da455f0"
+SRC_URI[md5sum] = "ae22f282d36ae5cb82ae5a2e9bcbb8b5"
+SRC_URI[sha256sum] = "365360d674bd63ab7ca1762e64e3d5d6c6d4841edf6e59f67ff8b40fafeb1137"
 
 REALPN = "mono-helloworld"
 
