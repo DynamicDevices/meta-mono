@@ -15,6 +15,7 @@ For Mono release notes please see:
 * [Mono 4.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.1/)
 * [Mono 4.0.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.2/)
 * [Mono 4.0.3 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.3/)
+* [Mono 4.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
