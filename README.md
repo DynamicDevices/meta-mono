@@ -16,6 +16,7 @@ For Mono release notes please see:
 * [Mono 4.0.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.2/)
 * [Mono 4.0.3 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.3/)
 * [Mono 4.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.0/)
+* [Mono 4.2.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.1/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -103,9 +104,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 04/09/2015
+#### 25/09/2015
 
-4.2.0.207
+4.2.1.36
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
