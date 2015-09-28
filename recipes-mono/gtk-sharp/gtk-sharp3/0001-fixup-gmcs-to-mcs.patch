@@ -1,0 +1,12 @@
+diff -ur gtk-sharp-2.99.3.org/configure.ac gtk-sharp-2.99.3/configure.ac
+--- gtk-sharp-2.99.3.org/configure.ac	2014-06-06 14:03:34.000000000 +0100
++++ gtk-sharp-2.99.3/configure.ac	2015-09-28 11:27:29.157332268 +0100
+@@ -133,7 +133,7 @@
+ 	RUNTIME="mono$RUNTIME_DEBUG_FLAGS"
+ fi
+ 
+-AC_PATH_PROG(CSC, gmcs, no)
++AC_PATH_PROG(CSC, mcs, no)
+ if test `uname -s` = "Darwin"; then
+ 	LIB_PREFIX=
+ 	LIB_SUFFIX=.dylib
