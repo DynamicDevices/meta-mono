@@ -1,2 +1,2 @@
-IMAGE_INSTALL += "mono mono-helloworld"
+IMAGE_INSTALL += "mono mono-helloworld tzdata"
 
