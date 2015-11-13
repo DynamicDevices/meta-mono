@@ -1,3 +1,4 @@
+
 ## Introduction
 
 meta-mono is an OpenEmbedded layer that builds mono runtime and mono
@@ -104,9 +105,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 08/10/2015
+#### 13/11/2015
 
-4.2.1.60
+4.2.1.102
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
