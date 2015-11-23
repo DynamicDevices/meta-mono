@@ -89,7 +89,7 @@ For a walkthrough on building Mono for Raspberry Pi see:
 
 ## Maintainer(s) & Patch policy
 
-* [Alex J Lennon](mailto://ajlennon@dynamicdevices.co.uk)
+* [Alex J Lennon](mailto:ajlennon@dynamicdevices.co.uk)
 
 Follow Yocto change submission policy, detailed here:
 
@@ -97,7 +97,7 @@ Follow Yocto change submission policy, detailed here:
 
 Use the create-pull-request and send-pull-request scripts details in 3.9.1. 
 
-Send to the maintainer and to [Yocto mailing list](mailto://yocto@yoctoproject.org)
+Send to the maintainer and to [Yocto mailing list](mailto:yocto@yoctoproject.org)
 
 ## Copyright
 
