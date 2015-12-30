@@ -36,7 +36,24 @@ For now the recommendation is to use softfp only when using Mono.
 There may be a solution to this issue in Mono 3.10.0 / 3.12.0+ but this is as yet untested.
 Feedback on testing with armhf would be appreciated and incorporated into this README.
 
-## Dependencies
+## Layer Dependencies
+
+The libgdiplus recipe has a dependency on the giflib recipe which is provided by the meta-oe layer.
+
+Thus if this recipe is included in an image, for example when building core-image-mono, then
+conf/bblayers needs to be modified to include meta-oe, e.g.
+
+BBLAYERS = " \
+  ..
+  /path/to/meta-oe \
+  ..
+"
+
+Otherwise an error of the following form will be seen:
+
+ERROR: Required build target 'core-image-mono' has no buildable providers. Missing or unbuildable dependency chain was: ['core-image-mono', 'mono-helloworld', 'mono', 'libgdiplus', 'giflib']
+
+## Other Dependencies
 
 On the host:
 

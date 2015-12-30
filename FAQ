@@ -49,6 +49,8 @@ image built
 
 IMAGE_INSTALL_append = " mono"
 
+Note that libgdiplus requires giflib which introduces a dependency on the meta-oe layer
+
 Q. How do I use Mono 3.x.x on Windows?
 
 A. See the articles here on building the Mono sources under Windows
