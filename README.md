@@ -178,7 +178,39 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - PPC
 
-* More investigation is needed, if there is an interest in getting mono to work perfectly on PPC, please contact the maintainer.
+#### 14/02/2016
+
+4.2.2.30
+
+* Maintainer has tested a Poky (Jethro) build on a qemuppc platform, with 
+
+a simple console application, helloworld which RUNS
+a simple Windows Forms application, helloworldform which FAILS
+a simple GTK# application hellloworldgtk, which RUNS
+
+#### 14/02/2016
+
+4.2.0.179
+
+* Maintainer has tested a Poky (Jethro) build on a qemuppc platform, with 
+
+a simple console application, helloworld which RUNS
+a simple Windows Forms application, helloworldform which FAILS
+a simple GTK# application hellloworldgtk, which RUNS
+
+#### 14/02/2016
+
+4.0.1.34
+
+* Maintainer has tested a Poky (Jethro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+
+#### 14/02/2016
+
+3.12.1
+
+Fails to link building Poky (Jethro) with:
+
+| mono/3.12.1-r0/mono-3.12.1/mono/metadata/loader.c:2322: undefined reference to `mono_sigctx_to_monoctx'
 
 ## Current State - alpha, amd64, hppa, ia64, s390 & sparc: Unknown
 
