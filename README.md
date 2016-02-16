@@ -188,6 +188,8 @@ a simple console application, helloworld which RUNS
 a simple Windows Forms application, helloworldform which FAILS
 a simple GTK# application hellloworldgtk, which RUNS
 
+NOTE: The issue with the latest 4.2.2.30 release appears to be resolved in Mono master
+
 #### 14/02/2016
 
 4.2.0.179
