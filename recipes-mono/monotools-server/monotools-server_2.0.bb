@@ -2,7 +2,7 @@ DESCRIPTION = "Monotools server (remote mono debugging)"
 SECTION = "mono" 
 LICENSE = "MIT" 
 # todo: Investigate license
-LIC_FILES_CHKSUM = "file://install-sh;md5=6e5fe73723cd40a28adc5b7b5650c8d1" 
+LIC_FILES_CHKSUM = "file://install-sh;md5=361482dd6b5b5eb7090fff3986fba68a" 
 PR = "r0" 
 
 # Download from Mono site
