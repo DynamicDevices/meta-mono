@@ -2,7 +2,7 @@ SUMMARY = "F# programming language"
 DESCRIPTION = "F# is a strongly-typed, functional-first programming language for writing simple code to solve complex problems."
 SECTION = "devel/mono"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "files://LICENSE;md5=512efb9375da0bd2fee9e2b9352c08af"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=512efb9375da0bd2fee9e2b9352c08af"
 
 inherit autotools-brokensep
 inherit mono

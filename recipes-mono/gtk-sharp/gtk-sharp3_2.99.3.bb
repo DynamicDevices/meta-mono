@@ -5,7 +5,7 @@ inherit pkgconfig
 DEPENDS += " gtk+3 atk pango cairo glib-2.0 libglade mono"
 RDEPENDS_${PN} += " perl gtk+3"
 
-LIC_FILES_CHKSUM = "files://COPYING;md5=8754deb904d22254188cb67189b87f19"
+LIC_FILES_CHKSUM = "file://COPYING;md5=8754deb904d22254188cb67189b87f19"
 
 SDIRVERN = "${@gtk_sharp_download_versionN(d)}"
 SEXT ??= "bz2"
