@@ -6,7 +6,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 4.3.x
+This README pertains to meta-mono layer support for Mono 3.12.1 - 4.4.x
 
 For Mono release notes please see:
 
@@ -18,6 +18,7 @@ For Mono release notes please see:
 * [Mono 4.0.3 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.3/)
 * [Mono 4.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.0/)
 * [Mono 4.2.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.1/)
+* [Mono 4.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.4.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -122,9 +123,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 23/02/2016
+#### 13/04/2016
 
-4.3.2.467
+4.4.0.122
 
 * Maintainer has tested a Poky (Jethro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
