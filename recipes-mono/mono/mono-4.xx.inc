@@ -5,6 +5,8 @@ BUGTRACKER = "http://bugzilla.xamarin.com/"
 SECTION = "devel"
 LICENSE = "GPLv2"
 
+DEPENDS = "zlib"
+
 LIC_FILES_CHKSUM = "file://COPYING.LIB;md5=80862f3fd0e11a5fa0318070c54461ce"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
