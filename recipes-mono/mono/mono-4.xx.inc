@@ -71,7 +71,7 @@ PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN} "
 
 FILES_${PN}	   			= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
-FILES_${PN}-libs   			= "${libdir}/libMono*.so"
+FILES_${PN}-libs   			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so"
 FILES_${PN}-lldb                        = "${libdir}/mono/lldb/*"
 FILES_${PN}-libs-2.0                    = "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
 FILES_${PN}-libs-3.5                    = "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
