@@ -34,6 +34,9 @@ inherit autotools-brokensep
 inherit pkgconfig
 inherit gettext
 
+# avoids build breaks when using no-static-libs.inc
+DISABLE_STATIC = ""
+
 EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure_prepend() {
