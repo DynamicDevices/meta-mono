@@ -1,0 +1,30 @@
+Temporary patch from https://github.com/BrzVlad/mono/commit/831e66655e7465023109333fca31d036c7b9a514
+for https://bugzilla.xamarin.com/show_bug.cgi?id=44918.  Should make it
+into upstream soon:
+
+From 831e66655e7465023109333fca31d036c7b9a514 Mon Sep 17 00:00:00 2001
+From: Vlad Brezae <brezaevlad@gmail.com>
+Date: Thu, 13 Oct 2016 00:18:46 +0300
+Subject: [PATCH] [arm] Disable fast tls on embedded mono with __thread
+
+We don't have MONO_THREAD_VAR_OFFSET on embedded mono.
+---
+ mono/mini/mini-arm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mono/mini/mini-arm.c b/mono/mini/mini-arm.c
+index 2eac369..86757ac 100644
+--- a/mono/mini/mini-arm.c
++++ b/mono/mini/mini-arm.c
+@@ -31,7 +31,7 @@
+ #include "mini-gc.h"
+ #include "mono/arch/arm/arm-vfp-codegen.h"
+ 
+-#if (defined(HAVE_KW_THREAD) && defined(__linux__) && defined(__ARM_EABI__)) \
++#if (defined(HAVE_KW_THREAD) && defined(__linux__) && defined(__ARM_EABI__) && !defined(__PIC__)) \
+ 	|| defined(TARGET_ANDROID) \
+ 	|| (defined(TARGET_IOS) && !defined(TARGET_WATCHOS))
+ #define HAVE_FAST_TLS
+-- 
+2.10.2
+
