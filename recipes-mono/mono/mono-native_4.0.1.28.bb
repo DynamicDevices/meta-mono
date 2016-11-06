@@ -1,4 +1,5 @@
 require mono-4.xx.inc
+require mono-gplv2.inc
 
 EXTRA_OECONF += "mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
