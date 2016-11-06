@@ -40,9 +40,19 @@ Feedback on testing with armhf would be appreciated and incorporated into this R
 
 ## Layer Dependencies
 
-The libgdiplus recipe has a dependency on the giflib recipe which is provided by the meta-oe layer.
+The libgdiplus recipe has a soft dependency on the giflib recipe which is provided by the meta-oe layer.
+These dependencies can be controlled using the PACKAGECONFIG feature of yocto.  libgdiplus
+recognizes the following options:
 
-Thus if this recipe is included in an image, for example when building core-image-mono, then
+"jpeg exif gif tiff"
+
+These can be controlled via the .bbappend mechanism or by adding:
+PACKAGECONFIG_pn-mono = ""
+PACKAGECONFIG_pn-mono-native = ""
+
+directives to the local.conf
+
+If this recipe is included in an image with gif enabled, for example when building core-image-mono, then
 conf/bblayers needs to be modified to include meta-oe, e.g.
 
 BBLAYERS = " \
