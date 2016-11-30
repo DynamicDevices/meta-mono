@@ -134,9 +134,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 03/05/2016
+#### 30/11/2016
 
-4.4.0.148
+4.6.1.5
 
 * Maintainer has tested a Poky (Jethro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
