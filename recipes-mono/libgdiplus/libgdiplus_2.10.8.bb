@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=fe7364dfce9f3689eb6995e7cdd56879"
 PACKAGECONFIG ??= "jpeg tiff gif exif"
 PACKAGECONFIG[jpeg] = "--with-libjpeg,--without-libjpeg,jpeg"
 PACKAGECONFIG[tiff] = "--with-libtiff,--without-libtiff,tiff"
-PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,libgif"
+PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,giflib"
 PACKAGECONFIG[exif] = "--with-libexif,--without-libexif,libexif"
 
 SRC_URI = "https://github.com/mono/libgdiplus/archive/${PV}.tar.gz \
