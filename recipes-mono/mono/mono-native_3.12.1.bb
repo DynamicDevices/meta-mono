@@ -11,7 +11,7 @@ EDEPENDS_X11 =+ "libgdiplus-native"
 PACKAGECONFIG[x11] = ",,${EDEPENDS_X11}"
 
 # Default configuration, distros might want to override
-PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}"
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}"
 
 SRC_URI += "file://fix-basic-mscorlib-dep.patch"
 

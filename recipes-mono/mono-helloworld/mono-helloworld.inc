@@ -27,14 +27,14 @@ PACKAGECONFIG[wayland] = ",,${EDEPENDS_WAYLAND},${ERDEPENDS_WAYLAND}"
 PACKAGECONFIG[gtk] = "--enable-gtkdemo=yes,,${EDEPENDS_GTK},${ERDEPENDS_GTK}"
 
 # Default configuration, distros might want to override
-PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'x11', 'x11 gtk', '', d)} \
-		   ${@base_contains('DISTRO_FEATURES', 'wayland', 'wayland gtk', '', d)} \
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11 gtk', '', d)} \
+		   ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland gtk', '', d)} \
 "
 
 FILES_${PN} = "${libdir}/helloworld/helloworld.exe \
 		${bindir}/helloworld \
-        	${libdir}/helloworld/helloworldform.exe \
+		${libdir}/helloworld/helloworldform.exe \
 		${bindir}/helloworldform \
-        	${libdir}/helloworld/helloworldgtk.exe \
+		${libdir}/helloworld/helloworldgtk.exe \
 		${bindir}/helloworldgtk \
 "

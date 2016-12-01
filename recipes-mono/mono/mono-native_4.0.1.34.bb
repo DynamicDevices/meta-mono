@@ -4,7 +4,7 @@ require mono-gplv2.inc
 EXTRA_OECONF += "mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 # Default configuration, distros might want to override
-PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}"
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}"
 
 SRC_URI += "file://fix-basic-mscorlib-dep.patch \
 	    file://0001-add-missing-visualbasic-targets.patch \
