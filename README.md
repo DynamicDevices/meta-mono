@@ -20,6 +20,7 @@ For Mono release notes please see:
 * [Mono 4.2.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.1/)
 * [Mono 4.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.4.0/)
 * [Mono 4.6.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.6.1/)
+* [Mono 4.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -115,6 +116,8 @@ For a walkthrough on building Mono for Raspberry Pi see:
 * Enric Balletbo i Serra
 * Khem Raj
 * Richard Tollerton
+* Fabio Berton
+* Barry Grussling
 
 ## Maintainer(s) & Patch policy
 
@@ -138,7 +141,7 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 4.8.0.371
 
-* Maintainer has tested a Poky (Jethro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+* Maintainer has tested Poky (Jethro/Krogoth/Morton) builds on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
 #### 28/07/2015
 
