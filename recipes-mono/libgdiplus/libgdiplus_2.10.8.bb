@@ -28,3 +28,7 @@ SRC_URI[sha256sum] = "45c533dc72af0a24d1d3a8097873f5fe1670107fe7e6d08fb71ae586c8
 FILES_${PN} += "${libdir}/libgdiplus.so"
 INSANE_SKIP_${PN} += "dev-so"
 
+do_install_append() {
+# fix pkgconfig .pc file
+sed -i -e s#I${STAGING_DIR_HOST}#I#g ${D}${libdir}/pkgconfig/*.pc
+}
