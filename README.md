@@ -6,7 +6,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 4.6.x
+This README pertains to meta-mono layer support for Mono 3.12.1 - 4.8.x
 
 For Mono release notes please see:
 
@@ -139,9 +139,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 #### 30/11/2016
 
-4.8.0.371
+4.8.0.374
 
-* Maintainer has tested Poky (Jethro/Krogoth/Morton) builds on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+* Maintainer has tested Poky (morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
 #### 28/07/2015
 
