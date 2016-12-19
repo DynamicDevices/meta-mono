@@ -141,7 +141,7 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 4.8.0.382
 
-* Maintainer has tested Poky (morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+* Maintainer has tested Poky (master, morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
 #### 28/07/2015
 
