@@ -149,6 +149,15 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
+## Current State - PPC emulation: Works
+
+#### 22/12/2016
+
+4.8.0.382
+
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+  (Not convinced that the test applications are exiting reliably)
+
 ## Current State - ARM emulation: Works
 
 #### 28/07/2015
@@ -241,7 +250,6 @@ Fails to link building Poky (Jethro) with:
 
 * see if mono works for amd64, seems like qemux86-64 is available
 * investigate why windows forms apps dont run on MIPS
-* investigate why compilation fails for PPC
 * run mono runtime tests for ARM
 * run mono runtime tests for MIPS
 * run mono runtime tests for PPC
