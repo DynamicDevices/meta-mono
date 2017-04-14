@@ -1,0 +1,36 @@
+The test hangs when LC_ALL=C is set as ArgumentNullException is thrown
+
+when code in OnUnhandledException calls ToString() on the passed
+exception object. This exception is caught within a try {} catch
+block in CultureInfo but still results in code in metadata/object.c
+outputting a warning and the code blocking.
+
+This works around the issue for now by instantiating the default
+CultureInfo object outside of OnUnhandledException but the correct
+solution is probably to look at what is going on in object.c
+
+Upstream-Status: Pending
+
+Signed-off-by: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+
+diff -ur mono-4.0.3.org/mono/tests/threadpool-exceptions5.cs mono-4.0.3/mono/tests/threadpool-exceptions5.cs
+--- mono-4.0.3.org/mono/tests/threadpool-exceptions5.cs	2015-07-20 08:07:20.000000000 +0100
++++ mono-4.0.3/mono/tests/threadpool-exceptions5.cs	2015-07-27 22:24:02.040606719 +0100
+@@ -1,11 +1,14 @@
+ using System;
+ using System.Threading;
++using System.Globalization;
+ 
+ class Test {
+ 	static object monitor;
+ 	static int return_value = 2;
+ 	static int Main ()
+ 	{
++		var c = CultureInfo.InstalledUICulture;
++
+ 		monitor = new object ();
+ 		AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+ 		WaitCallback wcb = new WaitCallback ((a) => {
+Only in mono-4.0.3/mono/tests: threadpool-exceptions5.cs.orig
+Only in mono-4.0.3/mono/tests: threadpool-exceptions5.cs.rej
+Only in mono-4.0.3.org: mono-4.0.3
