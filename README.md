@@ -21,7 +21,9 @@ For Mono release notes please see:
 * [Mono 4.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.4.0/)
 * [Mono 4.6.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.6.1/)
 * [Mono 4.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.0/)
+* [Mono 4.8.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.1/)
 * [Mono 5.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.0/)
+* [Mono 5.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.1/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -138,15 +140,15 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 13/04/2017
+#### 30/05/2017
 
-5.0.0.48
+5.0.1.1
 
-* Maintainer has tested Poky (master, morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+* Maintainer has tested Poky (krogoth) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
-#### 19/12/2016
+#### 30/05/2017
 
-4.8.0.382
+4.8.1.0
 
 * Maintainer has tested Poky (master, morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
