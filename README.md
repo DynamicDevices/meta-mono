@@ -121,6 +121,7 @@ For a walkthrough on building Mono for Raspberry Pi see:
 * Richard Tollerton
 * Fabio Berton
 * Barry Grussling
+* Zoltán Böszörményi
 
 ## Maintainer(s) & Patch policy
 
