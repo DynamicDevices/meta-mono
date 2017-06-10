@@ -37,3 +37,5 @@ nuget_sysroot_preprocess () {
 	install -m0755 ${WORKDIR}/nuget.sh.in ${SYSROOT_DESTDIR}${bindir_crossscripts}/nuget
 	sed -i -e 's:@bindir@:${STAGING_BINDIR_NATIVE}:g' -e 's:@libdir@:${STAGING_LIBDIR}:g' ${SYSROOT_DESTDIR}${bindir_crossscripts}/nuget
 }
+
+DIRFILES = "1"
