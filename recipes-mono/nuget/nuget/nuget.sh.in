@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec @bindir@/mono @libdir@/mono/nuget/NuGet.exe "$@"
