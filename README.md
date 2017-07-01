@@ -228,6 +228,16 @@ a simple console application, helloworld which RUNS
 a simple Windows Forms application, helloworldform which RUNS
 a simple GTK# application hellloworldgtk, which RUNS
 
+#### 01/07/2017
+
+5.2.0.196
+
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
+
+a simple console application, helloworld which RUNS
+a simple Windows Forms application, helloworldform which RUNS
+a simple GTK# application hellloworldgtk, which RUNS
+
 #### 14/02/2016
 
 4.2.0.179
