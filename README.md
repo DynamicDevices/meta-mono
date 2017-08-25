@@ -163,6 +163,13 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - PPC emulation: Works
 
+## 25/08/2017
+
+5.2.0.215
+
+* Maintainer has tested a Poky (krogoth) build on a qemuppc platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+  (Not convinced that the test applications are exiting reliably)
+
 #### 22/12/2016
 
 4.8.0.382
