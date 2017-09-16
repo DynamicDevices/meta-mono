@@ -143,9 +143,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 18/06/2017
+#### 16/09/2017
 
-5.2.0.179
+5.2.0.224
 
 * Maintainer has tested Poky (pyro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
