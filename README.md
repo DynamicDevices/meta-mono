@@ -6,7 +6,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 5.4.0
+This README pertains to meta-mono layer support for Mono 3.12.1 - 5.8.0
 
 For Mono release notes please see:
 
@@ -86,6 +86,28 @@ So far, Windows Forms applications have been tested under Sato.
 Mono does not require Sato, it does require X if you want to run
 Windows Forms applications. 
 
+## Testing Mono builds
+
+The meta-mono layer now includes basic image test support.
+
+For details on configuring image For setup details see: https://wiki.yoctoproject.org/wiki/Image_tests
+
+i.e.
+
+- Add INHERIT += "testimage" in local.conf
+- bitbake core-image-mono
+- bitbake core-image-mono -c testimage
+
+This will run some simple tests in Qemu (ensure MACHINE is configured appropriately)
+
+- helloworld (command line executable)
+- helloworldform (WinForms executable)
+- helloworldgtk (GTK# executable
+
+Python tests are defined in lib/oeqa/runtime/cases/mono.py
+
+Currently only core-image-mono is working.
+
 ## Build Examples
 
 There are mono-helloworld and a mono-helloworld-xbuild recipes in recipes-mono
@@ -135,7 +157,7 @@ Follow Yocto change submission policy, detailed here:
 
 Use the create-pull-request and send-pull-request scripts details in 3.9.1. 
 
-Send to the maintainer and to [Yocto mailing list](mailto:yocto@yoctoproject.org)
+Send patches and queries to the maintainer and to [Yocto mailing list](mailto:yocto@yoctoproject.org)
 
 ## Copyright
 
