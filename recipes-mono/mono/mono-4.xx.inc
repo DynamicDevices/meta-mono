@@ -4,7 +4,7 @@ HOMEPAGE = "http://mono-project.com"
 BUGTRACKER = "http://bugzilla.xamarin.com/"
 SECTION = "devel"
 
-DEPENDS = "zlib"
+DEPENDS = "zlib cmake-native"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
            file://dllmap-config.in.diff \
