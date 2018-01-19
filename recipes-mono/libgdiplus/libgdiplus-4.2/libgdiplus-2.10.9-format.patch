@@ -1,0 +1,9 @@
+diff -up libgdiplus-2.10.9/src/Makefile.am.format libgdiplus-2.10.9/src/Makefile.am
+--- libgdiplus-2.10.9/src/Makefile.am.format	2014-04-25 09:24:12.000000000 +0200
++++ libgdiplus-2.10.9/src/Makefile.am	2014-04-25 09:24:21.000000000 +0200
+@@ -119,4 +119,4 @@ libgdiplus_la_SOURCES = \
+ 
+ libgdiplus_la_LIBADD = $(GDIPLUS_LIBS)
+ 
+-INCLUDES = $(GDIPLUS_CFLAGS) -Wall -Wno-unused -Wno-format
++INCLUDES = $(GDIPLUS_CFLAGS) -Wall -Wno-unused

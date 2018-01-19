@@ -13,6 +13,8 @@ PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,giflib"
 PACKAGECONFIG[exif] = "--with-libexif,--without-libexif,libexif"
 
 SRC_URI = "https://github.com/mono/libgdiplus/archive/${PV}.tar.gz \
+	   file://01-remove-libjpeg-path.patch \
+	   file://libgdiplus-2.10.9-format.patch \
 	"
 
 inherit autotools pkgconfig
