@@ -9,3 +9,10 @@ do_compile() {
 
 EDEPENDS_X11 =+ "libgdiplus-native"
 PACKAGECONFIG[x11] = ",,${EDEPENDS_X11}"
+
+mono_copy_libdir_mono() {
+	install -d -m0755 ${STAGING_LIBDIR_NATIVE}
+	cp -arf ${SYSROOT_DESTDIR}${STAGING_LIBDIR_NATIVE}/mono ${STAGING_LIBDIR_NATIVE}/
+}
+
+do_populate_sysroot[postfuncs] += " mono_copy_libdir_mono "
