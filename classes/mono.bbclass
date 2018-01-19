@@ -32,3 +32,11 @@ FILES_${PN}-doc += "\
 "
 
 export MONO_CFG_DIR="${STAGING_ETCDIR_NATIVE}"
+
+# NuGet uses $HOME but we should not use anything
+# outside the build root of the packages.
+export HOME="${WORKDIR}/mono-home-dir"
+
+do_configure_prepend() {
+	mkdir -p ${HOME}
+}
