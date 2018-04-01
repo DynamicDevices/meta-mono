@@ -2,7 +2,7 @@ require gtk-sharp.inc
 
 inherit pkgconfig
 
-DEPENDS += " gtk+ atk pango cairo glib-2.0 libglade"
+DEPENDS += " gtk+ atk pango cairo glib-2.0"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
