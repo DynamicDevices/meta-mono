@@ -6,7 +6,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 4.6.x
+This README pertains to meta-mono layer support for Mono 3.12.1 - 5.4.0
 
 For Mono release notes please see:
 
@@ -21,6 +21,11 @@ For Mono release notes please see:
 * [Mono 4.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.4.0/)
 * [Mono 4.6.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.6.1/)
 * [Mono 4.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.0/)
+* [Mono 4.8.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.1/)
+* [Mono 5.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.0/)
+* [Mono 5.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.1/)
+* [Mono 5.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.2.0/)
+* [Mono 5.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.4.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -118,6 +123,7 @@ For a walkthrough on building Mono for Raspberry Pi see:
 * Richard Tollerton
 * Fabio Berton
 * Barry Grussling
+* Zoltán Böszörményi
 
 ## Maintainer(s) & Patch policy
 
@@ -137,17 +143,32 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 30/11/2016
+#### 18/06/2017
 
-4.8.0.371
+5.2.0.179
 
-* Maintainer has tested Poky (Jethro/Krogoth/Morton) builds on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+* Maintainer has tested Poky (pyro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+
+#### 30/05/2017
+
+4.8.1.0
+
+* Maintainer has tested Poky (master, morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
 #### 28/07/2015
 
 3.12.1
 
 * Maintainer has tested a Poky build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+
+## Current State - PPC emulation: Works
+
+#### 22/12/2016
+
+4.8.0.382
+
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+  (Not convinced that the test applications are exiting reliably)
 
 ## Current State - ARM emulation: Works
 
@@ -197,17 +218,15 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - PPC
 
-#### 14/02/2016
+#### 25/06/2017
 
-4.2.2.30
+5.4.0.56
 
-* Maintainer has tested a Poky (Jethro) build on a qemuppc platform, with 
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
 
 a simple console application, helloworld which RUNS
-a simple Windows Forms application, helloworldform which FAILS
+a simple Windows Forms application, helloworldform which RUNS
 a simple GTK# application hellloworldgtk, which RUNS
-
-NOTE: The issue with the latest 4.2.2.30 release appears to be resolved in Mono master
 
 #### 14/02/2016
 
@@ -241,7 +260,6 @@ Fails to link building Poky (Jethro) with:
 
 * see if mono works for amd64, seems like qemux86-64 is available
 * investigate why windows forms apps dont run on MIPS
-* investigate why compilation fails for PPC
 * run mono runtime tests for ARM
 * run mono runtime tests for MIPS
 * run mono runtime tests for PPC

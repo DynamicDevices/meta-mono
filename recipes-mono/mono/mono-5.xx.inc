@@ -24,7 +24,7 @@ def mono_workspace_version (d):
 
 S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
-FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
+FILESPATH =. "${FILE_DIRNAME}/mono-5.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
 inherit autotools-brokensep
@@ -66,13 +66,14 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 PACKAGES = "${PN}-dbg ${PN}-doc ${PN}-staticdev ${PN}-locale ${PN}-libs ${PN}-dev "
 PACKAGES += "${PN}-config ${PN}-binaries ${PN}-libs-core "
 PACKAGES += "${PN}-libs-2.0 ${PN}-libs-3.5 ${PN}-libs-4.0 ${PN}-libs-4.5 "
+PACKAGES += "${PN}-api-4.5.1 ${PN}-api-4.5.2 ${PN}-api-4.6 ${PN}-api-4.6.1 ${PN}-api-4.6.2 ${PN}-api-4.7 "
 PACKAGES += "${PN}-libs-compat-2.0 ${PN}-gac ${PN}-configuration-crypto "
 PACKAGES += "${PN}-libs-monodoc ${PN}-xbuild "
 PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN} "
 
 FILES_${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
-FILES_${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so"
+FILES_${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so ${libdir}/libmono-btls-shared.so"
 FILES_${PN}-lldb                        = "${libdir}/mono/lldb/*"
 FILES_${PN}-libs-2.0                    = "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
 FILES_${PN}-libs-3.5                    = "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
@@ -86,6 +87,12 @@ FILES_${PN}-xbuild			= "${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks
 FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
 FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
 FILES_${PN}-staticdev			+= " ${libdir}/*.a"
+FILES_${PN}-api-4.5.1			+= " ${libdir}/mono/4.5.1-api/*"
+FILES_${PN}-api-4.5.2			+= " ${libdir}/mono/4.5.2-api/*"
+FILES_${PN}-api-4.6			+= " ${libdir}/mono/4.6-api/*"
+FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
+FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
+FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
 
 RDEPENDS_${PN} =+ "bash" 
 

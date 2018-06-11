@@ -1,0 +1,2 @@
+SRC_URI[md5sum] = "e8f7f749e0066ce366453a47e2cde2b7"
+SRC_URI[sha256sum] = "b4de4ea2105ac43ba15cdaef05810b9dc2f00b41e68703f1c083c1fe4b72aa7a"

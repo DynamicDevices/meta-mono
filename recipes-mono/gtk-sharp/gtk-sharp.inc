@@ -31,3 +31,5 @@ FILES_${PN}-dev = "\
   ${libdir}/${PN}*/* \
   ${datadir}/* \
 "
+
+DIRFILES = "1"
