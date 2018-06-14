@@ -26,6 +26,8 @@ For Mono release notes please see:
 * [Mono 5.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.1/)
 * [Mono 5.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.2.0/)
 * [Mono 5.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.4.0/)
+* [Mono 5.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.8.0/)
+* [Mono 5.10.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.10.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -146,6 +148,7 @@ For a walkthrough on building Mono for Raspberry Pi see:
 * Fabio Berton
 * Barry Grussling
 * Zoltán Böszörményi
+* Ioan-Adrian Ratiu
 
 ## Maintainer(s) & Patch policy
 
@@ -165,9 +168,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 16/09/2017
+#### 14/06/2018
 
-5.2.0.224
+5.10.1.47
 
 * Maintainer has tested Poky (pyro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
