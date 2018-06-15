@@ -198,6 +198,12 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - ARM emulation: Works
 
+#### 14/06/2018
+
+5.12.0.226
+
+* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
+
 #### 28/07/2015
 
 4.0.3.19
