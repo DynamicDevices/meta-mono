@@ -40,7 +40,9 @@ do_configure_prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
     sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
     sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
+    if [ -f "eglib/acinclude.m4" ]; then
+      sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
+    fi
     sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/mono-wrapper.in
     sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/monodis-wrapper.in
     find . -name "*.pc.in" -exec sed -i -e 's:^\([^=]*=\).*pcfiledir.*/\.\./\.\.:\1@prefix@:g' {} \;
@@ -86,6 +88,7 @@ FILES_${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
 FILES_${PN}-xbuild			= "${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/.NET*"
 FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
 FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
+FILES_${PN}-dbg                         += " ${libdir}/mono/*/*.pdb ${libdir}/mono/*/*/*.pdb ${libdir}/mono/gac/*/*/*.pdb"
 FILES_${PN}-staticdev			+= " ${libdir}/*.a"
 FILES_${PN}-api-4.5.1			+= " ${libdir}/mono/4.5.1-api/*"
 FILES_${PN}-api-4.5.2			+= " ${libdir}/mono/4.5.2-api/*"
