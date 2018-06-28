@@ -96,6 +96,7 @@ FILES_${PN}-api-4.6			+= " ${libdir}/mono/4.6-api/*"
 FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
 FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
 FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
+FILES_${PN}-api-4.7.1			+= " ${libdir}/mono/4.7.1-api/*"
 
 RDEPENDS_${PN} =+ "bash" 
 
