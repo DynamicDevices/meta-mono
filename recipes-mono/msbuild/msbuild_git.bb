@@ -49,6 +49,11 @@ do_install () {
 	# End of conditional copies from install-mono-prefix.sh
 
 	sed -i -es,${D},,g ${D}${bindir}/msbuild
+
+	# There are two conflicting files in these directories
+	# across msbuild and mono 5.12.x
+	rm -rf ${D}${libdir}/mono/xbuild/15.0/Microsoft.Common.targets
+	rm -rf ${D}${libdir}/mono/xbuild/15.0/Imports/Microsoft.Common.props
 }
 
 do_install_append_class-target() {
