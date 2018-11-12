@@ -1,0 +1,11 @@
+diff --git a/cibuild.sh b/cibuild.sh
+index 82a3694..5278b35 100755
+--- a/cibuild.sh
++++ b/cibuild.sh
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env bash
+ 
++set -x
+ set -e
+ 
+ usage()

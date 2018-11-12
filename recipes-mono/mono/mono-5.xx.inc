@@ -40,7 +40,9 @@ do_configure_prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
     sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
     sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
+    if [ -f "eglib/acinclude.m4" ]; then
+      sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
+    fi
     sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/mono-wrapper.in
     sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/monodis-wrapper.in
     find . -name "*.pc.in" -exec sed -i -e 's:^\([^=]*=\).*pcfiledir.*/\.\./\.\.:\1@prefix@:g' {} \;
@@ -66,9 +68,9 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 PACKAGES = "${PN}-dbg ${PN}-doc ${PN}-staticdev ${PN}-locale ${PN}-libs ${PN}-dev "
 PACKAGES += "${PN}-config ${PN}-binaries ${PN}-libs-core "
 PACKAGES += "${PN}-libs-2.0 ${PN}-libs-3.5 ${PN}-libs-4.0 ${PN}-libs-4.5 "
-PACKAGES += "${PN}-api-4.5.1 ${PN}-api-4.5.2 ${PN}-api-4.6 ${PN}-api-4.6.1 ${PN}-api-4.6.2 ${PN}-api-4.7 "
+PACKAGES += "${PN}-api-4.5.1 ${PN}-api-4.5.2 ${PN}-api-4.6 ${PN}-api-4.6.1 ${PN}-api-4.6.2 ${PN}-api-4.7 ${PN}-api-4.7.1 "
 PACKAGES += "${PN}-libs-compat-2.0 ${PN}-gac ${PN}-configuration-crypto "
-PACKAGES += "${PN}-libs-monodoc ${PN}-xbuild "
+PACKAGES += "${PN}-libs-monodoc ${PN}-xbuild ${PN}-msbuild "
 PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN} "
 
@@ -84,8 +86,10 @@ FILES_${PN}-gac				= "${libdir}/mono/gac/*"
 FILES_${PN}-configuration-crypto	= "${libdir}/mono/mono-configuration-crypto/*/*"
 FILES_${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
 FILES_${PN}-xbuild			= "${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/.NET*"
+FILES_${PN}-msbuild			= "${libdir}/mono/msbuild/*"
 FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
 FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
+FILES_${PN}-dbg                         += " ${libdir}/mono/*/*.pdb ${libdir}/mono/*/*/*.pdb ${libdir}/mono/gac/*/*/*.pdb"
 FILES_${PN}-staticdev			+= " ${libdir}/*.a"
 FILES_${PN}-api-4.5.1			+= " ${libdir}/mono/4.5.1-api/*"
 FILES_${PN}-api-4.5.2			+= " ${libdir}/mono/4.5.2-api/*"
@@ -93,6 +97,7 @@ FILES_${PN}-api-4.6			+= " ${libdir}/mono/4.6-api/*"
 FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
 FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
 FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
+FILES_${PN}-api-4.7.1			+= " ${libdir}/mono/4.7.1-api/*"
 
 RDEPENDS_${PN} =+ "bash" 
 

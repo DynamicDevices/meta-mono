@@ -1,0 +1,4 @@
+SRC_URI[md5sum] = "07f653ae3994b692a3e13f6010beb7d5"
+SRC_URI[sha256sum] = "c9c6a53a498fd1c28f901f797f9f6706b961b262d2eebd2ce41f004b0173e35f"
+
+S = "${WORKDIR}/mono-${PV}"

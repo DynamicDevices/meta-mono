@@ -1,0 +1,6 @@
+SRC_URI[md5sum] = "74e26402a3b16433dd287f3c02fb387b"
+SRC_URI[sha256sum] = "03b8e463032bc425673dec844b35b4c669f5b99b0e45521195efb3741a9f5e94"
+
+S = "${WORKDIR}/mono-${PV}"
+
+EXTRA_OECONF = "--disable-btls"
