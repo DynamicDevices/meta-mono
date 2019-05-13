@@ -103,3 +103,7 @@ RDEPENDS_${PN} =+ "bash"
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
+
+# Otherwise the full path to bash is written to the first line of doltlibtool script
+# which causes build failures with deeply nested build directories
+CACHED_CONFIGUREVARS += "ac_cv_path_DOLT_BASH='/usr/bin/env bash'"
