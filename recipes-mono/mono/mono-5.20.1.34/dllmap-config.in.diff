@@ -1,0 +1,32 @@
+diff -ur mono-5.20.1.34.org/data/config.in mono-5.20.1.34/data/config.in
+--- mono-5.20.1.34.org/data/config.in	2019-07-16 19:16:09.000000000 +0100
++++ mono-5.20.1.34/data/config.in	2019-07-31 18:55:09.498000000 +0100
+@@ -10,7 +10,7 @@
+ 	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
+ 	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
+ 	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
+-	<dllmap dll="MonoPosixHelper" target="$mono_libdir/libMonoPosixHelper@libsuffix@" os="!windows" />
++	<dllmap dll="MonoPosixHelper" target="libMonoPosixHelper.so" os="!windows" />
+ 	<dllmap dll="System.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
+ 	<dllmap dll="System.Net.Security.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
+ 	<dllmap dll="System.Security.Cryptography.Native.Apple" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="osx" />
+@@ -19,7 +19,7 @@
+ 	<dllmap dll="i:msvcrt.dll" target="@LIBC@" os="!windows"/>
+ 	<dllmap dll="sqlite" target="@SQLITE@" os="!windows"/>
+ 	<dllmap dll="sqlite3" target="@SQLITE3@" os="!windows"/>
+-	<dllmap dll="libX11" target="@X11@" os="!windows" />
++	<dllmap dll="libX11" target="libX11.so.6" os="!windows" />
+ 	<dllmap dll="libgdk-x11-2.0" target="@GDKX11@" os="!windows"/>
+ 	<dllmap dll="libgdk_pixbuf-2.0" target="libgdk_pixbuf-2.0.so.0" os="!windows"/>
+ 	<dllmap dll="libgtk-x11-2.0" target="@GTKX11@" os="!windows"/>
+@@ -39,8 +39,8 @@
+ 		<dllentry dll="__Internal" name="MoveMemory" target="mono_win32_compat_MoveMemory"/>
+ 		<dllentry dll="__Internal" name="ZeroMemory" target="mono_win32_compat_ZeroMemory"/>
+ 	</dllmap>
+-	<dllmap dll="gdiplus" target="@libgdiplus_install_loc@" os="!windows"/>
+-	<dllmap dll="gdiplus.dll" target="@libgdiplus_install_loc@"  os="!windows"/>
++	<dllmap dll="gdiplus" target="libgdiplus.so.0" os="!windows"/>
++	<dllmap dll="gdiplus.dll" target="libgdiplus.so.0"  os="!windows"/>
+ 	<dllmap dll="gdi32" target="@libgdiplus_install_loc@" os="!windows"/>
+ 	<dllmap dll="gdi32.dll" target="@libgdiplus_install_loc@" os="!windows"/>
+ </configuration>
