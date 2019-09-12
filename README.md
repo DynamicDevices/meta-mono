@@ -6,7 +6,7 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 5.0.x
+This README pertains to meta-mono layer support for Mono 3.12.1 - 5.4.0
 
 For Mono release notes please see:
 
@@ -24,6 +24,8 @@ For Mono release notes please see:
 * [Mono 4.8.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.1/)
 * [Mono 5.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.0/)
 * [Mono 5.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.1/)
+* [Mono 5.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.2.0/)
+* [Mono 5.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.4.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
 
@@ -141,9 +143,9 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - x86 emulation: Works
 
-#### 04/06/2017
+#### 16/09/2017
 
-5.0.1.1
+5.2.0.224
 
 * Maintainer has tested Poky (pyro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
 
@@ -216,17 +218,25 @@ MIT/GPLv2 - following the lead of libgdiplus and mono
 
 ## Current State - PPC
 
-#### 14/02/2016
+#### 25/06/2017
 
-4.2.2.30
+5.4.0.56
 
-* Maintainer has tested a Poky (Jethro) build on a qemuppc platform, with 
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
 
 a simple console application, helloworld which RUNS
-a simple Windows Forms application, helloworldform which FAILS
+a simple Windows Forms application, helloworldform which RUNS
 a simple GTK# application hellloworldgtk, which RUNS
 
-NOTE: The issue with the latest 4.2.2.30 release appears to be resolved in Mono master
+#### 01/07/2017
+
+5.2.0.196
+
+* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
+
+a simple console application, helloworld which RUNS
+a simple Windows Forms application, helloworldform which RUNS
+a simple GTK# application hellloworldgtk, which RUNS
 
 #### 14/02/2016
 
