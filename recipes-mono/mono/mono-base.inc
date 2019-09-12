@@ -6,7 +6,7 @@ do_install_append() {
         cp -af --no-preserve=ownership \
             ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}
         cp -af --no-preserve=ownership \
-            ${STAGING_DIR_NATIVE}${libdir}/${PN} ${D}${libdir}
+            ${STAGING_LIBDIR_NATIVE}/${PN} ${D}${libdir}
         # AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
         find ${D}${libdir}/${PN} -name *.dll.so -o -name *.exe.so | xargs -i rm {}
 }
