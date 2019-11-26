@@ -6,9 +6,8 @@ SECTION = "devel"
 
 DEPENDS = "zlib"
 
-SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
+SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
-           file://0002-prevent-threadpool-exception5-test-hanging.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
