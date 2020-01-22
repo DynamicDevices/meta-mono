@@ -1,16 +1,25 @@
-diff -ur mono-5.20.1.34.org/data/config.in mono-5.20.1.34/data/config.in
---- mono-5.20.1.34.org/data/config.in	2019-07-16 19:16:09.000000000 +0100
-+++ mono-5.20.1.34/data/config.in	2019-07-31 18:55:09.498000000 +0100
-@@ -10,7 +10,7 @@
+--- mono-5.20.1.34.orig/data/config.in	2019-07-16 20:16:09.000000000 +0200
++++ mono-5.20.1.34/data/config.in	2020-01-22 07:35:08.569613059 +0100
+@@ -5,21 +5,21 @@
+ 	<dllmap dll="intl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
+ 	<dllmap dll="libintl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
+ 	<dllmap dll="libintl" target="@INTL@" os="!windows"/>
+-	<dllmap dll="i:libxslt.dll" target="libxslt@libsuffix@" os="!windows"/>
+-	<dllmap dll="i:odbc32.dll" target="libodbc@libsuffix@" os="!windows"/>
++	<dllmap dll="i:libxslt.dll" target="libxslt@libsuffix@.1" os="!windows"/>
++	<dllmap dll="i:odbc32.dll" target="libodbc@libsuffix@.2" os="!windows"/>
  	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
  	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
  	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
 -	<dllmap dll="MonoPosixHelper" target="$mono_libdir/libMonoPosixHelper@libsuffix@" os="!windows" />
+-	<dllmap dll="System.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
+-	<dllmap dll="System.Net.Security.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
 +	<dllmap dll="MonoPosixHelper" target="libMonoPosixHelper.so" os="!windows" />
- 	<dllmap dll="System.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
- 	<dllmap dll="System.Net.Security.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="!windows" />
++	<dllmap dll="System.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@.0" os="!windows" />
++	<dllmap dll="System.Net.Security.Native" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@.0" os="!windows" />
  	<dllmap dll="System.Security.Cryptography.Native.Apple" target="$mono_libdir/@MONO_NATIVE_LIBRARY_NAME@@libsuffix@" os="osx" />
-@@ -19,7 +19,7 @@
+ 	<dllmap dll="libmono-btls-shared" target="$mono_libdir/libmono-btls-shared@libsuffix@" os="!windows" />
+ 	<dllmap dll="i:msvcrt" target="@LIBC@" os="!windows"/>
  	<dllmap dll="i:msvcrt.dll" target="@LIBC@" os="!windows"/>
  	<dllmap dll="sqlite" target="@SQLITE@" os="!windows"/>
  	<dllmap dll="sqlite3" target="@SQLITE3@" os="!windows"/>
