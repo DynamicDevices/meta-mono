@@ -12,7 +12,7 @@ SRC_URI = "https://github.com/DynamicDevices/mono-helloworld/releases/download/v
 inherit autotools-brokensep
 inherit mono
 
-DEPENDS_${PN} = "mono"
+DEPENDS = "mono"
 RDEPENDS_${PN} = "mono"
 
 EDEPENDS_X11 = "libgdiplus"
