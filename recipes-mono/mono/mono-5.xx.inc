@@ -30,6 +30,7 @@ FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 inherit autotools-brokensep
 inherit pkgconfig
 inherit gettext
+inherit pythonnative
 
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
