@@ -30,6 +30,7 @@ FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 inherit autotools-brokensep
 inherit pkgconfig
 inherit gettext
+inherit pythonnative
 
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
@@ -99,7 +100,9 @@ FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
 FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
 FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
 
-RDEPENDS_${PN} =+ "bash" 
+RDEPENDS_${PN} =+ "bash zlib"
+RDEPENDS_${PN}-dev =+ "bash"
+RDEPENDS_${PN}-libs =+ "zlib"
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
