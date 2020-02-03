@@ -6,9 +6,8 @@ SECTION = "devel"
 
 DEPENDS = "zlib"
 
-SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
+SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
-           file://0002-prevent-threadpool-exception5-test-hanging.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
@@ -30,7 +29,6 @@ FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 inherit autotools-brokensep
 inherit pkgconfig
 inherit gettext
-inherit pythonnative
 
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
@@ -100,9 +98,7 @@ FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
 FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
 FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
 
-RDEPENDS_${PN} =+ "bash zlib"
-RDEPENDS_${PN}-dev =+ "bash"
-RDEPENDS_${PN}-libs =+ "zlib"
+RDEPENDS_${PN} =+ "bash" 
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
