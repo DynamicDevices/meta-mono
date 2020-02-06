@@ -23,7 +23,7 @@ def mono_workspace_version (d):
 
 S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
-FILESPATH =. "${FILE_DIRNAME}/mono-5.xx:"
+FILESPATH =. "${FILE_DIRNAME}/mono-6.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
 inherit autotools-brokensep
