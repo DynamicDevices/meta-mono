@@ -8,6 +8,7 @@ DEPENDS = "zlib"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
+           file://0003-mono-use-python3-instead-of-python.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
