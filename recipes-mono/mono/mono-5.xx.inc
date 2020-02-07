@@ -9,6 +9,7 @@ DEPENDS = "zlib"
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
            file://dllmap-config.in.diff \
            file://0002-prevent-threadpool-exception5-test-hanging.patch \
+           file://0003-mono-use-python3-instead-of-python.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
