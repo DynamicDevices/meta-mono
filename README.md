@@ -155,13 +155,15 @@ For a walkthrough on building Mono for Raspberry Pi see:
 
 * [Alex J Lennon](mailto:ajlennon@dynamicdevices.co.uk)
 
-Follow Yocto change submission policy, detailed here:
+Follow Yocto change submission policy, detailed here, for formatting:
 
 * [Yocto - How to submit a change](http://www.yoctoproject.org/docs/1.4.2/dev-manual/dev-manual.html#how-to-submit-a-change)
 
-Use the create-pull-request and send-pull-request scripts details in 3.9.1. 
-
-Send patches and queries to the maintainer and to [Yocto mailing list](mailto:yocto@yoctoproject.org)
+* Create an issue on github.com/dynamicdevices/meta-mono
+* Fork master on github.com/dynamicdevices/meta-mono
+* Commit your changes to your fork referencing the issue number prefixed with #
+* Create a pull request (PR) to the main repository
+* If the maintainer doesn't respond after a reasonable time email them a reminder
 
 ## Copyright
 
