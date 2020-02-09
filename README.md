@@ -314,3 +314,7 @@ Fails to link building Poky (Jethro) with:
 * write recipes to create packages for mscorlib library tests
 * write recipes to create packages for System.dll library tests
 * try mono on beagleboard (email maintainer when you do this, he will thank you)
+
+## HitCount
+
+[![HitCount](http://hits.dwyl.com/dynamicdevices/meta-mono.svg)](http://hits.dwyl.com/dynamicdevices/meta-mono)
