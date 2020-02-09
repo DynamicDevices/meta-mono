@@ -1,0 +1,166 @@
+From b23dc637abcb049fca335d3afd31a02cf87a309b Mon Sep 17 00:00:00 2001
+From: Kraag Gorim <kraaggorim@gmail.com>
+Date: Thu, 6 Feb 2020 16:21:46 +0100
+Subject: [PATCH] mono: use python3 instead of python
+
+Replace all calls for python with a variable and switch from python
+version 2 to version 3.
+---
+ acceptance-tests/Makefile.in    | 9 +++++----
+ mono/mini/Makefile.am           | 4 +++-
+ mono/mini/Makefile.am.in        | 4 +++-
+ mono/mini/Makefile.in           | 3 ++-
+ mono/mini/genmdesc.py           | 2 +-
+ mono/tests/Makefile.am          | 3 ++-
+ mono/utils/jemalloc/Makefile.in | 9 +++++----
+ 7 files changed, 21 insertions(+), 13 deletions(-)
+
+diff --git a/acceptance-tests/Makefile.in b/acceptance-tests/Makefile.in
+index 9b9b777..7b2313d 100644
+--- a/acceptance-tests/Makefile.in
++++ b/acceptance-tests/Makefile.in
+@@ -265,6 +265,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
+ PIDTYPE = @PIDTYPE@
+ PKG_CONFIG = @PKG_CONFIG@
+ PLATFORM_AOT_SUFFIX = @PLATFORM_AOT_SUFFIX@
++PYTHON = "python3"
+ RANLIB = @RANLIB@
+ SEARCHSEP = @SEARCHSEP@
+ SED = @SED@
+@@ -5770,19 +5771,19 @@ reset:
+ 
+ __bump-version-%:
+ 	@if [ "$(REV)" = "" ]; then echo "Usage: make bump-version-$* REV=<ref>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $(REV)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-branch-%:
+ 	@if [ "$(BRANCH)" = "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+ 	@if [ "$(REMOTE_BRANCH)" == "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to switch to $(BRANCH) $(REMOTE BRANCH)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-current-version-%:
+ 	REV=$(shell cd $(ACCEPTANCE_TESTS_PATH)/$* && git log -1 --pretty=format:%H); \
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
+ 	if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $$REV:" | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ $(eval $(call ValidateVersionTemplate,benchmarker,BENCHMARKER))
+diff --git a/mono/mini/Makefile.am b/mono/mini/Makefile.am
+index f6f85d0..f88e667 100644
+--- a/mono/mini/Makefile.am
++++ b/mono/mini/Makefile.am
+@@ -683,9 +683,11 @@ generics-variant-types.dll: generics-variant-types.il
+ MemoryIntrinsics.dll: MemoryIntrinsics.il
+ 	$(ILASM) -dll -output=$@ $<
+ 
++PYTHON = python3
++
+ GENMDESC_OPTS=
+ 
+-GENMDESC_PRG=python $(srcdir)/genmdesc.py $(target_define) $(srcdir)
++GENMDESC_PRG=$(PYTHON) $(srcdir)/genmdesc.py $(target_define) $(srcdir)
+ 
+ cpu-wasm.h: mini-ops.h cpu-wasm.md
+ 	$(GENMDESC_PRG) cpu-wasm.h wasm_desc $(srcdir)/cpu-wasm.md
+diff --git a/mono/mini/Makefile.am.in b/mono/mini/Makefile.am.in
+index f6f85d0..f88e667 100755
+--- a/mono/mini/Makefile.am.in
++++ b/mono/mini/Makefile.am.in
+@@ -683,9 +683,11 @@ generics-variant-types.dll: generics-variant-types.il
+ MemoryIntrinsics.dll: MemoryIntrinsics.il
+ 	$(ILASM) -dll -output=$@ $<
+ 
++PYTHON = python3
++
+ GENMDESC_OPTS=
+ 
+-GENMDESC_PRG=python $(srcdir)/genmdesc.py $(target_define) $(srcdir)
++GENMDESC_PRG=$(PYTHON) $(srcdir)/genmdesc.py $(target_define) $(srcdir)
+ 
+ cpu-wasm.h: mini-ops.h cpu-wasm.md
+ 	$(GENMDESC_PRG) cpu-wasm.h wasm_desc $(srcdir)/cpu-wasm.md
+diff --git a/mono/mini/Makefile.in b/mono/mini/Makefile.in
+index 52f3fcf..0fe413a 100644
+--- a/mono/mini/Makefile.in
++++ b/mono/mini/Makefile.in
+@@ -1146,8 +1146,9 @@ libmonosgen_2_0_la_LDFLAGS = $(libmonoldflags) $(monobin_platform_ldflags)
+ libmonoincludedir = $(includedir)/mono-$(API_VER)/mono/jit
+ libmonoinclude_HEADERS = jit.h
+ CSFLAGS = -unsafe -nowarn:0219,0169,0414,0649,0618
++PYTHON = python3
+ GENMDESC_OPTS = 
+-GENMDESC_PRG = python $(srcdir)/genmdesc.py $(target_define) $(srcdir)
++GENMDESC_PRG = $(PYTHON) $(srcdir)/genmdesc.py $(target_define) $(srcdir)
+ LLVM_AOT_RUNTIME_OPTS = $(if $(LLVM),--llvm,)
+ GSHAREDVT_RUNTIME_OPTS = $(if $(GSHAREDVT),-O=gsharedvt,)
+ fullaot_regtests = $(regtests)
+diff --git a/mono/mini/genmdesc.py b/mono/mini/genmdesc.py
+index 987332b..3691c9d 100755
+--- a/mono/mini/genmdesc.py
++++ b/mono/mini/genmdesc.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ #
+ # This tool is used to generate the cpu-<ARCH>.h files used by the JIT. The input is the
+diff --git a/mono/tests/Makefile.am b/mono/tests/Makefile.am
+index 2600999..a9512c2 100755
+--- a/mono/tests/Makefile.am
++++ b/mono/tests/Makefile.am
+@@ -2397,8 +2397,9 @@ coreclr-gcstress:
+ 
+ # Tests for the Mono lldb plugin
+ EXTRA_DIST += test_lldb.py test-lldb.cs
++PYTHON = python3
+ test-lldb: test-lldb.exe
+-	python test_lldb.py $(JITTEST_PROG)
++	$(PYTHON) test_lldb.py $(JITTEST_PROG)
+ 
+ noinst_LTLIBRARIES = libtest.la
+ 
+diff --git a/mono/utils/jemalloc/Makefile.in b/mono/utils/jemalloc/Makefile.in
+index 997cb07..cd53917 100644
+--- a/mono/utils/jemalloc/Makefile.in
++++ b/mono/utils/jemalloc/Makefile.in
+@@ -269,6 +269,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
+ PIDTYPE = @PIDTYPE@
+ PKG_CONFIG = @PKG_CONFIG@
+ PLATFORM_AOT_SUFFIX = @PLATFORM_AOT_SUFFIX@
++PYTHON = python3
+ RANLIB = @RANLIB@
+ SEARCHSEP = @SEARCHSEP@
+ SED = @SED@
+@@ -667,19 +668,19 @@ reset:
+ 
+ __bump-version-%:
+ 	@if [ "$(REV)" = "" ]; then echo "Usage: make bump-version-$* REV=<ref>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $(REV)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-branch-%:
+ 	@if [ "$(BRANCH)" = "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+ 	@if [ "$(REMOTE_BRANCH)" == "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to switch to $(BRANCH) $(REMOTE BRANCH)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-current-version-%:
+ 	REV=$(shell cd $(ACCEPTANCE_TESTS_PATH)/$* && git log -1 --pretty=format:%H); \
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
+ 	if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $$REV:" | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ $(eval $(call ValidateVersionTemplate,jemalloc,JEMALLOC))
+-- 
+2.24.0
+

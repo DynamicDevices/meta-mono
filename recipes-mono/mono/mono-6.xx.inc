@@ -8,6 +8,7 @@ DEPENDS = "zlib"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
+           file://0003-mono-use-python3-instead-of-python.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
@@ -23,12 +24,13 @@ def mono_workspace_version (d):
 
 S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
-FILESPATH =. "${FILE_DIRNAME}/mono-5.xx:"
+FILESPATH =. "${FILE_DIRNAME}/mono-6.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
 inherit autotools-brokensep
 inherit pkgconfig
 inherit gettext
+inherit python3native
 
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
@@ -74,7 +76,7 @@ PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN} "
 
 FILES_${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
-FILES_${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so ${libdir}/libmono-btls-shared.so"
+FILES_${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libmono-native.so ${libdir}/libikvm-native.so ${libdir}/libmono-btls-shared.so"
 FILES_${PN}-lldb                        = "${libdir}/mono/lldb/*"
 FILES_${PN}-libs-2.0                    = "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
 FILES_${PN}-libs-3.5                    = "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
@@ -98,7 +100,9 @@ FILES_${PN}-api-4.6.1			+= " ${libdir}/mono/4.6.1-api/*"
 FILES_${PN}-api-4.6.2			+= " ${libdir}/mono/4.6.2-api/*"
 FILES_${PN}-api-4.7			+= " ${libdir}/mono/4.7-api/*"
 
-RDEPENDS_${PN} =+ "bash" 
+RDEPENDS_${PN} =+ "bash zlib"
+RDEPENDS_${PN}-dev =+ "bash"
+RDEPENDS_${PN}-libs =+ "zlib"
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
