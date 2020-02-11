@@ -14,7 +14,9 @@ version 2 to version 3.
  mono/tests/Makefile.am          | 3 ++-
  mono/utils/jemalloc/Makefile.in | 9 +++++----
  netcore/Makefile                | 3 ++-
- 8 files changed, 23 insertions(+), 14 deletions(-)
+ scripts/submodules/versions.mk  | 9 +++++----
+ scripts/submodules/versions.py  | 2 +-
+ 10 files changed, 29 insertions(+), 19 deletions(-)
 
 diff --git a/acceptance-tests/Makefile.in b/acceptance-tests/Makefile.in
 index 930a27e68..1f0d44981 100644
@@ -176,6 +178,50 @@ index 72eb883a9..4a8ff64c6 100644
  XUNIT_FLAGS = -notrait category=nonwindowstests @../../../../CoreFX.issues_windows.rsp
  TESTS_PLATFORM = Windows_NT.x64
  ON_RUNTIME_EXTRACT = chmod -R 755 {host,shared,./dotnet}
+diff --git a/scripts/submodules/versions.mk b/scripts/submodules/versions.mk
+index 899b09de0..f1b9ccdfe 100644
+--- a/scripts/submodules/versions.mk
++++ b/scripts/submodules/versions.mk
+@@ -4,6 +4,7 @@
+ #
+ 
+ SCRIPT=$(top_srcdir)/scripts/submodules/versions.py
++PYTHON=python3
+ 
+ # usage $(call ValidateVersionTemplate (name,MAKEFILE VAR,repo name))
+ # usage $(call ValidateVersionTemplate (mono,MONO,mono))
+@@ -106,17 +107,17 @@ reset:
+ 
+ __bump-version-%:
+ 	@if [ "$(REV)" = "" ]; then echo "Usage: make bump-version-$* REV=<ref>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $(REV)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $(REV)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-branch-%:
+ 	@if [ "$(BRANCH)" = "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+ 	@if [ "$(REMOTE_BRANCH)" == "" ]; then echo "Usage: make bump-branch-$* BRANCH=<branch> REMOTE_BRANCH=<remote branch>"; exit 1; fi
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-branch $* $(BRANCH)
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-remote-branch $* $(REMOTE_BRANCH)
+ 	@if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to switch to $(BRANCH) $(REMOTE BRANCH)." | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+ 
+ __bump-current-version-%:
+ 	REV=$(shell cd $(ACCEPTANCE_TESTS_PATH)/$* && git log -1 --pretty=format:%H); \
+-	python $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
++	$(PYTHON) $(SCRIPT) $(SUBMODULES_CONFIG_FILE) set-rev $* $$REV; \
+ 	if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $$REV:" | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
+diff --git a/scripts/submodules/versions.py b/scripts/submodules/versions.py
+index 5252ee583..44994d23f 100755
+--- a/scripts/submodules/versions.py
++++ b/scripts/submodules/versions.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ import json
 -- 
 2.24.0
 
