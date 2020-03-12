@@ -54,7 +54,7 @@ do_install () {
 	rm -rf ${D}${libdir}/mono/xbuild/15.0/Imports/Microsoft.Common.props
 }
 
-do_install_append_class-target() {
+do_install_append() {
 	install -d -m0755 ${D}${libdir}/mono/msbuild/15.0/bin/Roslyn
 	install -m0755 ${S}/bin/Release-MONO/AnyCPU/Unix/Unix_Deployment/Roslyn/* ${D}${libdir}/mono/msbuild/15.0/bin/Roslyn/
 }
