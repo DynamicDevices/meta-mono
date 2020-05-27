@@ -5,6 +5,16 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
+## Layer Dependencies
+
+This layer depends on:
+
+URI: git://git.openembedded.org/openembedded-core
+layers: meta
+branch: master
+
+## Detail
+
 This README pertains to meta-mono layer support for Mono 3.12.1 - 6.8.0
 
 For Mono release notes please see:
