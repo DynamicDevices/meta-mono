@@ -1,5 +1,5 @@
 require libgdiplus-common.inc
-require libgdiplus.inc
+require libgdiplus-6.xx.inc
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=e0a7dacaa67d7e24a32074fba736dc59"
 
