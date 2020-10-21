@@ -9,3 +9,4 @@ PACKAGES += "${PN}-profiler "
 FILES_${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
 
 INSANE_SKIP_${PN}-libs += "dev-so"
+INSANE_SKIP_${PN} += "file-rdeps"
