@@ -3,6 +3,9 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 
 inherit native
 
+RPROVIDES += "nativesdk-mono"
+PROVIDES += "nativesdk-mono"
+
 do_compile() {
     make EXTERNAL_MCS="${S}/mcs/class/lib/monolite/basic.exe" EXTERNAL_RUNTIME="${S}/foo/bar/mono"
 }
