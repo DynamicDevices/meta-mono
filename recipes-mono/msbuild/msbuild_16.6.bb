@@ -21,6 +21,7 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git \
            file://mono-msbuild-use-bash.patch \
            file://0001-Don-t-try-to-run-pkill.patch \
            file://0001-Copy-hostfxr.patch \
+           file://0002-Remove-myget-feeds-and-replace-with-AzDO-feeds.patch \
            "
 
 S = "${WORKDIR}/git"
