@@ -19,3 +19,7 @@ mono_copy_libdir_mono() {
 }
 
 do_populate_sysroot[postfuncs] += " mono_copy_libdir_mono "
+
+do_install_append() {
+    sed "s|\$mono_libdir|${libdir}|g" -i ${D}${sysconfdir}/mono/config
+}

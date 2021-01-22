@@ -27,8 +27,6 @@ MONOLIBS = "\
     "
 
 do_install_append() {
-        cp -af --no-preserve=ownership \
-            ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}
         install -d ${D}${libdir}/${PN}
         for lib in ${MONOLIBS}; do
             if [ -d "${STAGING_DIR_NATIVE}${libdir}/${PN}/$lib" ]; then
