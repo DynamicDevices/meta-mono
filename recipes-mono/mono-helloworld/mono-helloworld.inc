@@ -13,8 +13,8 @@ inherit autotools
 inherit mono
 inherit pkgconfig
 
-DEPENDS = "mono-native"
-RDEPENDS_${PN} = "mono"
+DEPENDS += "mono-native"
+RDEPENDS_${PN} += "mono"
 
 EDEPENDS_X11 = "libgdiplus"
 ERDEPENDS_X11 = "libgdiplus"
