@@ -1,0 +1,31 @@
+From ec790cb2d23ea18d679046b94a130335d79c0698 Mon Sep 17 00:00:00 2001
+From: Kai Krakow <kai@kaishome.de>
+Date: Sat, 18 Apr 2020 11:00:39 +0200
+Subject: [PATCH] configure: Fix build with Gentoo pango
+
+Signed-off-by: Kai Krakow <kai@kaishome.de>
+---
+ configure.ac | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 0d8f089..f7bee07 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -53,10 +53,10 @@
+   LDFLAGS="$LDFLAGS --coverage"
+ fi
+ 
+-CAIRO_LIBS="`pkg-config --libs cairo `"
+-CAIRO_CFLAGS="`pkg-config --cflags cairo `"
++CAIRO_LIBS="`pkg-config --libs cairo pangoft2 `"
++CAIRO_CFLAGS="`pkg-config --cflags cairo pangoft2 `"
+ cairo_info="`pkg-config --modversion cairo ` (system)"
+-GDIPLUS_PKG_REQ="cairo"
++GDIPLUS_PKG_REQ="cairo pangoft2"
+ 
+ PANGO_REQUIRED_VERSION="1.40.14"
+ PANGO_MAX_VERSION="1.43"
+-- 
+2.24.1
+

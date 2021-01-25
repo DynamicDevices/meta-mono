@@ -8,5 +8,5 @@ SRC_URI += " \
 		file://0001-configure-Fix-build-with-Gentoo-pango.patch \
 		"
 
-SRC_URI[md5sum] = "3f94b3d61934eecccaaac5a49501b283"
-SRC_URI[sha256sum] = "9a5e3f98018116f99361520348e9713cd05680c231d689a83d87acfaf237d3a8"
+SRC_URI[md5sum] = "8079300e708c7ea9b4254d4b2eeba463"
+SRC_URI[sha256sum] = "1fd034f4b636214cc24e94c563cd10b3f3444d9f0660927b60e63fd4131d97fa"

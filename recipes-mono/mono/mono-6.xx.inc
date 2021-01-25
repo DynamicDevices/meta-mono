@@ -4,7 +4,7 @@ HOMEPAGE = "http://mono-project.com"
 BUGTRACKER = "http://bugzilla.xamarin.com/"
 SECTION = "devel"
 
-DEPENDS = "zlib"
+DEPENDS = "zlib libatomic-ops"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
