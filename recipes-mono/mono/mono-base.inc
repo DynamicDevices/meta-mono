@@ -17,6 +17,9 @@ MONOLIBS = "\
     4.6.2-api \
     4.6-api \
     4.7-api \
+    4.7.1-api \
+    4.7.2-api \
+    4.8-api \
     compat-2.0 \
     gac \
     lldb \
