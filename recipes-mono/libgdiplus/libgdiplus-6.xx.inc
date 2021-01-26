@@ -4,7 +4,7 @@ PACKAGECONFIG[tiff] = "--with-libtiff,--without-libtiff,tiff"
 PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,giflib"
 PACKAGECONFIG[exif] = "--with-libexif,--without-libexif,libexif"
 PACKAGECONFIG[pango] = "--with-pango,--without-pango,pango"
-PACKAGECONFIG[x11] = "--with-x11,--without-x11,virtual/libx11 libxft"
+PACKAGECONFIG[x11] = ",--without-x11,virtual/libx11 libxft"
 
 DEPENDS =+ "cairo freetype fontconfig libpng"
 
