@@ -112,6 +112,29 @@ RDEPENDS_${PN} =+ "bash zlib"
 RDEPENDS_${PN}-dev =+ "bash"
 RDEPENDS_${PN}-libs =+ "zlib"
 
+RPROVIDES_${PN}				= "mono(System.Runtime.Loader) mono(System.Buffers)"
+RPROVIDES_${PN}-gac			= "mono(Mono.Cecil) mono(Mono.Security) mono(System) mono(System.Configuration) mono(System.Net.Http) mono(System.Xml)"
+RPROVIDES_${PN}-libs-2.0		= "mono(mscorlib)"
+
+RDEPENDS_${PN}-libs-2.0			= "${PN}-gac"
+RDEPENDS_${PN}-libs-3.5			= "${PN}-gac ${PN}-libs-2.0"
+RDEPENDS_${PN}-libs-4.0			= "${PN}-gac"
+RDEPENDS_${PN}-libs-4.5			= "${PN}"
+RDEPENDS_${PN}-api-4.5.1		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.5.2		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.6			= "${PN}-gac"
+RDEPENDS_${PN}-api-4.6.1		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.6.2		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.7			= "${PN}-gac"
+RDEPENDS_${PN}-api-4.7.1		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.7.2		= "${PN}-gac"
+RDEPENDS_${PN}-api-4.8			= "${PN}-gac"
+RDEPENDS_${PN}-configuration-crypto	= "${PN}-gac"
+
+INSANE_SKIP_${PN}-gac			= "file-rdeps"
+INSANE_SKIP_${PN}-xbuild		= "file-rdeps"
+INSANE_SKIP_${PN}-configuration-crypto	= "file-rdeps"
+
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
 
