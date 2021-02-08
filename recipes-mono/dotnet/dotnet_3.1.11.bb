@@ -6,7 +6,7 @@ HOMEPAGE = "https://www.microsoft.com/net/core"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=9fc642ff452b28d62ab19b7eea50dfb9"
 
-COMPATIBLE_HOST ?= "(x86_64).*-linux"
+COMPATIBLE_HOST ?= "(i586|x86_64).*-linux"
 
 DEPENDS += "\
     zlib \
