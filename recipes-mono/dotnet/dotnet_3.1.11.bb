@@ -67,7 +67,6 @@ shell_do_install() {
 
     # Symlinks
     ln -s ${D}${datadir}/dotnet/dotnet ${D}${bindir}/dotnet
-    ln -s ${D}${datadir}/dotnet/host/fxr/${HOST_FXR}/libhostfxr.so ${D}${libdir}/libhostfxr.so
 }
 
 FILES_${PN} = "\
