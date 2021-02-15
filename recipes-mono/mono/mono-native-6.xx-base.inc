@@ -3,7 +3,7 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 
 inherit native
 
-RPROVIDES += "nativesdk-mono"
+RPROVIDES_${PN} += "nativesdk-mono"
 PROVIDES += "nativesdk-mono"
 
 do_compile() {
