@@ -15,29 +15,10 @@ branch: master
 
 ## Detail
 
-This README pertains to meta-mono layer support for Mono 3.12.1 - 6.8.0
+This README pertains to meta-mono layer support for Mono 6.8.x - 6.12.x
 
 For Mono release notes please see:
 
-* [Mono 3.12.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.0/)
-* [Mono 3.12.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/3.12.1/)
-* [Mono 4.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.0/)
-* [Mono 4.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.1/)
-* [Mono 4.0.2 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.2/)
-* [Mono 4.0.3 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.0.3/)
-* [Mono 4.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.0/)
-* [Mono 4.2.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.2.1/)
-* [Mono 4.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.4.0/)
-* [Mono 4.6.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.6.1/)
-* [Mono 4.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.0/)
-* [Mono 4.8.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/4.8.1/)
-* [Mono 5.0.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.0/)
-* [Mono 5.0.1 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.0.1/)
-* [Mono 5.2.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.2.0/)
-* [Mono 5.4.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.4.0/)
-* [Mono 5.8.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.8.0/)
-* [Mono 5.10.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.10.0/)
-* [Mono 5.12.0 Release Notes](http://www.mono-project.com/docs/about-mono/releases/5.12.0/)
 * [Mono 6.8.0 Release Notes](https://www.mono-project.com/docs/about-mono/releases/6.8.0/)
 
 NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
