@@ -36,7 +36,7 @@ DISABLE_STATIC = ""
 
 EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
-do_configure_prepend() {
+do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
     sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
     sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
@@ -71,24 +71,24 @@ PACKAGES += "${PN}-libs-monodoc ${PN}-xbuild "
 PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN} "
 
-FILES_${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
-FILES_${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so"
-FILES_${PN}-lldb                        = "${libdir}/mono/lldb/*"
-FILES_${PN}-libs-2.0                    = "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
-FILES_${PN}-libs-3.5                    = "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
-FILES_${PN}-libs-4.0                    = "${libdir}/mono/4.0/* ${libdir}/mono/4.0-api/*"
-FILES_${PN}-libs-4.5                    = "${libdir}/mono/4.5/* ${libdir}/mono/4.5-api/*"
-FILES_${PN}-libs-compat-2.0		= "${libdir}/mono/compat-2.0/*"
-FILES_${PN}-gac				= "${libdir}/mono/gac/*"
-FILES_${PN}-configuration-crypto	= "${libdir}/mono/mono-configuration-crypto/*/*"
-FILES_${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
-FILES_${PN}-xbuild			= "${bindir}/xbuild ${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/.NET*"
-FILES_${PN}-dev                         += " ${bindir}/al ${bindir}/al2 ${bindir}/caspol ${bindir}/cccheck ${bindir}/cert2spc ${bindir}/certmgr ${bindir}/crlupdate ${bindir}/dtd2rng ${bindir}/dtd2xsd ${bindir}/genxs ${bindir}/ilasm ${bindir}/installvst ${bindir}/macpack ${bindir}/makecert ${bindir}/mdbrebase ${bindir}/mkbundle ${bindir}/mono-api-html ${bindir}/mono-api-info ${bindir}/mono-cil-strip ${bindir}/mono-find-provides ${bindir}/mono-find-requires ${bindir}/mono-shlib-cop ${bindir}/mono-symbolicate ${bindir}/mono-xmltool ${bindir}/monodis ${bindir}/monolinker ${bindir}/monop ${bindir}/monop2 ${bindir}/pedump ${bindir}/permview ${bindir}/peverify ${bindir}/resgen ${bindir}/resgen2 ${bindir}/secutil ${bindir}/sgen ${bindir}/signcode"
-FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
-FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
-FILES_${PN}-staticdev			+= " ${libdir}/*.a"
+FILES:${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
+FILES:${PN}-libs			= "${libdir}/libMono*.so ${libdir}/libikvm-native.so"
+FILES:${PN}-lldb                        = "${libdir}/mono/lldb/*"
+FILES:${PN}-libs-2.0                    = "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
+FILES:${PN}-libs-3.5                    = "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
+FILES:${PN}-libs-4.0                    = "${libdir}/mono/4.0/* ${libdir}/mono/4.0-api/*"
+FILES:${PN}-libs-4.5                    = "${libdir}/mono/4.5/* ${libdir}/mono/4.5-api/*"
+FILES:${PN}-libs-compat-2.0		= "${libdir}/mono/compat-2.0/*"
+FILES:${PN}-gac				= "${libdir}/mono/gac/*"
+FILES:${PN}-configuration-crypto	= "${libdir}/mono/mono-configuration-crypto/*/*"
+FILES:${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
+FILES:${PN}-xbuild			= "${bindir}/xbuild ${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/* ${libdir}/mono/xbuild-frameworks/.NETPortable/*/*/.NET*"
+FILES:${PN}-dev                         += " ${bindir}/al ${bindir}/al2 ${bindir}/caspol ${bindir}/cccheck ${bindir}/cert2spc ${bindir}/certmgr ${bindir}/crlupdate ${bindir}/dtd2rng ${bindir}/dtd2xsd ${bindir}/genxs ${bindir}/ilasm ${bindir}/installvst ${bindir}/macpack ${bindir}/makecert ${bindir}/mdbrebase ${bindir}/mkbundle ${bindir}/mono-api-html ${bindir}/mono-api-info ${bindir}/mono-cil-strip ${bindir}/mono-find-provides ${bindir}/mono-find-requires ${bindir}/mono-shlib-cop ${bindir}/mono-symbolicate ${bindir}/mono-xmltool ${bindir}/monodis ${bindir}/monolinker ${bindir}/monop ${bindir}/monop2 ${bindir}/pedump ${bindir}/permview ${bindir}/peverify ${bindir}/resgen ${bindir}/resgen2 ${bindir}/secutil ${bindir}/sgen ${bindir}/signcode"
+FILES:${PN}-doc				+= " ${datadir}/libgc-mono/*"
+FILES:${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
+FILES:${PN}-staticdev			+= " ${libdir}/*.a"
 
-RDEPENDS_${PN} =+ "bash" 
+RDEPENDS:${PN} =+ "bash" 
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""

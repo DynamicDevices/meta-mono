@@ -5,7 +5,7 @@
 # Clenaup is based on mono commit ffa8c9992f8 ("Merge pull request #11509 from
 # directhex/cleanup-system-native-make-dist")
 
-do_configure_prepend () {
+do_configure:prepend () {
     rm -rf $(find ${S} -type d -name "*\.libs")
     rm -rf $(find ${S} -name "*\.deps")
     rm -f $(find ${S} -name "*\.o")

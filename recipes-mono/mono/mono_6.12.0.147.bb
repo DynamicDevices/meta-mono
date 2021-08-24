@@ -3,7 +3,7 @@ require mono-mit-bsd-6xx.inc
 require ${PN}-base.inc
 require mono-${PV}.inc
 
-RDEPENDS_${PN}-dev =+ " zlib "
+RDEPENDS:${PN}-dev =+ " zlib "
 
 SRCREV = "mono-${PV}"
 
@@ -21,6 +21,6 @@ do_fixup_config() {
 }
 
 PACKAGES += "${PN}-profiler "
-FILES_${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
+FILES:${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
 
-INSANE_SKIP_${PN}-libs += "dev-so"
+INSANE_SKIP:${PN}-libs += "dev-so"

@@ -12,7 +12,7 @@ DEPENDS += "\
     zlib \
 "
 
-RDEPENDS_${PN}_class-target += "\
+RDEPENDS:${PN}:class-target += "\
     lttng-ust \
     libcurl \
     krb5 \
@@ -21,7 +21,7 @@ RDEPENDS_${PN}_class-target += "\
     libicui18n \
 "
 
-RDEPENDS_${PN}_class-native += "\
+RDEPENDS:${PN}:class-native += "\
     curl-native \
     krb5-native \
     icu-native \
@@ -69,7 +69,7 @@ shell_do_install() {
     ln -s ${D}${datadir}/dotnet/dotnet ${D}${bindir}/dotnet
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
     ${bindir} \
     ${libdir} \
     ${datadir}/dotnet/dotnet \
@@ -78,19 +78,19 @@ FILES_${PN} = "\
     ${datadir}/dotnet/shared \
 "
 
-FILES_${PN}-dbg = "\
+FILES:${PN}-dbg = "\
     ${datadir}/dotnet/.debug \
 "
 
-FILES_${PN}-dev = "\
+FILES:${PN}-dev = "\
     ${datadir}/dotnet/sdk \
     ${datadir}/dotnet/templates \
 "
 
-RRECOMMENDS_dotnet-dev[nodeprrecs] = "1"
+RRECOMMENDS:dotnet-dev[nodeprrecs] = "1"
 
-INSANE_SKIP_${PN} = "already-stripped staticdev ldflags libdir"
-INSANE_SKIP_${PN}-dbg = "libdir"
-INSANE_SKIP_${PN}-dev = "libdir"
+INSANE_SKIP:${PN} = "already-stripped staticdev ldflags libdir"
+INSANE_SKIP:${PN}-dbg = "libdir"
+INSANE_SKIP:${PN}-dev = "libdir"
 
 BBCLASSEXTEND = "native"

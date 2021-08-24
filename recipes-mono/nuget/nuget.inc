@@ -28,7 +28,7 @@ do_install () {
 	install -m0755 ${WORKDIR}/NuGet-v${PV}.exe ${D}${libdir}/mono/nuget/NuGet.exe
 }
 
-FILES_${PN} += "${libdir}/mono/nuget"
+FILES:${PN} += "${libdir}/mono/nuget"
 
 SYSROOT_PREPROCESS_FUNCS += "nuget_sysroot_preprocess" 
 

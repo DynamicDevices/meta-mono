@@ -32,7 +32,7 @@ inherit pkgconfig
 
 EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
-do_configure_prepend() {
+do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
     sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
     sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
@@ -67,24 +67,24 @@ PACKAGES += "${PN}-lldb "
 PACKAGES += "${PN}-profiler "
 PACKAGES += "${PN} "
 
-FILES_${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
-FILES_${PN}-libs			= "${libdir}/libMono*.so"
-FILES_${PN}-lldb                        = "${libdir}/mono/lldb/*"
-FILES_${PN}-libs-2.0			= "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
-FILES_${PN}-libs-3.5			= "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
-FILES_${PN}-libs-4.0			= "${libdir}/mono/4.0/* ${libdir}/mono/4.0-api/*"
-FILES_${PN}-libs-4.5			= "${libdir}/mono/4.5/* ${libdir}/mono/4.5-api/*"
-FILES_${PN}-libs-compat-2.0		= "${libdir}/mono/compat-2.0/*"
-FILES_${PN}-gac				= "${libdir}/mono/gac/*"
-FILES_${PN}-configuration-crypto	= "${libdir}/mono/mono-configuration-crypto/*/*"
-FILES_${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
-FILES_${PN}-xbuild			= "${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/*"
-FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
-FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
-FILES_${PN}-staticdev			+= " ${libdir}/*.a"
-FILES_${PN}-profiler			+= " ${datadir}/mono-2.0/mono/profiler/*"
+FILES:${PN}				= "${sysconfdir}/* ${bindir}/* ${libdir}/*.so*"
+FILES:${PN}-libs			= "${libdir}/libMono*.so"
+FILES:${PN}-lldb                        = "${libdir}/mono/lldb/*"
+FILES:${PN}-libs-2.0			= "${libdir}/mono/2.0/* ${libdir}/mono/2.0-api/*"
+FILES:${PN}-libs-3.5			= "${libdir}/mono/3.5/* ${libdir}/mono/3.5-api/*"
+FILES:${PN}-libs-4.0			= "${libdir}/mono/4.0/* ${libdir}/mono/4.0-api/*"
+FILES:${PN}-libs-4.5			= "${libdir}/mono/4.5/* ${libdir}/mono/4.5-api/*"
+FILES:${PN}-libs-compat-2.0		= "${libdir}/mono/compat-2.0/*"
+FILES:${PN}-gac				= "${libdir}/mono/gac/*"
+FILES:${PN}-configuration-crypto	= "${libdir}/mono/mono-configuration-crypto/*/*"
+FILES:${PN}-libs-monodoc		= "${libdir}/mono/monodoc/*"
+FILES:${PN}-xbuild			= "${libdir}/mono/xbuild/* ${libdir}/mono/xbuild-frameworks/* ${libdir}/mono/xbuild-frameworks/.NETFramework/*/*/*"
+FILES:${PN}-doc				+= " ${datadir}/libgc-mono/*"
+FILES:${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
+FILES:${PN}-staticdev			+= " ${libdir}/*.a"
+FILES:${PN}-profiler			+= " ${datadir}/mono-2.0/mono/profiler/*"
 
-RDEPENDS_${PN} =+ "bash" 
+RDEPENDS:${PN} =+ "bash" 
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""

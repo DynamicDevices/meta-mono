@@ -41,11 +41,11 @@ EXTRA_OECMAKE = " \
     -DCLI_CMAKE_COMMIT_HASH:STRING=${SRCREV} \
 "
 
-EXTRA_OECMAKE_append_class-native = " \
+EXTRA_OECMAKE:append:class-native = " \
     -DCLI_CMAKE_PLATFORM_ARCH_${@get_dotnet_host_arch(bb, d)}=1 \
 "
 
-EXTRA_OECMAKE_append_class-target = " \
+EXTRA_OECMAKE:append:class-target = " \
     -DCLI_CMAKE_PLATFORM_ARCH_${@get_dotnet_target_arch(bb, d)}=1 \
 "
 
@@ -54,11 +54,11 @@ do_install() {
 	install -m755 ${B}/cli/fxr/libhostfxr.so ${D}${libdir}/mono/msbuild/Current/bin/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/libhostfxr.so
 }
 
-do_install_append_class-native () {
+do_install:append:class-native () {
 	install -m755 ${B}/cli/fxr/libhostfxr.so ${D}${libdir}
 }
 
-FILES_${PN} = " \
+FILES:${PN} = " \
     ${libdir}/mono/msbuild/Current/bin/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/libhostfxr.so \
 "
 

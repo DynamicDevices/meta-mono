@@ -11,7 +11,7 @@ DEPENDS = "mono mono-addins gtk-sharp taglib-sharp"
 SRCREV = "b374ed41c566bc6ad50b3513218458b711e508db"
 SRCBRANCH = "master"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
 SRC_URI = "git://github.com/mono/mono-upnp.git;branch=${SRCBRANCH} \
 "
@@ -25,7 +25,7 @@ do_configure () {
   ./autogen.sh 
 }
 
-FILES_${PN}-dbg += " \
+FILES:${PN}-dbg += " \
   ${libdir}/${PN}/*.mdb \
 "
 

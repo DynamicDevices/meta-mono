@@ -9,5 +9,5 @@ SRC_URI = "https://github.com/mono/libgdiplus/archive/${PV}.tar.gz;downloadfilen
 
 inherit autotools pkgconfig
 
-FILES_${PN} += "${libdir}/libgdiplus.so"
-INSANE_SKIP_${PN} += "dev-so"
+FILES:${PN} += "${libdir}/libgdiplus.so"
+INSANE_SKIP:${PN} += "dev-so"

@@ -16,18 +16,18 @@ inherit autotools-brokensep pkgconfig
 
 EXTRA_OECONF = " --disable-docs"
 
-do_configure_prepend () {
+do_configure:prepend () {
   sed -e "s|\$(datadir)/pkgconfig|\$(libdir)/pkgconfig|" -i Makefile.am
 }
 
-FILES_${PN} += " \
+FILES:${PN} += " \
   ${libdir}/mono/${PN}/*.dll \
   ${libdir}/mono/gac/*\ 
   ${libdir}/mono/gac/*/*/*/*.dll \
   ${libdir}/mono/gac/*/*/*/*..config \
 "
 
-FILES_${PN}-dbg += " \
+FILES:${PN}-dbg += " \
   ${libdir}/mono/${PN}/*.mdb \
   ${libdir}/mono/gac/*/*/*/*.mdb \
 "

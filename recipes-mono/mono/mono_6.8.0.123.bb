@@ -6,7 +6,7 @@ require mono-${PV}.inc
 SRC_URI += "file://shm_open-test-crosscompile.diff"
 
 PACKAGES += "${PN}-profiler "
-FILES_${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
+FILES:${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
 
-INSANE_SKIP_${PN}-libs += "dev-so"
-INSANE_SKIP_${PN} += "file-rdeps"
+INSANE_SKIP:${PN}-libs += "dev-so"
+INSANE_SKIP:${PN} += "file-rdeps"

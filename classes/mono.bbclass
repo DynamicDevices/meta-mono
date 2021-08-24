@@ -2,9 +2,9 @@
 # PACKAGE_ARCH="all"
 
 DEPENDS += "mono-native ca-certificates-native mono"
-RDEPENDS_${PN} += "mono"
+RDEPENDS:${PN} += "mono"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
   ${libdir}/mono/*/*.exe \
   ${libdir}/mono/*/*.dll \
   ${libdir}/mono/*/*.config \
@@ -12,12 +12,12 @@ FILES_${PN} += "\
   ${libdir}/mono/gac/*/*/*.*.config \
 "
 
-FILES_${PN}-dbg += "\
+FILES:${PN}-dbg += "\
   ${libdir}/mono/*/*.mdb \
   ${libdir}/mono/gac/*/*/*.mdb \
 "
 
-FILES_${PN}-dev += "\
+FILES:${PN}-dev += "\
   ${libdir}/mono/*/*.rsp \
   ${libdir}/mono/*/*.xml \
   ${libdir}/mono/gac/*/*/*.xml \
@@ -27,7 +27,7 @@ FILES_${PN}-dev += "\
   ${libdir}/mono/*/*.Targets \
 "
 
-FILES_${PN}-doc += "\
+FILES:${PN}-doc += "\
   ${libdir}/monodoc/* \
 "
 
@@ -38,7 +38,7 @@ export MONO_CFG_DIR="${STAGING_ETCDIR_NATIVE}"
 export NUGET_PACKAGES="${WORKDIR}/mono-nuget-packages"
 export NUGET_HTTP_CACHE_PATH="${WORKDIR}/mono-nuget-http-cache"
 
-do_configure_prepend() {
+do_configure:prepend() {
 	mkdir -p ${NUGET_PACKAGES} ${NUGET_HTTP_CACHE_PATH}
 	cert-sync --user ${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt
 }

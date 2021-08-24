@@ -18,7 +18,7 @@ SRC_URI[sha256sum] = "8fdc69329c8d669d1c5e5bc922a5df8a3ed61a72344b92e5a073809bf1
 
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
-do_configure_prepend() {
+do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
     sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
     sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
