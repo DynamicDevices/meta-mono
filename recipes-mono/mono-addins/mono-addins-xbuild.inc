@@ -37,11 +37,11 @@ do_install() {
         install -m 0755 ${S}/bin/mautil.exe ${D}${bindir}/mautil.exe
 }
 
-FILES_${PN} += " \
+FILES:${PN} += " \
   ${libdir}/mono/gac/*/*/*.dll \
   ${libdir}/mono/gac/*/*/*.config \
 "
 
-FILES_${PN}-dbg += " \
+FILES:${PN}-dbg += " \
   ${libdir}/mono/gac/*/*/*.mdb \
 "

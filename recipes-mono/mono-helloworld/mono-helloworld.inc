@@ -14,7 +14,7 @@ inherit mono
 inherit pkgconfig
 
 DEPENDS += "mono-native"
-RDEPENDS_${PN} += "mono"
+RDEPENDS:${PN} += "mono"
 
 EDEPENDS_X11 = "libgdiplus"
 ERDEPENDS_X11 = "libgdiplus"
@@ -32,7 +32,7 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11 gtk', '',
 		   ${@bb.utils.contains('DISTRO_FEATURES', 'wayland', 'wayland gtk', '', d)} \
 "
 
-FILES_${PN} = "${libdir}/helloworld/helloworld.exe \
+FILES:${PN} = "${libdir}/helloworld/helloworld.exe \
 		${bindir}/helloworld \
 		${libdir}/helloworld/helloworldform.exe \
 		${bindir}/helloworldform \

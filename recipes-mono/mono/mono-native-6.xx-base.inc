@@ -3,7 +3,7 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 
 inherit native
 
-RPROVIDES_${PN} += "nativesdk-mono"
+RPROVIDES:${PN} += "nativesdk-mono"
 PROVIDES += "nativesdk-mono"
 
 do_compile() {
@@ -20,6 +20,6 @@ mono_copy_libdir_mono() {
 
 do_populate_sysroot[postfuncs] += " mono_copy_libdir_mono "
 
-do_install_append() {
+do_install:append() {
     sed "s|\$mono_libdir|${libdir}|g" -i ${D}${sysconfdir}/mono/config
 }

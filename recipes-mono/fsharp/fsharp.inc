@@ -11,7 +11,7 @@ inherit mono
 # therefore use some variables for the directory and extension
 SRC_URI = "https://github.com/fsharp/fsharp/archive/${PV}.tar.gz"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
   ${libdir}/mono/*/*.optdata \
   ${libdir}/mono/*/*.sigdata \
   ${libdir}/mono/gac/*/*/*.optdata \

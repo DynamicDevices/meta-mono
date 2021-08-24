@@ -7,7 +7,7 @@ EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-s
 
 S = "${WORKDIR}/${PN}-4.0.1"
 
-do_install_append() {
+do_install:append() {
         cp -af ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}
         cp -af ${STAGING_DIR_NATIVE}${libdir}/${PN}  ${D}${libdir}
         # AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination

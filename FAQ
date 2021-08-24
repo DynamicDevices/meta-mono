@@ -47,7 +47,7 @@ So you can modify your own image recipe(s) in this manner. However in the simple
 for testing you can add the following to your conf/local.conf to add packages to every 
 image built
 
-IMAGE_INSTALL_append = " mono"
+IMAGE_INSTALL:append = " mono"
 
 Note that libgdiplus requires giflib which introduces a dependency on the meta-oe layer
 

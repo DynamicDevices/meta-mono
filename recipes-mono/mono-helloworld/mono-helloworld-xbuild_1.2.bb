@@ -30,4 +30,4 @@ do_install() {
         sed -i "s|@APP@|helloworld|g" ${D}${bindir}/helloworldform
 }
 
-FILES_${PN}-dbg += "${libdir}/helloworld/.debug/*"
+FILES:${PN}-dbg += "${libdir}/helloworld/.debug/*"

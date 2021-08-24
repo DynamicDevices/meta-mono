@@ -5,7 +5,7 @@ LICENSE = "MIT"
 
 DEPENDS = "unzip-native msbuild-libhostfxr-native"
 
-RDEPENDS_${PN} = "msbuild-libhostfxr"
+RDEPENDS:${PN} = "msbuild-libhostfxr"
 
 LIC_FILES_CHKSUM = "file://license;md5=aa2bb45abfacf721bd09860b11b79f5a \
                     file://ref/LicenseHeader.txt;md5=b06c0743af93aeb14a577bb2bfdada8e"
@@ -27,7 +27,7 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main \
 S = "${WORKDIR}/git"
 
 LIBHOSTFXR_PATH = "${libdir}/mono/msbuild/Current/bin/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/libhostfxr.so"
-LIBHOSTFXR_PATH_prepend_class-target = "${STAGING_DIR_NATIVE}"
+LIBHOSTFXR_PATH:prepend:class-target = "${STAGING_DIR_NATIVE}"
 
 do_configure () {
     sed "s|%libhostfxr%|${LIBHOSTFXR_PATH}|g" -i ${S}/eng/cibuild_bootstrapped_msbuild.sh
@@ -52,7 +52,7 @@ do_install () {
     ./stage1/mono-msbuild/msbuild mono/build/install.proj /p:MonoInstallPrefix="${D}" /p:Configuration=Release-MONO /p:IgnoreDiffFailure=true
 }
 
-FILES_${PN} = "\
+FILES:${PN} = "\
     ${bindir} \
     ${libdir}/mono \
 "

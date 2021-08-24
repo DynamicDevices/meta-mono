@@ -47,8 +47,8 @@ recognizes the following options:
 "jpeg exif gif tiff"
 
 These can be controlled via the .bbappend mechanism or by adding:
-PACKAGECONFIG_pn-mono = ""
-PACKAGECONFIG_pn-mono-native = ""
+PACKAGECONFIG:pn-mono = ""
+PACKAGECONFIG:pn-mono-native = ""
 
 directives to the local.conf
 

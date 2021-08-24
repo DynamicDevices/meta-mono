@@ -7,7 +7,7 @@ PACKAGECONFIG[x11] = "--with-x11,--without-x11,virtual/libx11 libxft"
 
 DEPENDS =+ "cairo freetype fontconfig libpng"
 
-do_install_append() {
+do_install:append() {
 # fix pkgconfig .pc file
 sed -i -e s#I${STAGING_DIR_HOST}#I#g ${D}${libdir}/pkgconfig/*.pc
 }

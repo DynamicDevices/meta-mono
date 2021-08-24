@@ -29,7 +29,7 @@ MONOLIBS = "\
     xbuild-frameworks \
     "
 
-do_install_append() {
+do_install:append() {
         install -d ${D}${libdir}/${PN}
         for lib in ${MONOLIBS}; do
             if [ -d "${STAGING_DIR_NATIVE}${libdir}/${PN}/$lib" ]; then

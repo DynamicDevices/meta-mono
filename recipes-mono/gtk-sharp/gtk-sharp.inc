@@ -3,7 +3,7 @@ DESCRIPTION = "GTK+ bindings for Mono"
 SECTION = "devel/mono"
 BUGTRACKER = "http://bugzilla.xamarin.com"
 LICENSE = "LGPL-2.1"
-RDEPENDS_${PN}-dev += "perl"
+RDEPENDS:${PN}-dev += "perl"
 
 inherit autotools
 inherit mono
@@ -21,11 +21,11 @@ def gtk_sharp_download_version(d):
 
 FILESPATH =. "${FILE_DIRNAME}/gtk-sharp-${PV}:"
 
-FILES_${PN} += "\
+FILES:${PN} += "\
   ${libdir}/*.so \
 "
 
-FILES_${PN}-dev = "\
+FILES:${PN}-dev = "\
   ${libdir}/*.la \
   ${libdir}/pkgconfig/* \
   ${libdir}/${PN}*/* \
@@ -34,7 +34,7 @@ FILES_${PN}-dev = "\
 
 DIRFILES = "1"
 
-do_install_append() {
+do_install:append() {
   find ${D} -name *.dll -exec chown -h root:root {} \;
 }
 

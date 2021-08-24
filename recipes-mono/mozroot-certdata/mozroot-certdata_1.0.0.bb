@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}-${PV}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 
 SUMMARY = "Mono Mozilla Root Certificates"
 
@@ -21,18 +21,18 @@ SRC_URI = "file://certdata.txt"
 SRC_URI[md5sum] = "b5b009a1c475f7bb95ac8c55f80442f3"
 SRC_URI[sha256sum] = "ea89ac8ae495e69586abae22941816842ca5811a32a20dc9e1adb95859802879"
 
-do_install_append() {
+do_install:append() {
  install -d "${D}${sysconfdir}"
  install -d "${D}${sysconfdir}/ssl"
  install -m 644 ${S}/../certdata.txt ${D}${sysconfdir}/ssl/certdata.txt
 }
 
-FILES_${PN} = "${sysconfdir}/ssl/certdata.txt"
+FILES:${PN} = "${sysconfdir}/ssl/certdata.txt"
 
 inherit allarch
 
 # Do post installation install
-pkg_postinst_${PN} () {
+pkg_postinst:${PN} () {
      #!/bin/sh -e
      if [ x"$D" = "x" ]; then
           # Actions to carry out on the device go here
