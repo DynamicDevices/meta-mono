@@ -1,10 +1,10 @@
 # Class for building C# packages. If your package is all-managed, add
 # PACKAGE_ARCH="all"
 
-DEPENDS += "mono-native ca-certificates-native mono"
-RDEPENDS:${PN} += "mono"
+DEPENDS:append = " mono-native ca-certificates-native mono"
+RDEPENDS:${PN}:append = " mono"
 
-FILES:${PN} += "\
+FILES:${PN}:append = " \
   ${libdir}/mono/*/*.exe \
   ${libdir}/mono/*/*.dll \
   ${libdir}/mono/*/*.config \
@@ -12,12 +12,12 @@ FILES:${PN} += "\
   ${libdir}/mono/gac/*/*/*.*.config \
 "
 
-FILES:${PN}-dbg += "\
+FILES:${PN}-dbg:append = " \
   ${libdir}/mono/*/*.mdb \
   ${libdir}/mono/gac/*/*/*.mdb \
 "
 
-FILES:${PN}-dev += "\
+FILES:${PN}-dev:append = " \
   ${libdir}/mono/*/*.rsp \
   ${libdir}/mono/*/*.xml \
   ${libdir}/mono/gac/*/*/*.xml \
@@ -27,7 +27,7 @@ FILES:${PN}-dev += "\
   ${libdir}/mono/*/*.Targets \
 "
 
-FILES:${PN}-doc += "\
+FILES:${PN}-doc:append = " \
   ${libdir}/monodoc/* \
 "
 
