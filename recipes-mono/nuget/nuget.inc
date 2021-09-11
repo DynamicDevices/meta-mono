@@ -6,6 +6,9 @@ HOMEPAGE = "http://nuget.org/"
 # This package ships Mono EXE and a shell script
 PACKAGE_ARCH="all"
 
+# Fully updated Fedora 33 and 34 say that dist.nuget.org cert is untrusted
+BB_CHECK_SSL_CERTS = "0"
+
 inherit mono
 
 SRC_URI = " \
