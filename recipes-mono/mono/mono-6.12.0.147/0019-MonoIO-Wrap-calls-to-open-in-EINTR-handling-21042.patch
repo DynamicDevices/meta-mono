@@ -1,0 +1,64 @@
+From 0449008883dfe8cf108c74ba1167f99723d5a3a3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Aleksey=20Kliger=20=28=CE=BBgeek=29?= <alklig@microsoft.com>
+Date: Fri, 30 Apr 2021 13:09:56 -0400
+Subject: [PATCH 19/32] [MonoIO] Wrap calls to open() in EINTR handling
+ (#21042)
+
+Related to https://github.com/mono/mono/issues/21040 and
+https://github.com/dotnet/runtime/issues/48663
+
+On MacOS Big Sur open() is much more likely to throw EINTR - and moreover if
+the thread receives a signal while doing an open() even if the signal handler
+is marked with SA_RESTART, the open call appears not to restart and to fail
+anyway.
+
+So wrap all the calls to open() in retry loops.
+---
+ mono/metadata/w32file-unix.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/mono/metadata/w32file-unix.c b/mono/metadata/w32file-unix.c
+index 819bbba6818..5430744f9d1 100644
+--- a/mono/metadata/w32file-unix.c
++++ b/mono/metadata/w32file-unix.c
+@@ -282,17 +282,23 @@ _wapi_open (const gchar *pathname, gint flags, mode_t mode)
+ 		located_filename = mono_portability_find_file (pathname, FALSE);
+ 		if (located_filename == NULL) {
+ 			MONO_ENTER_GC_SAFE;
+-			fd = open (pathname, flags, mode);
++			do {
++				fd = open (pathname, flags, mode);
++			} while (fd == -1 && errno == EINTR);
+ 			MONO_EXIT_GC_SAFE;
+ 		} else {
+ 			MONO_ENTER_GC_SAFE;
+-			fd = open (located_filename, flags, mode);
++			do {
++				fd = open (located_filename, flags, mode);
++			} while (fd == -1 && errno == EINTR);
+ 			MONO_EXIT_GC_SAFE;
+ 			g_free (located_filename);
+ 		}
+ 	} else {
+ 		MONO_ENTER_GC_SAFE;
+-		fd = open (pathname, flags, mode);
++		do {
++			fd = open (pathname, flags, mode);
++		} while (fd == -1 && errno == EINTR);
+ 		MONO_EXIT_GC_SAFE;
+ 		if (fd == -1 && (errno == ENOENT || errno == ENOTDIR) && IS_PORTABILITY_SET) {
+ 			gint saved_errno = errno;
+@@ -304,7 +310,9 @@ _wapi_open (const gchar *pathname, gint flags, mode_t mode)
+ 			}
+ 
+ 			MONO_ENTER_GC_SAFE;
+-			fd = open (located_filename, flags, mode);
++			do {
++				fd = open (located_filename, flags, mode);
++			} while (fd == -1 && errno == EINTR);
+ 			MONO_EXIT_GC_SAFE;
+ 			g_free (located_filename);
+ 		}
+-- 
+2.31.1
+
