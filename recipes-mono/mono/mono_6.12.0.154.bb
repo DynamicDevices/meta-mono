@@ -17,6 +17,13 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${BASEPV}.tar.xz \
            file://0020-2020-02-Fix-leak-in-assembly-specific-dllmap-lookups.patch \
            file://0024-2020-02-Start-a-dedicated-thread-for-MERP-crash-repo.patch \
            file://0025-2020-02-Fix-memory-leak-during-data-registration-211.patch \
+           file://0026-mini-Add-GC-Unsafe-transitions-in-mono_pmip-21186.patch \
+           file://0027-Adding-null-check-to-avoid-abort-when-invalid-IL-is-.patch \
+           file://0028-Mono.Profiler.Aot-Write-true-string-wire-length-2119.patch \
+           file://0029-2020-02-backport-metadata-fixes-21190.patch \
+           file://0030-2020-02-linux-Some-pseudo-tty-fixes-21205.patch \
+           file://0031-mini-Don-t-add-unbox-tramopline-on-generic-DIM-calls.patch \
+           file://0032-Ignore-inherit-param-for-ParameterInfo.GetCustomAttr.patch \
 "
 
 

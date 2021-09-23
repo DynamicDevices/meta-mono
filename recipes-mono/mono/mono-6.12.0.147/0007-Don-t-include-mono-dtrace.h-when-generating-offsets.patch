@@ -1,0 +1,26 @@
+From be9218f4d1f7529fbe85d15c58f6fe78161909b3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexander=20K=C3=B6plinger?= <alex.koeplinger@outlook.com>
+Date: Wed, 10 Mar 2021 22:36:56 +0100
+Subject: [PATCH 07/32] Don't include mono-dtrace.h when generating offsets
+
+offsets-tool can run before mono-dtrace.h is generated which leads to a compiler error about the file missing.
+---
+ mono/utils/dtrace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mono/utils/dtrace.h b/mono/utils/dtrace.h
+index 540f2588a8b..bd3062530ff 100644
+--- a/mono/utils/dtrace.h
++++ b/mono/utils/dtrace.h
+@@ -10,7 +10,7 @@
+ #ifndef __UTILS_DTRACE_H__
+ #define __UTILS_DTRACE_H__
+ 
+-#ifdef ENABLE_DTRACE
++#if defined(ENABLE_DTRACE) && !defined(MONO_GENERATING_OFFSETS)
+ 
+ #include <mono/utils/mono-dtrace.h>
+ 
+-- 
+2.31.1
+
