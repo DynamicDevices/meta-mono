@@ -9,7 +9,7 @@ SRC_URI = "git://github.com/dotnet/core-setup.git;branch=release/3.1 \
            file://0001-Don-t-set-a-plethora-of-compiler-arguments-through-c.patch;patchdir=${WORKDIR}/git \
            file://0002-Remove-broken-objcopy-detection-STRIP_SYMBOLS-is-uns.patch;patchdir=${WORKDIR}/git \
            "
-SRCREV = "f5eceb810586ea6138aadcef9e2bba115015ab99"
+SRCREV = "4c6b4aa257241c4d419b8c271e37afac4445b1c0"
 
 inherit cmake
 
