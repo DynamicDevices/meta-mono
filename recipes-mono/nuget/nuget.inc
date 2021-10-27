@@ -39,3 +39,5 @@ nuget_sysroot_preprocess () {
 }
 
 DIRFILES = "1"
+
+BBCLASSEXTEND = "native"
