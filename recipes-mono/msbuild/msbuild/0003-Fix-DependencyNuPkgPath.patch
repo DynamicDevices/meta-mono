@@ -1,0 +1,13 @@
+--- a/eng/cibuild_bootstrapped_msbuild.sh	2021-10-27 13:13:20.000000000 +0200
++++ b/eng/cibuild_bootstrapped_msbuild.sh	2021-10-27 13:06:50.000000000 +0200
+@@ -96,8 +96,9 @@
+ 
+       configuration="$configuration-MONO"
+       extn_path="$mono_msbuild_dir/Extensions"
++      nuget_path="$RepoRoot/.nuget/packages"
+ 
+-      extra_properties=" /p:MSBuildExtensionsPath=$extn_path /p:MSBuildExtensionsPath32=$extn_path /p:MSBuildExtensionsPath64=$extn_path /p:DeterministicSourcePaths=false /fl /flp:v=diag /m /p:MicrosoftNetCompilersVersion=$roslyn_version_to_use /p:NuGetBuildTasksVersion=$nuget_version_to_use"
++      extra_properties=" /p:MSBuildExtensionsPath=$extn_path /p:MSBuildExtensionsPath32=$extn_path /p:MSBuildExtensionsPath64=$extn_path /p:DeterministicSourcePaths=false /fl /flp:v=diag /m /p:MicrosoftNetCompilersVersion=$roslyn_version_to_use /p:NuGetBuildTasksVersion=$nuget_version_to_use /p:NuGetPackagesDir=$nuget_path"
+   else
+       export _InitializeBuildTool="msbuild"
+       export _InitializeBuildToolCommand=""

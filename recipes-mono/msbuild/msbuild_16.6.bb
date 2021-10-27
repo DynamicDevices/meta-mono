@@ -22,6 +22,7 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main \
            file://0001-Don-t-try-to-run-pkill.patch \
            file://0001-Copy-hostfxr.patch \
            file://0002-Remove-myget-feeds-and-replace-with-AzDO-feeds.patch \
+           file://0003-Fix-DependencyNuPkgPath.patch \
            "
 
 S = "${WORKDIR}/git"
@@ -42,18 +43,18 @@ do_configure () {
 
     # Fixes issue with nuget packages download and curl download. They failed due of invalid certificates.
     # This also requires ca-certificates-native dependency.
-    cert-sync --user ${sysconfdir}/ssl/certs/ca-certificates.crt
+    HOME="${S}" cert-sync --user ${sysconfdir}/ssl/certs/ca-certificates.crt
 }
 
 export DOTNET_MSBUILD_SDK_RESOLVER_CLI_DIR="${STAGING_DATADIR_NATIVE}/dotnet"
 export CURL_CA_BUNDLE="${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt"
 
 do_compile () {
-    ./eng/cibuild_bootstrapped_msbuild.sh --host_type mono --configuration Release --skip_tests /p:DisableNerdbankVersioning=true
+    HOME="${S}" ./eng/cibuild_bootstrapped_msbuild.sh --host_type mono --configuration Release --skip_tests /p:DisableNerdbankVersioning=true
 }
 
 do_install () {
-    ./stage1/mono-msbuild/msbuild mono/build/install.proj /p:MonoInstallPrefix="${D}" /p:Configuration=Release-MONO /p:IgnoreDiffFailure=true
+    HOME="${S}" ./stage1/mono-msbuild/msbuild mono/build/install.proj /p:MonoInstallPrefix="${D}" /p:Configuration=Release-MONO /p:IgnoreDiffFailure=true
 }
 
 FILES_${PN} = "\
