@@ -1,0 +1,22 @@
+From 92f3ad0b176a1494d7225ea4b4062df9b40984e9 Mon Sep 17 00:00:00 2001
+From: Nicolas Jeker <n.jeker@delisys.ch>
+Date: Fri, 6 Nov 2020 11:19:38 +0100
+Subject: [PATCH] Don't try to run pkill
+
+---
+ eng/cibuild_bootstrapped_msbuild.sh | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/eng/cibuild_bootstrapped_msbuild.sh b/eng/cibuild_bootstrapped_msbuild.sh
+index c88445b..759c75f 100755
+--- a/eng/cibuild_bootstrapped_msbuild.sh
++++ b/eng/cibuild_bootstrapped_msbuild.sh
+@@ -107,8 +107,6 @@ if [ $host_type = "mono" ] ; then
+   fi
+ fi
+ 
+-pkill -9 -f VBCSCompiler.exe
+-
+ if [[ $build_stage1 == true ]];
+ then
+     "$_InitializeBuildTool" "$_InitializeBuildToolCommand" $extra_properties /bl mono/build/update_bundled_bits.proj || exit $?
