@@ -14,7 +14,7 @@ inherit mono
 
 SRCREV = "94d0c55bc96f297618d50cc32167ddba9fee30b0"
 
-SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main \
+SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main;protocol=https \
            file://mono-msbuild-dotnetbits-case.patch \
            file://mono-msbuild-license-case.patch \
            file://mono-msbuild-no-hostfxr.patch \
