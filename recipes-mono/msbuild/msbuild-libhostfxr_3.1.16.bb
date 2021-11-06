@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/git/LICENSE.TXT;md5=9fc642ff452b28d62ab19b
 
 COMPATIBLE_HOST ?= "(i.86|x86_64|arm|aarch64).*-linux"
 
-SRC_URI = "git://github.com/dotnet/core-setup.git;branch=release/3.1 \
+SRC_URI = "git://github.com/dotnet/core-setup.git;branch=release/3.1;protocol=https \
            file://0001-Don-t-set-a-plethora-of-compiler-arguments-through-c.patch;patchdir=${WORKDIR}/git \
            file://0002-Remove-broken-objcopy-detection-STRIP_SYMBOLS-is-uns.patch;patchdir=${WORKDIR}/git \
            "
