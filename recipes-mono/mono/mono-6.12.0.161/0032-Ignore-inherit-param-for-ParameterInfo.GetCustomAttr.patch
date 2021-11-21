@@ -1,0 +1,49 @@
+From 0c979e6d769bda97bfba41c29324f727e72e27d8 Mon Sep 17 00:00:00 2001
+From: "github-actions[bot]"
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Fri, 3 Sep 2021 14:16:00 -0400
+Subject: [PATCH 32/39] Ignore inherit param for
+ ParameterInfo.GetCustomAttributes (#21201)
+
+It is documented that the inherit flag is ignored.
+Attribute.GetCustomAttributes is to be used to search
+inheritance chain.
+
+This change is only for the Mono classlib implementation.
+CoreCLR already has this behavior.
+
+Co-authored-by: Bill Holmes <bill.holmes@unity3d.com>
+---
+ .../corlib/System.Reflection/RuntimeParameterInfo.cs   | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/mcs/class/corlib/System.Reflection/RuntimeParameterInfo.cs b/mcs/class/corlib/System.Reflection/RuntimeParameterInfo.cs
+index 0b49a1aff35..d57fbdecde9 100644
+--- a/mcs/class/corlib/System.Reflection/RuntimeParameterInfo.cs
++++ b/mcs/class/corlib/System.Reflection/RuntimeParameterInfo.cs
+@@ -192,14 +192,20 @@ public override
+ 		override
+ 		object[] GetCustomAttributes (bool inherit)
+ 		{
+-			return MonoCustomAttrs.GetCustomAttributes (this, inherit);
++			// It is documented that the inherit flag is ignored.
++			// Attribute.GetCustomAttributes is to be used to search
++			// inheritance chain.
++			return MonoCustomAttrs.GetCustomAttributes (this, false);
+ 		}
+ 
+ 		public
+ 		override
+ 		object[] GetCustomAttributes (Type attributeType, bool inherit)
+ 		{
+-			return MonoCustomAttrs.GetCustomAttributes (this, attributeType, inherit);
++			// It is documented that the inherit flag is ignored.
++			// Attribute.GetCustomAttributes is to be used to search
++			// inheritance chain.
++			return MonoCustomAttrs.GetCustomAttributes (this, attributeType, false);
+ 		}
+ 
+ 		internal object GetDefaultValueImpl (ParameterInfo pinfo)
+-- 
+2.33.1
+

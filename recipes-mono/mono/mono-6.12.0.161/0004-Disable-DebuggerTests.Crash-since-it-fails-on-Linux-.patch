@@ -1,0 +1,28 @@
+From fdf57e77442b94c38ac1d4f33e8be752351a8db5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexander=20K=C3=B6plinger?= <alex.koeplinger@outlook.com>
+Date: Mon, 8 Mar 2021 11:45:16 +0100
+Subject: [PATCH 04/32] Disable DebuggerTests.Crash since it fails on Linux
+ i386 in CI
+
+See https://github.com/mono/mono/issues/20905
+
+(cherry picked from commit 7eb63051a8b49d9174dd65a319b6b08f98385ad9)
+---
+ mcs/class/Mono.Debugger.Soft/Test/dtest.cs | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/mcs/class/Mono.Debugger.Soft/Test/dtest.cs b/mcs/class/Mono.Debugger.Soft/Test/dtest.cs
+index 8c953f6fe3d..0fbe87421db 100644
+--- a/mcs/class/Mono.Debugger.Soft/Test/dtest.cs
++++ b/mcs/class/Mono.Debugger.Soft/Test/dtest.cs
+@@ -2475,6 +2475,7 @@ Event step_out_await (string method, Event e)
+ 	[Test]
+ 	[Category("NotOnWindows")]
+ 	[Category ("AndroidSdksNotWorking")]
++	[Ignore("https://github.com/mono/mono/issues/20905")] // fails on Linux i386 on CI
+ 	public void Crash () {
+ 		string [] existingCrashFileEntries = Directory.GetFiles (".", "mono_crash*.json");
+ 
+-- 
+2.31.1
+

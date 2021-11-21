@@ -1,0 +1,80 @@
+From 28a101a8ab5a3852bcb8876edfbc9d9f1360cd35 Mon Sep 17 00:00:00 2001
+From: Ryan Lucia <rylucia@microsoft.com>
+Date: Mon, 10 May 2021 09:30:00 -0400
+Subject: [PATCH 20/32] [2020-02] Fix leak in assembly-specific dllmap lookups
+ (#21053)
+
+---
+ mono/metadata/native-library.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/mono/metadata/native-library.c b/mono/metadata/native-library.c
+index d57252f1b1d..0f556794a38 100644
+--- a/mono/metadata/native-library.c
++++ b/mono/metadata/native-library.c
+@@ -83,9 +83,9 @@ GENERATE_GET_CLASS_WITH_CACHE (native_library, "System.Runtime.InteropServices",
+  * LOCKING: Assumes the relevant lock is held.
+  * For the global DllMap, this is `global_loader_data_mutex`, and for images it's their internal lock.
+  */
+-static int
++static gboolean
+ mono_dllmap_lookup_list (MonoDllMap *dll_map, const char *dll, const char* func, const char **rdll, const char **rfunc) {
+-	int found = 0;
++	gboolean found = FALSE;
+ 
+ 	*rdll = dll;
+ 	*rfunc = func;
+@@ -107,7 +107,7 @@ mono_dllmap_lookup_list (MonoDllMap *dll_map, const char *dll, const char* func,
+ 
+ 		if (!found && dll_map->target) {
+ 			*rdll = dll_map->target;
+-			found = 1;
++			found = TRUE;
+ 			/* we don't quit here, because we could find a full
+ 			 * entry that also matches the function, which takes priority.
+ 			 */
+@@ -120,8 +120,6 @@ mono_dllmap_lookup_list (MonoDllMap *dll_map, const char *dll, const char* func,
+ 	}
+ 
+ exit:
+-	*rdll = g_strdup (*rdll);
+-	*rfunc = g_strdup (*rfunc);
+ 	return found;
+ }
+ 
+@@ -129,10 +127,10 @@ exit:
+  * The locking and GC state transitions here are wonky due to the fact the image lock is a coop lock
+  * and the global loader data lock is an OS lock.
+  */
+-static int
++static gboolean
+ mono_dllmap_lookup (MonoImage *assembly, const char *dll, const char* func, const char **rdll, const char **rfunc)
+ {
+-	int res;
++	gboolean res;
+ 
+ 	MONO_REQ_GC_UNSAFE_MODE;
+ 
+@@ -141,7 +139,7 @@ mono_dllmap_lookup (MonoImage *assembly, const char *dll, const char* func, cons
+ 		res = mono_dllmap_lookup_list (assembly->dll_map, dll, func, rdll, rfunc);
+ 		mono_image_unlock (assembly);
+ 		if (res)
+-			return res;
++			goto leave;
+ 	}
+ 
+ 	MONO_ENTER_GC_SAFE;
+@@ -152,6 +150,10 @@ mono_dllmap_lookup (MonoImage *assembly, const char *dll, const char* func, cons
+ 
+ 	MONO_EXIT_GC_SAFE;
+ 
++leave:
++	*rdll = g_strdup (*rdll);
++	*rfunc = g_strdup (*rfunc);
++
+ 	return res;
+ }
+ 
+-- 
+2.31.1
+

@@ -1,0 +1,85 @@
+From 225ba3c8cb1a309513222a513db0b092bdfab2aa Mon Sep 17 00:00:00 2001
+From: Vlad Brezae <brezaevlad@gmail.com>
+Date: Tue, 30 Mar 2021 17:08:00 +0300
+Subject: [PATCH 14/32] [2020-02] Backport r4-conv-i fixes (#20986)
+
+* [mini] Add missing opcodes for r4 to native int conversions
+
+* [interp] Add handling for conv.i from r4
+---
+ mono/mini/cpu-arm.md         | 1 +
+ mono/mini/cpu-arm64.md       | 1 +
+ mono/mini/interp/transform.c | 7 +++++++
+ mono/mini/mini-arm.c         | 1 +
+ mono/mini/mini-arm64.c       | 1 +
+ 5 files changed, 11 insertions(+)
+
+diff --git a/mono/mini/cpu-arm.md b/mono/mini/cpu-arm.md
+index f3b6641d3f5..516bbb3209d 100644
+--- a/mono/mini/cpu-arm.md
++++ b/mono/mini/cpu-arm.md
+@@ -227,6 +227,7 @@ rmove: dest:f src1:f len:4
+ r4_conv_to_i1: dest:i src1:f len:88
+ r4_conv_to_i2: dest:i src1:f len:88
+ r4_conv_to_i4: dest:i src1:f len:88
++r4_conv_to_i: dest:i src1:f len:88
+ r4_conv_to_u1: dest:i src1:f len:88
+ r4_conv_to_u2: dest:i src1:f len:88
+ r4_conv_to_u4: dest:i src1:f len:88
+diff --git a/mono/mini/cpu-arm64.md b/mono/mini/cpu-arm64.md
+index 6b8488c0468..aff89052937 100644
+--- a/mono/mini/cpu-arm64.md
++++ b/mono/mini/cpu-arm64.md
+@@ -229,6 +229,7 @@ r4_conv_to_u2: dest:i src1:f len:8
+ r4_conv_to_i4: dest:i src1:f len:8
+ r4_conv_to_u4: dest:i src1:f len:8
+ r4_conv_to_i8: dest:l src1:f len:8
++r4_conv_to_i: dest:l src1:f len:8
+ r4_conv_to_u8: dest:l src1:f len:8
+ r4_conv_to_r4: dest:f src1:f len:4
+ r4_conv_to_r8: dest:f src1:f len:4
+diff --git a/mono/mini/interp/transform.c b/mono/mini/interp/transform.c
+index 7438255c6a1..60cfb37c5a2 100644
+--- a/mono/mini/interp/transform.c
++++ b/mono/mini/interp/transform.c
+@@ -4201,6 +4201,13 @@ generate_code (TransformData *td, MonoMethod *method, MonoMethodHeader *header,
+ 				interp_add_ins (td, MINT_CONV_I8_R8);
+ #else
+ 				interp_add_ins (td, MINT_CONV_I4_R8);
++#endif
++				break;
++			case STACK_TYPE_R4:
++#if SIZEOF_VOID_P == 8
++				interp_add_ins (td, MINT_CONV_I8_R4);
++#else
++				interp_add_ins (td, MINT_CONV_I4_R4);
+ #endif
+ 				break;
+ 			case STACK_TYPE_I4:
+diff --git a/mono/mini/mini-arm.c b/mono/mini/mini-arm.c
+index 00c0be5fdfe..678b4a2f77a 100644
+--- a/mono/mini/mini-arm.c
++++ b/mono/mini/mini-arm.c
+@@ -5909,6 +5909,7 @@ mono_arch_output_basic_block (MonoCompile *cfg, MonoBasicBlock *bb)
+ 			code = emit_r4_to_int (cfg, code, ins->dreg, ins->sreg1, 2, FALSE);
+ 			break;
+ 		case OP_RCONV_TO_I4:
++		case OP_RCONV_TO_I:
+ 			code = emit_r4_to_int (cfg, code, ins->dreg, ins->sreg1, 4, TRUE);
+ 			break;
+ 		case OP_RCONV_TO_U4:
+diff --git a/mono/mini/mini-arm64.c b/mono/mini/mini-arm64.c
+index 2dc1a5532ef..4e3688c87d4 100644
+--- a/mono/mini/mini-arm64.c
++++ b/mono/mini/mini-arm64.c
+@@ -4304,6 +4304,7 @@ mono_arch_output_basic_block (MonoCompile *cfg, MonoBasicBlock *bb)
+ 			arm_fcvtzu_sx (code, dreg, sreg1);
+ 			break;
+ 		case OP_RCONV_TO_I8:
++		case OP_RCONV_TO_I:
+ 			arm_fcvtzs_sx (code, dreg, sreg1);
+ 			break;
+ 		case OP_RCONV_TO_U8:
+-- 
+2.31.1
+

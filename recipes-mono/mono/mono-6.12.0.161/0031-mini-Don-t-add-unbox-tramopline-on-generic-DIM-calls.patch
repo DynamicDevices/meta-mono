@@ -1,0 +1,41 @@
+From 22074346900050843ace1d658cdb242f728a22fb Mon Sep 17 00:00:00 2001
+From: "github-actions[bot]"
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Fri, 3 Sep 2021 14:14:57 -0400
+Subject: [PATCH 31/39] [mini] Don't add unbox tramopline on generic DIM calls
+ (#21209)
+
+Don't unbox a valuetype `this` if the generic method is a DIM
+
+Fixes https://github.com/dotnet/runtime/issues/58394
+
+Fixes https://github.com/mono/mono/issues/21206
+
+Co-authored-by: lambdageek <lambdageek@users.noreply.github.com>
+---
+ mono/mini/mini-trampolines.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/mono/mini/mini-trampolines.c b/mono/mini/mini-trampolines.c
+index e5bb1cea2a2..3d507bfcc3d 100644
+--- a/mono/mini/mini-trampolines.c
++++ b/mono/mini/mini-trampolines.c
+@@ -637,11 +637,13 @@ common_call_trampoline (host_mgreg_t *regs, guint8 *code, MonoMethod *m, MonoVTa
+ 		return NULL;
+ 
+ 	if (generic_virtual || variant_iface) {
+-		if (m_class_is_valuetype (vt->klass)) /*FIXME is this required variant iface?*/
++		if (m_class_is_valuetype (vt->klass)  && !mini_method_is_default_method (m)) /*FIXME is this required variant iface?*/
+ 			need_unbox_tramp = TRUE;
+ 	} else if (orig_vtable_slot) {
+-		if (m_class_is_valuetype (m->klass))
++		if (m_class_is_valuetype (m->klass)) {
++			g_assert (!mini_method_is_default_method (m));
+ 			need_unbox_tramp = TRUE;
++		}
+ 	}
+ 
+ 	addr = mini_add_method_trampoline (m, compiled_method, need_rgctx_tramp, need_unbox_tramp);
+-- 
+2.33.1
+
