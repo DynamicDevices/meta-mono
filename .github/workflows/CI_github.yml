@@ -51,16 +51,16 @@ jobs:
          . ./oe-init-build-env 
     - name: Setup configuration
       run: |
-        if [ ! grep meta-mono conf/bblayers.conf ]; then
+        if [[ ! grep meta-mono conf/bblayers.conf ]]; then
           echo "BBLAYERS += '$WORKSPACE/meta-mono'" >> conf/bblayers.conf
         fi
-        if [ ! grep meta-openembedded conf/bblayers.conf]; then
+        if [[ ! grep meta-openembedded conf/bblayers.conf]]; then
           echo "BBLAYERS += '$WORKSPACE/meta-openembedded/meta-oe'" >> conf/bblayers.conf
         fi
-        if [ ! grep rm_work conf/local.conf ]; then
+        if [[ ! grep rm_work conf/local.conf ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
-        if [ ! grep testimage conf/local.conf]; then
+        if [[ ! grep testimage conf/local.conf]]; then
           echo "INHERIT += ' testimage ' >> conf/local.conf
         fi
 
