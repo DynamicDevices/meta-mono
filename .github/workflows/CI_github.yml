@@ -35,7 +35,7 @@ jobs:
         cd ..
         rm -Rf meta-mono
         mv meta-mono.new meta-mono
-     - name: Update repo poky
+    - name: Update repo poky
       run: |
         if [ ! -d 'poky' ]; then
           git clone git://git.yoctoproject.org/poky -b $GITHUB_REF_NAME
