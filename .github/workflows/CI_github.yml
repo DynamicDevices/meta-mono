@@ -55,8 +55,7 @@ jobs:
         fi
     - name: Configure bitbake
       run: |
-        cd poky
-         . ./oe-init-build-env 
+         . ./poky/oe-init-build-env 
     - name: Setup configuration
       run: |
         if [[ ! grep meta-mono conf/bblayers.conf ]]; then
