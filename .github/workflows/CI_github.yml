@@ -1,0 +1,42 @@
+name: meta-mono CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+#  release:
+#    types: published
+
+jobs:
+  meta-mono-build:
+    runs-on: [self-hosted, linux]
+    environment: 
+      name: build
+    steps:
+    - name: Set environment for branch
+      run: |
+        if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+          echo "BUILD_TYPE=master" >> "$GITHUB_ENV"
+        fi
+        if [[ $GITHUB_REF == 'refs/heads/hardknott' ]]; then
+          echo "BUILD_TYPE=hardknott" >> "$GITHUB_ENV"
+        fi
+    - name: Checkout meta-mono
+      uses: actions/checkout@v1
+    - name: Clone repos
+      run: |
+        if [ ! -d 'poky' ]; then
+          git clone git://git.yoctoproject.org/poky -b $GITHUB_REF_NAME
+        else
+          cd poky
+          git pull origin $GITHUB_REF_NAME
+          cd ..
+        fi 
+#    - name: Store artifacts
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: firmware-${{ github.sha }}
+#        path: ./build_output/firmware
