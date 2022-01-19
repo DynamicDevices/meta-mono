@@ -27,7 +27,7 @@ jobs:
         fi
     - name: Checkout meta-mono
       uses: actions/checkout@v1
-    - name: Update repo: poky
+    - name: Update repo poky
       run: |
         if [ ! -d 'poky' ]; then
           git clone git://git.yoctoproject.org/poky -b $GITHUB_REF_NAME
@@ -36,7 +36,7 @@ jobs:
           git pull origin $GITHUB_REF_NAME
           cd ..
         fi 
-    - name: Update repo: meta-openembedded
+    - name: Update repo meta-openembedded
       run: |
         if [ ! -d 'meta-openembedded' ]; then
           git clone https://github.com/openembedded/meta-openembedded.git -b $GITHUB_REF_NAME
