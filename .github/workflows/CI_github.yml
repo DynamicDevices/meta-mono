@@ -57,7 +57,6 @@ jobs:
     - name: Setup configuration and do build
       run: |
          . ./poky/oe-init-build-env 
-        cd build
         if [[ ! $(grep meta-mono/meta-mono/meta-mono conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$WORKSPACE/meta-mono'" >> conf/bblayers.conf
         fi
