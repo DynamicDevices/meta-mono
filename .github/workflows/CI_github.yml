@@ -56,7 +56,7 @@ jobs:
 
         export VERSION=6.12.0.154
         export MACHINE=x86
-        env PREFERRED_VERSION_mono=${VERSION} PREFERRED_VERSION_mono-native=${VERSION} MACHINE="qemu${ARCH}" DL_DIR="$WORKSPACE/downloads" bitbake test-image-mono 
+        env PREFERRED_VERSION_mono="${VERSION}" PREFERRED_VERSION_mono-native="${VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$WORKSPACE/downloads" bitbake test-image-mono 
 #    - name: Store artifacts
 #      uses: actions/upload-artifact@v2
 #      with:
