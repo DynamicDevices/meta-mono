@@ -53,9 +53,9 @@ jobs:
           git pull origin $GITHUB_REF_NAME
           cd ..
         fi 
-    - name: Build
+    - name: Building
       run: |
-         . ./poky/oe-init-build-env
+        . ./poky/oe-init-build-env
         if [[ ! $(grep meta-mono/meta-mono/meta-mono conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$WORKSPACE/meta-mono'" >> conf/bblayers.conf
         fi
