@@ -33,7 +33,7 @@ jobs:
         pwd
         ls -l
         mkdir meta-mono.new
-        mv * meta-mono.new
+        mv * meta-mono.new || 1
         mv meta-mono.new meta-mono
     - name: Update repo poky
       run: |
