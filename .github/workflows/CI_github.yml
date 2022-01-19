@@ -57,10 +57,10 @@ jobs:
       run: |
         . ./poky/oe-init-build-env
         if [[ ! $(grep meta-mono/meta-mono/meta-mono conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$WORKSPACE/meta-mono'" >> conf/bblayers.conf
+          echo "BBLAYERS += '$GITHUB_WORKSPACE/meta-mono'" >> conf/bblayers.conf
         fi
         if [[ ! $(grep meta-openembedded conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$WORKSPACE/meta-openembedded/meta-oe'" >> conf/bblayers.conf
+          echo "BBLAYERS += '$GITHUB_WORKSPACE/meta-openembedded/meta-oe'" >> conf/bblayers.conf
         fi
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
