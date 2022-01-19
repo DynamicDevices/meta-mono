@@ -1,4 +1,3 @@
-
 name: meta-mono CI
 
 on:
@@ -54,7 +53,7 @@ jobs:
           git pull origin $GITHUB_REF_NAME
           cd ..
         fi
-    - name: Setup configuration and do build
+    - name: Build
       run: |
          . ./poky/oe-init-build-env 
         if [[ ! $(grep meta-mono/meta-mono/meta-mono conf/bblayers.conf) ]]; then
