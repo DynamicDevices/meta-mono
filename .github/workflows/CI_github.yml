@@ -57,7 +57,7 @@ jobs:
     - name: Configure bitbake
       run: |
          . ./poky/oe-init-build-env 
-    - name: Setup configuration
+    - name: Setup configuration and do build
       run: |
         cd build
         if [[ ! $(grep meta-mono/meta-mono/meta-mono conf/bblayers.conf) ]]; then
@@ -75,6 +75,10 @@ jobs:
 
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
+
+        export VERSION=6.12.0.154
+        export MACHINE=x86
+        env PREFERRED_VERSION_mono=${VERSION} PREFERRED_VERSION_mono-native=${VERSION} MACHINE="qemu${ARCH}" DL_DIR="$WORKSPACE/downloads" bitbake test-image-mono 
 #    - name: Store artifacts
 #      uses: actions/upload-artifact@v2
 #      with:
