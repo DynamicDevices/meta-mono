@@ -31,7 +31,8 @@ jobs:
     - name: Relocate meta-mono
       run: |
         mkdir ../meta-mono.new
-        mv * ../meta-mono.new
+        mkdir ../meta-mono.new/meta-mono
+        mv * ../meta-mono.new/meta-mono
         cd ..
         rm -Rf meta-mono
         mv meta-mono.new meta-mono
