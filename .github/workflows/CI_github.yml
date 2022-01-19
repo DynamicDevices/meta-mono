@@ -52,7 +52,7 @@ jobs:
           cd meta-openembedded
           git pull origin $GITHUB_REF_NAME
           cd ..
-        fi
+        fi 
     - name: Build
       run: |
          . ./poky/oe-init-build-env 
