@@ -44,6 +44,8 @@ jobs:
           git pull origin $GITHUB_REF_NAME
           cd ..
         fi 
+
+
 #    - name: Update repo meta-openembedded
 #      run: |
 #        if [ ! -d 'meta-openembedded' ]; then
@@ -53,6 +55,8 @@ jobs:
 #          git pull origin $GITHUB_REF_NAME
 #          cd ..
 #        fi 
+
+
     - name: Build
       run: |
          . ./poky/oe-init-build-env 
