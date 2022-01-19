@@ -73,8 +73,8 @@ jobs:
           echo "INHERIT += ' testimage ' >> conf/local.conf
         fi
 
-        export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_EXTRAWHITE="$BB_ENV_EXTRAWHITE MACHINE DL_DIR"
+        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
+        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
 #    - name: Store artifacts
 #      uses: actions/upload-artifact@v2
 #      with:
