@@ -31,6 +31,7 @@ jobs:
     - name: Update repo poky
       run: |
         cd $GITHUB_WORKSPACE
+        cd ..
         if [ ! -d 'poky' ]; then
           git clone git://git.yoctoproject.org/poky -b $GITHUB_REF_NAME
         else
@@ -41,6 +42,7 @@ jobs:
     - name: Update repo meta-openembedded
       run: |
         cd $GITHUB_WORKSPACE
+        cd ..
         if [ ! -d 'meta-openembedded' ]; then
           git clone https://github.com/openembedded/meta-openembedded.git -b $GITHUB_REF_NAME
         else
