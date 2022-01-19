@@ -70,7 +70,7 @@ jobs:
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
         if [[ ! $(grep testimage conf/local.conf) ]]; then
-          echo "INHERIT += ' testimage ' >> conf/local.conf
+          echo "INHERIT += ' testimage '" >> conf/local.conf
         fi
 
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
