@@ -30,6 +30,8 @@ jobs:
       uses: actions/checkout@v1
     - name: Relocate meta-mono
       run: |
+        pwd
+        ls -l
         mkdir meta-mono.new
         mv meta-mono meta-mono.new
         mv meta-mono.new meta-mono
