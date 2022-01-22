@@ -5,6 +5,21 @@ libraries to allow users to run .NET applications under linux built
 using OE. For more info about mono, see mono project's website. For
 more info on OpenEmbedded, see OE's website.
 
+## Build status
+
+| Branch | Status of Build & Tests |
+| ------ | ----------------------- |
+| master | [![master](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=master)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | [![kirkstone](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=kirkstone)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| honister | [![honister](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=honister)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| hardknott | [![hardknott](https://github.com//dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=hardknott)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| gatesgarth | [![gatesgarth](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=gatesgarth)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| dunfell | [![dunfell](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=dunfell)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| zeus | [![zeus](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=zeus)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| warrior | [![warrior](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=warrior)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| thud | [![thud](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=thud)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| sumo | [![sumo](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=sumo)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+
 ## Layer Dependencies
 
 This layer depends on:
