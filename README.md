@@ -4,18 +4,20 @@ meta-mono is an OpenEmbedded layer that builds mono runtime and mono libraries t
 
 ## Build status
 
-| Branch | Status of Build & Tests |
-| ------ | ----------------------- |
-| master | [![master](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=master)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | [![kirkstone](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=kirkstone)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| honister | [![honister](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=honister)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| hardknott | [![hardknott](https://github.com//dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=hardknott)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| gatesgarth | [![gatesgarth](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=gatesgarth)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| dunfell | [![dunfell](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=dunfell)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| zeus | [![zeus](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=zeus)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| warrior | [![warrior](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=warrior)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| thud | [![thud](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=thud)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| sumo | [![sumo](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=sumo)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| Branch | Support Status* | Status of Build & Tests |
+| ------ | --------------- | ----------------------- |
+| master | Supported | [![master](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=master)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | Supported (LTS) | [![kirkstone](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=kirkstone)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| honister | Supported | [![honister](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=honister)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| hardknott | Supported | [![hardknott](https://github.com//dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=hardknott)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| gatesgarth | EOL | [![gatesgarth](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=gatesgarth)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| dunfell | Supported (LTS) | [![dunfell](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=dunfell)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| zeus | EOL | [![zeus](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=zeus)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| warrior | EOL | [![warrior](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=warrior)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| thud | EOL | [![thud](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=thud)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| sumo | EOL | [![sumo](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=sumo)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+
+*support status as of 23/01/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
 ## Layer Dependencies
 
