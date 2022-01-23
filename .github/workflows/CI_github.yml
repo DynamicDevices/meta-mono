@@ -1,4 +1,4 @@
-name: meta-mono CI
+name: meta-mono
 
 on:
   push:
@@ -19,48 +19,48 @@ on:
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    strategy:
+      matrix:
+        mono_version: [6.12.0.154]
+        branch: [gatesgarth]
+        arch: [x86, arm]
     env:
-      name: build
-      MONO_VERSION: 6.12.0.154
-      ARCH: x86
+      name: build-and-test
+      MONO_VERSION: ${{ matrix.mono_version }}
+      ARCH: ${{ matrix.arch }}
+      BRANCH: ${{ matrix.branch }}
     steps:
     - name: Checkout meta-mono
       uses: actions/checkout@v2
       with:
         clean: false
-    - name: Relocate meta-mono
-      run: |
-        mkdir -p ../meta-mono.new/${GITHUB_REF##*/}/meta-mono
-        mv * ../meta-mono.new/${GITHUB_REF##*/}/meta-mono
-        cd ..
-        rm -Rf meta-mono
-        mv meta-mono.new meta-mono
+        path: ${{ matrix.branch }}/meta-mono
     - name: Update repo poky
       run: |
-        if [ ! -d 'poky' ]; then
-          git clone git://git.yoctoproject.org/poky -b $GITHUB_REF_NAME ${GITHUB_REF##*/}/poky
+        if [ ! -d ${BRANCH}/poky ]; then
+          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
         else
-          cd ${GITHUB_REF##*/}/poky
-          git pull origin $GITHUB_REF_NAME
+          cd ${BRANCH}/poky
+          git pull origin ${BRANCH}
           cd ../..
         fi
     - name: Update repo meta-openembedded
       run: |
-        if [ ! -d 'meta-openembedded' ]; then
-          git clone https://github.com/openembedded/meta-openembedded.git -b $GITHUB_REF_NAME ${GITHUB_REF##*/}/meta-openembedded
+        if [ ! -d ${BRANCH}/meta-openembedded ]; then
+          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
         else
-          cd ${GITHUB_REF##*/}/meta-openembedded
-          git pull origin $GITHUB_REF_NAME
+          cd ${BRANCH}/meta-openembedded
+          git pull origin ${BRANCH}
           cd ../..
         fi 
     - name: Configuring
       run: |
-        . ./${GITHUB_REF##*/}/poky/oe-init-build-env ${GITHUB_REF##*/}/build
-        if [[ ! $(grep meta-mono/meta-mono/${GITHUB_REF##*/}/meta-mono conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$GITHUB_WORKSPACE/${GITHUB_REF##*/}/meta-mono'" >> conf/bblayers.conf
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        if [[ ! $(grep meta-mono/meta-mono/${BRANCH}/meta-mono conf/bblayers.conf) ]]; then
+          echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
         fi
         if [[ ! $(grep meta-openembedded conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$GITHUB_WORKSPACE/${GITHUB_REF##*/}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
+          echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
         fi
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
@@ -68,7 +68,7 @@ jobs:
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
     - name: Building
       run: |
-        . ./${GITHUB_REF##*/}/poky/oe-init-build-env ${GITHUB_REF##*/}/build
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
@@ -76,7 +76,7 @@ jobs:
         env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
     - name: Testing
       run: |
-        . ./${GITHUB_REF##*/}/poky/oe-init-build-env ${GITHUB_REF##*/}/build
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
         export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
