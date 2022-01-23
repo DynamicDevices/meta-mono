@@ -22,12 +22,10 @@ jobs:
     runs-on: [self-hosted, linux]
     strategy:
       matrix:
-        mono_version: [6.12.0.154]
         branch: [master]
         arch: [x86, arm]
     env:
       name: build-and-test
-      MONO_VERSION: ${{ matrix.mono_version }}
       ARCH: ${{ matrix.arch }}
       BRANCH: ${{ matrix.branch }}
     steps:
@@ -71,15 +69,13 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
 
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
+        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
         export TERM=linux
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
