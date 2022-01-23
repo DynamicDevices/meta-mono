@@ -15,6 +15,7 @@ on:
       - honister
       - kirkstone
   pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
   build-and-test:
