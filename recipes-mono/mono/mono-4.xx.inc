@@ -38,11 +38,6 @@ EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
-    sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/mono-wrapper.in
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/monodis-wrapper.in
     find . -name "*.pc.in" -exec sed -i -e 's:^\([^=]*=\).*pcfiledir.*/\.\./\.\.:\1@prefix@:g' {} \;
 }
 
