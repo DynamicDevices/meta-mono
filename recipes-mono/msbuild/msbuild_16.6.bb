@@ -44,6 +44,8 @@ do_configure () {
 export DOTNET_MSBUILD_SDK_RESOLVER_CLI_DIR="${STAGING_DATADIR_NATIVE}/dotnet"
 export CURL_CA_BUNDLE="${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt"
 
+do_compile[network] = "1"
+
 do_compile () {
     ./eng/cibuild_bootstrapped_msbuild.sh --host_type mono --configuration Release --skip_tests /p:DisableNerdbankVersioning=true
 }
