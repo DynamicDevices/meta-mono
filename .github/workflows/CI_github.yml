@@ -76,6 +76,6 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR TERM"
         export TERM=linux
         env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
