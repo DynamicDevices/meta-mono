@@ -1,0 +1,43 @@
+From 69cfb5fa61ab9b78c7c4f76812b8b84f165dc73d Mon Sep 17 00:00:00 2001
+From: Maxim Lipnin <v-maxlip@microsoft.com>
+Date: Sat, 27 Mar 2021 13:39:33 +0300
+Subject: [PATCH 10/32] Fix the System.String.Replace throwing
+ NotImplementedException (#20960) (#20978)
+
+https://github.com/mono/mono/issues/20948
+---
+ mcs/class/corlib/Test/System/StringTest.cs | 4 ++++
+ mcs/class/corlib/corefx/CompareInfo.cs     | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/mcs/class/corlib/Test/System/StringTest.cs b/mcs/class/corlib/Test/System/StringTest.cs
+index eabaa07fe12..4407d4a71a7 100644
+--- a/mcs/class/corlib/Test/System/StringTest.cs
++++ b/mcs/class/corlib/Test/System/StringTest.cs
+@@ -3221,6 +3221,10 @@ public void Replace()
+ 
+ 		// Test replacing null characters (bug #67395)
+ 		Assert.AreEqual ("is this ok ?", "is \0 ok ?".Replace ("\0", "this"), "should not strip content after nullchar");
++
++		// System.String.Replace fails with NotImplementedException https://github.com/mono/mono/issues/20948
++		Assert.AreEqual ("Original", s1.Replace("o", "O", StringComparison.CurrentCulture), "Replace(string, string, StringComparison)");
++		Assert.AreEqual ("Original", s1.Replace("o", "O", false, CultureInfo.CurrentCulture), "Replace(string, string, bool, CultureInfo)");
+ 	}
+ 
+ 	[Test]
+diff --git a/mcs/class/corlib/corefx/CompareInfo.cs b/mcs/class/corlib/corefx/CompareInfo.cs
+index b8205f21ac5..08f6aa50355 100644
+--- a/mcs/class/corlib/corefx/CompareInfo.cs
++++ b/mcs/class/corlib/corefx/CompareInfo.cs
+@@ -86,7 +86,7 @@ int LastIndexOfCore (string source, string target, int startIndex, int count, Co
+ 		unsafe int IndexOfCore (string source, string target, int startIndex, int count, CompareOptions options, int* matchLengthPtr)
+ 		{
+ 			if (matchLengthPtr != null)
+-				throw new NotImplementedException ();
++				*matchLengthPtr = target.Length;
+ 
+ 			return internal_index_switch (source, startIndex, count, target, options, true);
+ 		}
+-- 
+2.31.1
+

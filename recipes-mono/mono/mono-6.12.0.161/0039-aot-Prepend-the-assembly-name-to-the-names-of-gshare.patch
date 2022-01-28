@@ -1,0 +1,43 @@
+From e750cb3ee50e958afa85d6642ba118c25844b262 Mon Sep 17 00:00:00 2001
+From: "github-actions[bot]"
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Fri, 19 Nov 2021 15:20:56 -0500
+Subject: [PATCH 39/39] [aot] Prepend the assembly name to the names of
+ gsharedvt wrappers to avoid duplicate symbol errors during static linking.
+ (#21309)
+
+Fixes https://github.com/mono/mono/issues/20417.
+
+Co-authored-by: Zoltan Varga <vargaz@gmail.com>
+---
+ mono/mini/aot-compiler.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/mono/mini/aot-compiler.c b/mono/mini/aot-compiler.c
+index b2dcabf154a..1ce73a79f9d 100644
+--- a/mono/mini/aot-compiler.c
++++ b/mono/mini/aot-compiler.c
+@@ -9073,8 +9073,18 @@ mono_aot_get_method_name (MonoCompile *cfg)
+ 	/* Use the mangled name if possible */
+ 	if (method->wrapper_type == MONO_WRAPPER_OTHER) {
+ 		WrapperInfo *info = mono_marshal_get_wrapper_info (method);
+-		if (info->subtype == WRAPPER_SUBTYPE_GSHAREDVT_IN_SIG || info->subtype == WRAPPER_SUBTYPE_GSHAREDVT_OUT_SIG)
+-			return mono_aot_get_mangled_method_name (method);
++		if (info->subtype == WRAPPER_SUBTYPE_GSHAREDVT_IN_SIG || info->subtype == WRAPPER_SUBTYPE_GSHAREDVT_OUT_SIG) {
++		    char *name, *s;
++			name = mono_aot_get_mangled_method_name (method);
++			if (llvm_acfg->aot_opts.static_link) {
++				/* Include the assembly name too to avoid duplicate symbol errors */
++				 s = g_strdup_printf ("%s_%s", llvm_acfg->assembly_name_sym, name);
++				 g_free (name);
++				 return s;
++			} else {
++				return name;
++			}
++		}
+ 	}
+ 
+ 	if (llvm_acfg->aot_opts.static_link)
+-- 
+2.33.1
+
