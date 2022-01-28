@@ -5,6 +5,6 @@ S = "${WORKDIR}/mono-${BASEPV}"
 
 DEPENDS += " cmake-native"
 
-do_configure:prepend () {
+do_configure_prepend () {
 	sed -i 's/${BASEPV}/${PV}/g' configure.ac
 }
