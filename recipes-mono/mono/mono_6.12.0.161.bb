@@ -3,7 +3,7 @@ require mono-mit-bsd-6xx.inc
 require ${PN}-base.inc
 require mono-${PV}.inc
 
-RDEPENDS:${PN}-dev =+ " zlib "
+RDEPENDS_${PN}-dev =+ " zlib "
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${BASEPV}.tar.xz \
            file://shm_open-test-crosscompile.diff \
@@ -40,6 +40,6 @@ do_fixup_config() {
 }
 
 PACKAGES += "${PN}-profiler "
-FILES:${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
+FILES_${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
 
-INSANE_SKIP:${PN}-libs += "dev-so"
+INSANE_SKIP_${PN}-libs += "dev-so"
