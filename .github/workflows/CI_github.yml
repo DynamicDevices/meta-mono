@@ -64,6 +64,9 @@ jobs:
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
+        if [[ ! $(grep cve-check conf/local.conf) ]]; then
+          echo "INHERIT += ' cve-check '" >> conf/local.conf
+        fi
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
     - name: Building
       run: |
