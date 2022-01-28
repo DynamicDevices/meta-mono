@@ -1,0 +1,36 @@
+From dfcef746405b049e0ac8e438f6f3c1a1068cd6ab Mon Sep 17 00:00:00 2001
+From: Rolf Bjarne Kvinge <rolf@xamarin.com>
+Date: Wed, 3 Nov 2021 12:46:32 +0100
+Subject: [PATCH 37/39] Allow nfloat to be in the ObjCRuntime namespace, and
+ make it work for Xamarin.MacCatalyst.dll as well. (#21261)
+
+Ref: https://github.com/xamarin/xamarin-macios/pull/13092
+---
+ mono/mini/mini-native-types.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/mono/mini/mini-native-types.c b/mono/mini/mini-native-types.c
+index 7d4bf660966..a6077e6e2f7 100644
+--- a/mono/mini/mini-native-types.c
++++ b/mono/mini/mini-native-types.c
+@@ -379,6 +379,8 @@ mono_class_is_magic_assembly (MonoClass *klass)
+ 		return TRUE;
+ 	if (!strcmp ("Xamarin.WatchOS", aname))
+ 		return TRUE;
++	if (!strcmp ("Xamarin.MacCatalyst", aname))
++		return TRUE;
+ 	/* regression test suite */
+ 	if (!strcmp ("builtin-types", aname))
+ 		return TRUE;
+@@ -434,7 +436,7 @@ mono_class_is_magic_float (MonoClass *klass)
+ 	if (!mono_class_is_magic_assembly (klass))
+ 		return FALSE;
+ 
+-	if (strcmp ("System", m_class_get_name_space (klass)) != 0)
++	if (strcmp ("System", m_class_get_name_space (klass)) != 0 && strcmp ("ObjCRuntime", m_class_get_name_space (klass)) != 0)
+ 		return FALSE;
+ 
+ 	if (strcmp ("nfloat", m_class_get_name (klass)) == 0) {
+-- 
+2.33.1
+
