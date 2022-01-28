@@ -75,6 +75,13 @@ jobs:
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
 
         env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
+    - name: CVE check
+      run: |
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR TERM"
+        export TERM=linux
+        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake mono -c cve_check
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
