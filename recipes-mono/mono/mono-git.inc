@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING.LIB;md5=80862f3fd0e11a5fa0318070c54461ce"
 SRCBRANCH = "main"
 SRCREV = "${AUTOREV}"
 
-SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH}\
+SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH};protocol=https \
            file://dllmap-config.in.diff \
 	   file://0002-prevent-threadpool-exception5-test-hanging.patch \
 "
