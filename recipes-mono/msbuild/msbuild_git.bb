@@ -23,6 +23,8 @@ SRC_URI = " \
 S = "${WORKDIR}/git"
 
 do_compile () {
+        sed -i 's/curl -sL/curl --insecure -sL/' cibuild.sh
+        sed -i 's/curl --retry/curl --insecure --retry/' init-tools.sh
 	./cibuild.sh --scope Compile --host Mono --target Mono --config Release --bootstrap-only
 }
 
