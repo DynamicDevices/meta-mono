@@ -5,27 +5,22 @@ on:
     branches:
       - master
       - master-next
-      - sumo
-      - thud
-      - warrior
-      - zeus
-      - dunfell
-      - gatesgarth
-      - hardknott
-      - honister
-      - kirkstone
   pull_request:
-    types: [opened, reopened, synchronize]
 
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    container:
+      image: dynamicdevices/yocto-ci-build:latest
+      options: --network host -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
+        mono_version: [6.12.0.161]
         branch: [master]
         arch: [x86, arm]
     env:
       name: build-and-test
+      MONO_VERSION: ${{ matrix.mono_version }}
       ARCH: ${{ matrix.arch }}
       BRANCH: ${{ matrix.branch }}
     steps:
@@ -64,28 +59,20 @@ jobs:
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
-        if [[ ! $(grep cve-check conf/local.conf) ]]; then
-          echo "INHERIT += ' cve-check '" >> conf/local.conf
-        fi
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
     - name: Building
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
 
-        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
-    - name: CVE check
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR TERM"
-        export TERM=linux
-        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake mono -c cve_check
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR TERM"
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
         export TERM=linux
-        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
