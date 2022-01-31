@@ -3,22 +3,15 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
       - sumo
-      - thud
-      - warrior
-      - zeus
-      - dunfell
-      - gatesgarth
-      - hardknott
-      - honister
-      - kirkstone
   pull_request:
 
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    container:
+      image: dynamicdevices/yocto-ci-build:sumo
+      options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
         mono_version: [6.12.0.161]
@@ -53,6 +46,8 @@ jobs:
           git pull origin ${BRANCH}
           cd ../..
         fi 
+    - name: Configuring
+      run: |
     - name: Configuring
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
