@@ -3,27 +3,19 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
       - morty
-      - sumo
-      - thud
-      - warrior
-      - zeus
-      - dunfell
-      - gatesgarth
-      - hardknott
-      - honister
-      - kirkstone
+      - morty-next
   pull_request:
-    types: [opened, reopened, synchronize]
 
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    container:
+      image: dynamicdevices/yocto-ci-build:sumo
+      options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
-        mono_version: [6.8.0.123]
+        mono_version: [5.8.0.129]
         branch: [morty]
         arch: [x86, arm]
     env:
@@ -57,6 +49,8 @@ jobs:
         fi 
     - name: Configuring
       run: |
+    - name: Configuring
+      run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         if [[ ! $(grep meta-mono/meta-mono/${BRANCH}/meta-mono conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
@@ -75,7 +69,7 @@ jobs:
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
 
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
