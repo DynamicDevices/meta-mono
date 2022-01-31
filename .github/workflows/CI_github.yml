@@ -14,7 +14,7 @@ jobs:
       options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
-        mono_version: [6.12.0.161]
+        mono_version: [5.8.0.129]
         branch: [sumo]
         arch: [x86, arm]
     env:
