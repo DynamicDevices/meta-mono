@@ -3,25 +3,17 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
-      - sumo
-      - thud
-      - warrior
-      - zeus
-      - dunfell
       - gatesgarth
-      - hardknott
-      - honister
-      - kirkstone
+      - gatesgarth-next
   pull_request:
 
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    container: dynamicdevices/yocto-ci-build:latest
     strategy:
       matrix:
-        mono_version: [6.12.0.154]
+        mono_version: [6.12.0.161]
         branch: [gatesgarth]
         arch: [x86, arm]
     env:
@@ -70,15 +62,15 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
-        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
 
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native'
-        export BB_ENV_EXTRAWHITE='$BB_ENV_EXTRAWHITE MACHINE DL_DIR'
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
+        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
         export TERM=linux
         env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
