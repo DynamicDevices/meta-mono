@@ -3,17 +3,8 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
-      - sumo
-      - thud
-      - warrior
-      - zeus
-      - dunfell
-      - gatesgarth
-      - hardknott
       - honister
-      - kirkstone
+      - honister-next
   pull_request:
 
 jobs:
