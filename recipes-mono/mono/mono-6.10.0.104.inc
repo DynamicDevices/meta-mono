@@ -2,4 +2,4 @@ SRC_URI[sha256sum] = "b8d6eb70a252d2efad8384d66b529883dc59e581565d617fa57f8e7931
 
 S = "${WORKDIR}/mono-${PV}"
 
-DEPENDS += " cmake-native"
+DEPENDS += " cmake-native libatomic-ops"
