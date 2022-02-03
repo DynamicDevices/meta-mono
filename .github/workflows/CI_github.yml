@@ -60,7 +60,7 @@ jobs:
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
-        sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
+        sed -i 's/#TEST_IMAGE = \"1\"/TEST_IMAGE = \"1\"/' conf/local.conf
     - name: Building
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
