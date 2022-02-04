@@ -10,6 +10,9 @@ on:
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
+    container:
+      image: dynamicdevices/yocto-ci-build:sumo
+      options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
         mono_version: [6.10.0.104]
