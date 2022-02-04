@@ -14,6 +14,7 @@ meta-mono is an OpenEmbedded layer that builds mono runtime and mono libraries t
 | warrior | EOL | [![warrior](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/warrior?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | thud | EOL | [![thud](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/thud?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | sumo | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/sumo?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| morty | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/morty?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
 *support status as of 23/01/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
