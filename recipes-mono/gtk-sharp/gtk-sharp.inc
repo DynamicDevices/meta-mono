@@ -33,3 +33,7 @@ FILES_${PN}-dev = "\
 "
 
 DIRFILES = "1"
+
+do_install_append() {
+  find ${D} -name *.dll -exec chown -h root:root {} \;
+}

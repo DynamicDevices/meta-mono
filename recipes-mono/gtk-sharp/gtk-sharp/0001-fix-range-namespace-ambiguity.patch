@@ -1,0 +1,11 @@
+diff -ur gtk-sharp-2.12.45.org/sample/test/TestRange.cs gtk-sharp-2.12.45/sample/test/TestRange.cs
+--- gtk-sharp-2.12.45.org/sample/test/TestRange.cs	2016-09-21 11:49:20.000000000 +0000
++++ gtk-sharp-2.12.45/sample/test/TestRange.cs	2020-02-04 16:55:49.527862899 +0000
+@@ -9,6 +9,7 @@
+ using System;
+ 
+ using Gtk;
++using Range=Gtk.Range;
+ 
+ namespace WidgetViewer {
+ 
