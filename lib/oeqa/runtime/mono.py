@@ -1,11 +1,9 @@
 import os
 
-from oeqa.runtime.case import OERuntimeTestCase
-from oeqa.core.decorator.depends import OETestDepends
-from oeqa.core.decorator.data import skipIfNotFeature
 from oeqa.oetest import oeRuntimeTest, skipModule
+from oeqa.utils.decorators import *
 
-class MonoCompileTest(OERuntimeTestCase):
+class MonoCompileTest(oeRuntimeTest):
 
     @classmethod
     def setUpClass(cls):
@@ -14,18 +12,17 @@ class MonoCompileTest(OERuntimeTestCase):
 
         dst = '/tmp/'
         src = os.path.join(files_dir, 'helloworld.cs')
-        cls.tc.target.copyTo(src, dst)
+        cls.tc.target.copy_to(src, dst)
         src = os.path.join(files_dir, 'helloworldform.cs')
-        cls.tc.target.copyTo(src, dst)
+        cls.tc.target.copy_to(src, dst)
         src = os.path.join(files_dir, 'helloworldgtk.cs')
-        cls.tc.target.copyTo(src, dst)
+        cls.tc.target.copy_to(src, dst)
 
     @classmethod
     def tearDownClass(cls):
         files = '/tmp/helloworld.cs /tmp/helloworld.exe /tmp/helloworldform.cs /tmp/helloworldform.exe /tmp/helloworldgtk.cs /tmp/helloworldgtk.exe'
         cls.tc.target.run('rm %s' % files)
 
-    @OETestDepends(['ssh.SSHTest.test_ssh'])
     def test_executable_compile_and_run_cmdline(self):
         status, output = self.target.run('mcs /tmp/helloworld.cs -out:/tmp/helloworld.exe')
         msg = 'mcs compile failed, output: %s' % output
@@ -35,10 +32,7 @@ class MonoCompileTest(OERuntimeTestCase):
         self.assertEqual(status, 0, msg=msg)
         self.assertEqual(output, 'HelloWorld', msg=msg)
 
-    @OETestDepends(['ssh.SSHTest.test_ssh'])
     def test_executable_compile_and_run_winform(self):
-#        if not oeRuntimeTest.hasFeature("x11"):
-#          skipModule("No x11 feature in image")
         status, output = self.target.run('mcs /tmp/helloworldform.cs -out:/tmp/helloworldform.exe -r:System.Windows.Forms -r:System.Data -r:System.Drawing')
         msg = 'mcs compile failed, output: %s' % output
         self.assertEqual(status, 0, msg=msg)
@@ -46,10 +40,7 @@ class MonoCompileTest(OERuntimeTestCase):
         msg = 'running compiled file failed, output: %s' % output
         self.assertEqual(status, 0, msg=msg)
 
-    @OETestDepends(['ssh.SSHTest.test_ssh'])
     def test_executable_compile_and_run_gtk(self):
-#        if not oeRuntimeTest.hasPackage("gtk-sharp"):
-#          skipModule("No gtk-sharp package in image")
         status, output = self.target.run('mcs /tmp/helloworldgtk.cs -out:/tmp/helloworldgtk.exe -r:System.Windows.Forms -r:System.Data -r:System.Drawing -lib:/usr/lib/mono/gtk-sharp-2.0 -r:gtk-sharp -r:glib-sharp -r:atk-sharp')
         msg = 'mcs compile failed, output: %s' % output
         self.assertEqual(status, 0, msg=msg)
