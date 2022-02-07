@@ -10,7 +10,7 @@ class MonoCompileTest(OERuntimeTestCase):
     @classmethod
     def setUpClass(cls):
 
-        files_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../files"))
+        files_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "files"))
 
         dst = '/tmp/'
         src = os.path.join(files_dir, 'helloworld.cs')
