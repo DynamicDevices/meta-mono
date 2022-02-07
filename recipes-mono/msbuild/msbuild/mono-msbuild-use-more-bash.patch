@@ -1,0 +1,28 @@
+diff --git a/mono/build/extract_and_copy_hostfxr.sh b/mono/build/extract_and_copy_hostfxr.sh
+index 68a8586..8fae00b 100755
+--- a/mono/build/extract_and_copy_hostfxr.sh
++++ b/mono/build/extract_and_copy_hostfxr.sh
+@@ -21,7 +21,8 @@ OLDCWD=`pwd`
+ cd $TMPDIR
+ 
+ GetDotNetInstallScript $TMPDIR
+-sh ./dotnet-install.sh --version $1 --install-dir $DOTNET_DIR --architecture x64 --runtime dotnet --skip-non-versioned-files
++chmod +x dotnet-install.sh
++./dotnet-install.sh --version $1 --install-dir $DOTNET_DIR --architecture x64 --runtime dotnet --skip-non-versioned-files
+ find $DOTNET_DIR -name libhostfxr.dylib | xargs -I {} cp -v {} $DESTDIR
+ 
+ cd $OLDCWD
+diff --git a/mono/build/get_sdk_files.sh b/mono/build/get_sdk_files.sh
+index 11d2ffc..fbf52e2 100755
+--- a/mono/build/get_sdk_files.sh
++++ b/mono/build/get_sdk_files.sh
+@@ -24,7 +24,8 @@ OLDCWD=`pwd`
+ cd $TMPDIR
+ 
+ GetDotNetInstallScript $TMPDIR
+-sh ./dotnet-install.sh --version $dotnet_sdk_version --install-dir $DOTNET_DIR --architecture x64 --skip-non-versioned-files
++chmod +x dotnet-install.sh
++./dotnet-install.sh --version $dotnet_sdk_version --install-dir $DOTNET_DIR --architecture x64 --skip-non-versioned-files
+ find $DOTNET_DIR -name Microsoft.NETCoreSdk.BundledVersions.props -exec cp -v {} $1 \;
+ find $DOTNET_DIR -name RuntimeIdentifierGraph.json -exec cp -v {} $1 \;
+ 
