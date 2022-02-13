@@ -5,7 +5,7 @@ PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,giflib"
 PACKAGECONFIG[exif] = "--with-libexif,--without-libexif,libexif"
 PACKAGECONFIG[x11] = "--with-x11,--without-x11,virtual/libx11 libxft"
 
-DEPENDS =+ "cairo freetype fontconfig libpng"
+DEPENDS =+ "cairo-dev freetype fontconfig libpng"
 
 do_install:append() {
 # fix pkgconfig .pc file
