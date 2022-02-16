@@ -1,9 +1,9 @@
-PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} jpeg tiff gif exif pango"
+PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)} jpeg tiff gif exif"
 PACKAGECONFIG[jpeg] = "--with-libjpeg,--without-libjpeg,jpeg"
 PACKAGECONFIG[tiff] = "--with-libtiff,--without-libtiff,tiff"
 PACKAGECONFIG[gif] = "--with-libgif,--without-libgif,giflib"
 PACKAGECONFIG[exif] = "--with-libexif,--without-libexif,libexif"
-PACKAGECONFIG[pango] = "--with-pango,--without-pango,pango"
+PACKAGECONFIG[pango] = "--with-pango,,pango"
 PACKAGECONFIG[x11] = ",--without-x11,virtual/libx11 libxft"
 
 DEPENDS =+ "cairo freetype fontconfig libpng"
