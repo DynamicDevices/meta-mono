@@ -5,7 +5,6 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=e0a7dacaa67d7e24a32074fba736dc59"
 
 SRC_URI += " \
 		file://0001-fix-cross-compile.patch \
-		file://0001-configure-Fix-build-with-Gentoo-pango.patch \
 		"
 
 SRC_URI[md5sum] = "8079300e708c7ea9b4254d4b2eeba463"
