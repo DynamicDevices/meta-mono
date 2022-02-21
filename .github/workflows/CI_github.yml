@@ -80,4 +80,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: test-image-mono-${{ github.sha }}
-        path: ./${BRANCH}/build/tmp/deploy/images/qemu${ARCH}
+        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
