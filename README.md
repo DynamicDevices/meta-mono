@@ -7,6 +7,7 @@ meta-mono is an OpenEmbedded layer that builds mono runtime and mono libraries t
 | Branch | Support Status* | Status of Build & Tests |
 | ------ | --------------- | ----------------------- |
 | master | Supported | [![master](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/master?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | Supported | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/kirkstone?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | hardknott | Supported | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/hardknott?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | gatesgarth | EOL | [![gatesgarth](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/gatesgarth?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | dunfell | Supported (LTS) | [![dunfell](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/dunfell?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
