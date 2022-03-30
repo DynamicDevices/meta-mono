@@ -5,6 +5,7 @@ require core-image-mono.inc
 # Build up meta-mono test image here
 IMAGE_INSTALL += "msbuild \
                   dotnet \
+                  dotnet-helloworld \
 "
 
 IMAGE_BASENAME = "${PN}"
