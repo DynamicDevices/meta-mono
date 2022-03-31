@@ -1,6 +1,6 @@
 ## Introduction
 
-meta-mono is an OpenEmbedded layer that builds mono runtime and mono libraries to allow users to run .NET applications under linux built using OE. For more info about mono, see mono project's website. For more info on OpenEmbedded, see OE's website.
+meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono libraries to allow users to run .NET applications under linux built using OE. For more info about mono, see mono project's website. For more info on OpenEmbedded, see OE's website.
 
 ## Build status
 
