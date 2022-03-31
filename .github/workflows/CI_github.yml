@@ -67,6 +67,8 @@ jobs:
         export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
         export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
 
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -c cleansstate dotnet
+
         env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
