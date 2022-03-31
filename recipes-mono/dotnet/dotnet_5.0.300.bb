@@ -10,11 +10,10 @@ DEPENDS = "zlib"
 RDEPENDS:${PN} = "\
     icu \
     libgssapi-krb5 \
-    lttng-ust \
     zlib \
 "
 
-RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5 liblttng-ust"
+RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
 
 PR = "r0"
 
