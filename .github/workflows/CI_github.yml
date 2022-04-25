@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         mono_version: [6.12.0.161]
-        branch: [master]
+        branch: [kirkstone]
         arch: [x86-64, arm]
     env:
       name: build-and-test
