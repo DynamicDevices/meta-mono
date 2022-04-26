@@ -7,14 +7,14 @@ COMPATIBLE_HOST ?= "(x86_64|aarch64|arm).*-linux"
 
 DEPENDS = "zlib"
 
+#FIXME add lttng-ust as soon as dotnet core supports liblttng-ust.so.1
 RDEPENDS:${PN} = "\
     icu \
     libgssapi-krb5 \
-    lttng-ust \
     zlib \
 "
 
-RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5 liblttng-ust"
+RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
 
 PR = "r0"
 
@@ -60,11 +60,20 @@ do_install() {
     install -d ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
     cp -r --no-preserve=ownership ${S}/shared/Microsoft.NETCore.App/${RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
 
+    #FIXME: remove the following line. if the lttng-ust conflict is solved
+    rm ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${RUNTIME}/libcoreclrtraceptprovider.so
+
     install -d ${D}${datadir}/dotnet/shared/Microsoft.AspNetCore.App
     cp -r --no-preserve=ownership ${S}/shared/Microsoft.AspNetCore.App/${RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.AspNetCore.App
+
+    if [ "${SRC_ARCH}" = "x64" ]; then
+        ln -s ${base_libdir} ${D}/lib64
+    fi
+
 }
 
 FILES:${PN} += "\
+    /lib64 \
     ${datadir}/dotnet/dotnet \
     ${datadir}/dotnet/*.txt \
     ${datadir}/dotnet/host \
