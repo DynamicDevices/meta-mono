@@ -8,7 +8,7 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 | ------ | --------------- | ----------------------- |
 | master | Supported | [![master](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/master?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | langdale | 	Future  | [![langdale](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/langdale?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | 	Future - Long Term Support (minimum Apr. 2024)	 | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/kirkstone?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![kirkstone](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/kirkstone?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | hardknott | Supported | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/hardknott?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | gatesgarth | EOL | [![gatesgarth](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/gatesgarth?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | dunfell | 	Supported - Long Term Support (until Apr. 2024) | [![dunfell](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/dunfell?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
@@ -18,7 +18,7 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 | sumo | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/sumo?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | morty | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/morty?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
-*support status as of 31/03/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
+*support status as of 07/05/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
 NOTE: 24/01/22 - This [patch](https://patchwork.openembedded.org/patch/171349/) is needed to Poky for branch morty, sumo (and perhaps others) to fix a gcc version build error.
 
