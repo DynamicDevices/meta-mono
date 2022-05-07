@@ -7,7 +7,7 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 | Branch | Support Status* | Status of Build & Tests |
 | ------ | --------------- | ----------------------- |
 | langdale | 	Future  | [![langdale](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/langdale?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/kirkstone?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/master?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | hardknott | Supported | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/hardknott?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | gatesgarth | EOL | [![gatesgarth](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/gatesgarth?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | dunfell | 	Supported - Long Term Support (until Apr. 2024) | [![dunfell](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/dunfell?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
