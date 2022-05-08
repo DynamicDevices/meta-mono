@@ -19,16 +19,16 @@ RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
 PR = "r0"
 
 SRC_ARCH:aarch64 = "arm64"
-SRC_FETCH_ID:aarch64 = "50c2990a-2b62-4a51-b3db-8dab334f81c9/e0edfb3905b31ab030a97fa64f48cc8e"
-SRC_SHA512SUM:aarch64 = "654e625627b35d9b8e4e5967c76485d0ff91769f5bb5429c99e0554c601426de1b26a5c37d32ab4bc227a15409c134757d5422944cf52c945b351c5927a28393"
+SRC_FETCH_ID:aarch64 = "952f5525-7227-496f-85e5-09cadfb44629/eefd0f6eb8f809bfaf4f0661809ed826"
+SRC_SHA512SUM:aarch64 = "2d0021bb4cd221ffba6888dbd6300e459f45f4f9d3cf7323f3b97ee0f093ef678f5a36d1c982296f4e15bbcbd7275ced72c3e9b2fc754039ba663d0612ffd866"
 
 SRC_ARCH:arm = "arm"
-SRC_FETCH_ID:arm = "4bbb3a8d-e32a-4822-81d8-b2c570414f0a/aa7659eac0f0c52316a0fa7aa7c2081a"
-SRC_SHA512SUM:arm = "9e507eac7d6598188766d6281ee8102c8f2b738611a4050cc7cbce7723591dce4b6e8d35588561741852f46a6f9af4fd4b715c328007a461cc5fb468d7ab0d8c"
+SRC_FETCH_ID:arm = "e41a177d-9f0b-4afe-97a4-53587cd89d00/c2c897aa6442d49c1d2d86abb23c20b2"
+SRC_SHA512SUM:arm = "8c2d56256f4bebe58caee7810b7689408ff023b1f2e68f99fa375f0115db41ef0c3eb160b9ab84dc2764443a045801a4b03f6bc9090e0c1583fca2587ea0d9d6"
 
 SRC_ARCH:x86-64 = "x64"
-SRC_FETCH_ID:x86-64 = "98563846-f949-4dc7-81a0-77016735bf08/56d5882a2046382fccb7db032f7d2a02"
-SRC_SHA512SUM:x86-64 = "724a8e6ed77d2d3b957b8e5eda82ca8c99152d8691d1779b4a637d9ff781775f983468ee46b0bc8ad0ddbfd9d537dd8decb6784f43edae72c9529a90767310d2"
+SRC_FETCH_ID:x86-64 = "9d8c7137-2091-4fc6-a419-60ba59c8b9de/db0c5cda94f31d2260d369123de32d59"
+SRC_SHA512SUM:x86-64 = "81e9c368d445d9e92e3af471d52dc2aa05e3ecb75ce95c13a2ed1d117852dae43d23d913bbe92eab730aef7f38a14488a1ac65c3b79444026a629647322c5798"
 
 SRC_URI[vardeps] += "SRC_FETCH_ID SRC_ARCH"
 SRC_URI[sha512sum] = "${SRC_SHA512SUM}"
@@ -38,7 +38,7 @@ SRC_URI = "https://download.visualstudio.microsoft.com/download/pr/${SRC_FETCH_I
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-RUNTIME = "5.0.6"
+RUNTIME = "6.0.4"
 do_install[vardeps] += "RUNTIME"
 
 do_install() {
@@ -54,8 +54,8 @@ do_install() {
     install -d ${D}${datadir}/dotnet/host/fxr
     cp -r --no-preserve=ownership ${S}/host/fxr/${RUNTIME} ${D}${datadir}/dotnet/host/fxr
 
-    install -d ${D}${datadir}/dotnet/sdk
-    cp -r --no-preserve=ownership ${S}/sdk/${PV} ${D}${datadir}/dotnet/sdk
+    cp -r --no-preserve=ownership ${S}/sdk ${D}${datadir}/dotnet/
+    cp -r --no-preserve=ownership ${S}/sdk-manifests ${D}${datadir}/dotnet/
 
     install -d ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
     cp -r --no-preserve=ownership ${S}/shared/Microsoft.NETCore.App/${RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
@@ -82,6 +82,7 @@ FILES:${PN} += "\
 
 FILES:${PN}-dev = "\
     ${datadir}/dotnet/sdk \
+    ${datadir}/dotnet/sdk-manifests \
     ${datadir}/dotnet/templates \
 "
 
