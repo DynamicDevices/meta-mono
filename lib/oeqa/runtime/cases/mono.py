@@ -19,10 +19,12 @@ class MonoCompileTest(OERuntimeTestCase):
         cls.tc.target.copyTo(src, dst)
         src = os.path.join(files_dir, 'helloworldgtk.cs')
         cls.tc.target.copyTo(src, dst)
+        src = os.path.join(files_dir, 'helloyoctosummit.cs')
+        cls.tc.target.copyTo(src, dst)
 
     @classmethod
     def tearDownClass(cls):
-        files = '/tmp/helloworld.cs /tmp/helloworld.exe /tmp/helloworldform.cs /tmp/helloworldform.exe /tmp/helloworldgtk.cs /tmp/helloworldgtk.exe'
+        files = '/tmp/helloworld.cs /tmp/helloworld.exe /tmp/helloworldform.cs /tmp/helloworldform.exe /tmp/helloworldgtk.cs /tmp/helloworldgtk.exe /tmp/helloyoctosummit.cs /tmp/helloyoctosummit.exe'
         cls.tc.target.run('rm %s' % files)
 
     @OETestDepends(['ssh.SSHTest.test_ssh'])
@@ -34,6 +36,16 @@ class MonoCompileTest(OERuntimeTestCase):
         msg = 'running compiled file failed, output: %s' % output
         self.assertEqual(status, 0, msg=msg)
         self.assertEqual(output, 'HelloWorld', msg=msg)
+
+    @OETestDepends(['ssh.SSHTest.test_ssh'])
+    def test_executable_compile_and_run_cmdline(self):
+        status, output = self.target.run('mcs /tmp/helloyoctosummit.cs -out:/tmp/helloyoctosummit.exe')
+        msg = 'mcs compile failed, output: %s' % output
+        self.assertEqual(status, 0, msg=msg)
+        status, output = self.target.run('mono /tmp/helloyoctosummit.exe')
+        msg = 'running compiled file failed, output: %s' % output
+        self.assertEqual(status, 0, msg=msg)
+        self.assertEqual(output, 'Hello Yocto Summit', msg=msg)
 
     @OETestDepends(['ssh.SSHTest.test_ssh'])
     def test_executable_compile_and_run_winform(self):
