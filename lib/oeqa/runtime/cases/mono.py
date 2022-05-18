@@ -56,3 +56,14 @@ class MonoCompileTest(OERuntimeTestCase):
         status, output = self.target.run('export DISPLAY=:0; mono /tmp/helloworldgtk.exe')
         msg = 'running compiled file failed, output: %s' % output
         self.assertEqual(status, 0, msg=msg)
+
+    @OETestDepends(['ssh.SSHTest.test_ssh'])
+    def test_executable_yocto_summit_love(self):
+        status, output = self.target.run('mcs /tmp/yoctosummit.cs -out:/tmp/yoctosummit.exe')
+        msg = 'mcs compile failed, output: %s' % output
+        self.assertEqual(status, 0, msg=msg)
+        status, output = self.target.run('mono /tmp/yoctosummit.exe')
+        msg = 'running compiled file failed, output: %s' % output
+        self.assertEqual(status, 0, msg=msg)
+        self.assertEqual(output, 'Hello Yocto Summit!', msg=msg)
+
