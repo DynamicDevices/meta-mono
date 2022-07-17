@@ -38,8 +38,8 @@ SRC_URI = "https://download.visualstudio.microsoft.com/download/pr/${SRC_FETCH_I
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-RUNTIME = "6.0.4"
-do_install[vardeps] += "RUNTIME"
+DOTNET_RUNTIME = "6.0.4"
+do_install[vardeps] += "DOTNET_RUNTIME"
 
 do_install() {
     install -d ${D}${bindir}
@@ -52,19 +52,19 @@ do_install() {
     install -m 0644 ${S}/ThirdPartyNotices.txt ${D}${datadir}/dotnet
 
     install -d ${D}${datadir}/dotnet/host/fxr
-    cp -r --no-preserve=ownership ${S}/host/fxr/${RUNTIME} ${D}${datadir}/dotnet/host/fxr
+    cp -r --no-preserve=ownership ${S}/host/fxr/${DOTNET_RUNTIME} ${D}${datadir}/dotnet/host/fxr
 
     cp -r --no-preserve=ownership ${S}/sdk ${D}${datadir}/dotnet/
     cp -r --no-preserve=ownership ${S}/sdk-manifests ${D}${datadir}/dotnet/
 
     install -d ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
-    cp -r --no-preserve=ownership ${S}/shared/Microsoft.NETCore.App/${RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
+    cp -r --no-preserve=ownership ${S}/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App
 
     #FIXME: remove the following line. if the lttng-ust conflict is solved
-    rm ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${RUNTIME}/libcoreclrtraceptprovider.so
+    rm ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME}/libcoreclrtraceptprovider.so
 
     install -d ${D}${datadir}/dotnet/shared/Microsoft.AspNetCore.App
-    cp -r --no-preserve=ownership ${S}/shared/Microsoft.AspNetCore.App/${RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.AspNetCore.App
+    cp -r --no-preserve=ownership ${S}/shared/Microsoft.AspNetCore.App/${DOTNET_RUNTIME} ${D}${datadir}/dotnet/shared/Microsoft.AspNetCore.App
 
     if [ "${SRC_ARCH}" = "x64" ]; then
         ln -s ${base_libdir} ${D}/lib64
