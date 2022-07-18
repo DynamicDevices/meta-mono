@@ -12,7 +12,8 @@ SRCREV = "${AUTOREV}"
 
 SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH}\
            file://dllmap-config.in.diff \
-	   file://0002-prevent-threadpool-exception5-test-hanging.patch \
+           file://0001-mcs-aot-compiler-Fixes-GNU-Make-4.3-incompatibility.patch \
+           file://0002-prevent-threadpool-exception5-test-hanging.patch \
 "
 
 # Add this patch into SRC_URI when testing projects

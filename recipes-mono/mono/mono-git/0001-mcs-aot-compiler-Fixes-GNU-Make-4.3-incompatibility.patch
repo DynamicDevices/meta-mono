@@ -1,0 +1,33 @@
+From 2703ac46b72d0f1bdbf1bdac2857815a14728590 Mon Sep 17 00:00:00 2001
+From: Jan Kraemer <jan.kraemer@mbition.io>
+Date: Tue, 29 Mar 2022 12:46:37 +0200
+Subject: [PATCH] mcs/aot-compiler: Fixes GNU Make >= 4.3 incompatibility
+
+GNU Make 4.3 introduced new behaviour when appending to empty variables
+https://lists.gnu.org/archive/html/info-gnu/2020-01/msg00004.html
+To accomodate, the creation of the $(space) variable in the Makefile
+has been adapted
+
+Upstream-Status: Pending
+Signed-off-by: Jan Kraemer <jan.kraemer@mbition.io>
+---
+ mcs/class/aot-compiler/Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/mcs/class/aot-compiler/Makefile b/mcs/class/aot-compiler/Makefile
+index d070a293e..83b29189b 100644
+--- a/mcs/class/aot-compiler/Makefile
++++ b/mcs/class/aot-compiler/Makefile
+@@ -45,8 +45,7 @@ ifndef SKIP_AOT
+ profile_file:=$(wildcard $(topdir)/class/lib/build/csc.*.aotprofile)
+ ifneq ($(profile_file),)
+ comma:=,
+-space:=
+-space+=
++space:=$(subst ,, )
+ profile_arg:=$(subst $(space)$(comma),$(comma),$(foreach pf,$(profile_file),$(comma)profile=$(strip $(pf))))
+ endif
+ 
+-- 
+2.35.1
+
