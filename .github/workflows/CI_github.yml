@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - master-next
+      - kirkstone
   pull_request:
 
 jobs:
