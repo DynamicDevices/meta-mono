@@ -19,7 +19,7 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 | sumo | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/sumo?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | morty | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/morty?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
-*support status as of 07/05/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
+*support status as of 09/11/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
 NOTE: 24/01/22 - This [patch](https://patchwork.openembedded.org/patch/171349/) is needed to Poky for branch morty, sumo (and perhaps others) to fix a gcc version build error.
 
