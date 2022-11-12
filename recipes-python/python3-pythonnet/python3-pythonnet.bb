@@ -39,10 +39,10 @@ S = "${WORKDIR}/git"
 # Use a separated folder for nuget downloads.
 export NUGET_PACKAGES="${WORKDIR}/nuget"
 
-# Workaround for dotnet restore issue, define custom proxy
-# in layer.conf or local.conf if dotnet restore was failed.
-export http_proxy="${DOTNET_HTTP_PROXY}"
-export https_proxy="${DOTNET_HTTPS_PROXY}"
+# Workaround for dotnet restore issue, define custom proxy in a .bbappend
+# and/or in layer.conf or local.conf if dotnet restore was failed.
+#export http_proxy="${DOTNET_HTTP_PROXY}"
+#export https_proxy="${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
     echo '\n__version__ = "${PYTHONNET_VERSION}"\n' >> ${S}/pythonnet/__init__.py
