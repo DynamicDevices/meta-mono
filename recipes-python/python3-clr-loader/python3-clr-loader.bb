@@ -22,7 +22,7 @@ DEPENDS += " \
 
 RDEPENDS:${PN} += " \
     dotnet (>= ${DOTNET_MIN_REQ_VERSION}) \
-	${PYTHON_PN}-cffi \
+    ${PYTHON_PN}-cffi \
 "
 
 S = "${WORKDIR}/git"
