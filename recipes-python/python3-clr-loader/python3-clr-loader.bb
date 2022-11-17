@@ -43,6 +43,8 @@ do_configure:prepend() {
 }
 
 do_compile:prepend() {
+    bbnote "http_proxy: $http_proxy"
+    bbnote "https_proxy: $https_proxy"
     python3 setup.py build_dotnet
     cp -R ${S}/build/lib/clr_loader/ffi/dlls    ${S}/clr_loader/ffi/
 }
