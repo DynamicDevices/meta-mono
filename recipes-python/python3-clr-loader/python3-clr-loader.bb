@@ -37,7 +37,7 @@ export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
 # and/or in layer.conf or local.conf if dotnet restore was failed.
 #export http_proxy="${DOTNET_HTTP_PROXY}"
 #export https_proxy="${DOTNET_HTTPS_PROXY}"
-export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER=0
+export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER="0"
 
 do_configure:prepend() {
     echo '\n__version__ = "${CLR_LOADER_VERSION}"\n' >> ${S}/clr_loader/__init__.py
