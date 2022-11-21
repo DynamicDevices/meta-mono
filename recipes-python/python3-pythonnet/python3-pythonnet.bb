@@ -11,8 +11,6 @@ PV = "${PYTHONNET_VERSION}+git${SRCPV}"
 SRC_URI = "git://github.com/pythonnet/pythonnet.git;protocol=https;branch=master;tag=v${PYTHONNET_VERSION}"
 
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
-DOTNET_HTTP_PROXY ?= ""
-DOTNET_HTTPS_PROXY ?= ""
 
 # Python.NET’s documentation - Loading a Runtime
 # https://pythonnet.github.io/pythonnet/python.html#loading-a-runtime
@@ -21,6 +19,7 @@ PYTHONNET_DEFAULT_RUNTIME ?= "coreclr"
 PYTHONNET_ENV = "#!/bin/bash\n\nexport PYTHONNET_RUNTIME=${PYTHONNET_DEFAULT_RUNTIME}\n"
 
 DEPENDS += " \
+    libcurl-native
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-clr-loader-native \
     ${PYTHON_PN}-setuptools-scm-native \
@@ -44,8 +43,13 @@ export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
 
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.
-#export http_proxy="${DOTNET_HTTP_PROXY}"
-#export https_proxy="${DOTNET_HTTPS_PROXY}"
+# Override DOTNET_HTTP_PROXY and DOTNET_HTTPS_PROXY in layer.conf or local.conf if needed
+DOTNET_HTTP_PROXY ?= ""
+DOTNET_HTTPS_PROXY ?= ""
+export http_proxy="${DOTNET_HTTP_PROXY}"
+export https_proxy="${DOTNET_HTTPS_PROXY}"
+export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER="0"
+export DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT="0"
 
 do_configure:prepend() {
     echo '\n__version__ = "${PYTHONNET_VERSION}"\n' >> ${S}/pythonnet/__init__.py
