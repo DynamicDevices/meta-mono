@@ -19,7 +19,7 @@ PYTHONNET_DEFAULT_RUNTIME ?= "coreclr"
 PYTHONNET_ENV = "#!/bin/bash\n\nexport PYTHONNET_RUNTIME=${PYTHONNET_DEFAULT_RUNTIME}\n"
 
 DEPENDS += " \
-    libcurl-native \
+    curl-native \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-clr-loader-native \
     ${PYTHON_PN}-setuptools-scm-native \

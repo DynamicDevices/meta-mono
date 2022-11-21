@@ -13,7 +13,7 @@ SRC_URI = "git://github.com/pythonnet/clr-loader.git;protocol=https;branch=maste
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
 DEPENDS += " \
-    libcurl-native \
+    curl-native \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-setuptools-scm-native \
     ${PYTHON_PN}-toml-native \
