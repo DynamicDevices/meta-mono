@@ -46,6 +46,9 @@ do_configure:prepend() {
     echo '\n__version__ = "${CLR_LOADER_VERSION}"\n' >> ${S}/clr_loader/__init__.py
 }
 
+
+do_compile[network] = "1"
+
 do_compile:prepend() {
     python3 setup.py build_dotnet
     cp -R ${S}/build/lib/clr_loader/ffi/dlls    ${S}/clr_loader/ffi/

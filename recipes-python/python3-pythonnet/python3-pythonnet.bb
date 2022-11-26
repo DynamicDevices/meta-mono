@@ -55,6 +55,8 @@ do_configure:prepend() {
     echo '\n__version__ = "${PYTHONNET_VERSION}"\n' >> ${S}/pythonnet/__init__.py
 }
 
+do_compile[network] = "1"
+
 do_compile:prepend() {
     python3 setup.py build_dotnet
     cp -r ${S}/build/lib/pythonnet/runtime/Python.Runtime.*     ${S}/pythonnet/runtime/
