@@ -48,8 +48,8 @@ do_configure:prepend() {
 }
 
 do_compile:prepend() {
-    curl https://api.nuget.org/v3/index.json -o "$NUGET_INDEX"
-    cat "$NUGET_INDEX"
+    curl https://api.nuget.org/v3/index.json -o ${WORKDIR}/nuget-index.json
+    cat ${WORKDIR}/nuget-index.json
     python3 setup.py build_dotnet
     cp -R ${S}/build/lib/clr_loader/ffi/dlls    ${S}/clr_loader/ffi/
 }
