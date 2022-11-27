@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 600
     container:
       image: dynamicdevices/yocto-ci-build:latest
-      options: --privileged --platform linux/amd64 --dns=8.8.8.8 -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
+      options: --privileged --platform linux/amd64 -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
         mono_version: [6.12.0.161]

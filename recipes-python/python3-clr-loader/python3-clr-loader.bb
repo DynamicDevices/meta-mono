@@ -31,7 +31,6 @@ S = "${WORKDIR}/git"
 # Use a separated folder for nuget downloads and cache in WORKDIR.
 export NUGET_PACKAGES="${WORKDIR}/nuget-packages"
 export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
-export NUGET_INDEX="${WORKDIR}/nuget-index.json"
 
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.
@@ -48,8 +47,6 @@ do_configure:prepend() {
 }
 
 do_compile:prepend() {
-    curl https://api.nuget.org/v3/index.json -o ${WORKDIR}/nuget-index.json
-    cat ${WORKDIR}/nuget-index.json
     python3 setup.py build_dotnet
     cp -R ${S}/build/lib/clr_loader/ffi/dlls    ${S}/clr_loader/ffi/
 }
