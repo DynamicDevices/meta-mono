@@ -49,7 +49,7 @@ export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
-    printf "\n__version__ = \"%s\"\n" "${PYTHONNET_VERSION}" >> ${S}/pythonnet/__init__.py
+    printf "\\n__version__ = \"%s\"\\n" "${PYTHONNET_VERSION}" >> ${S}/pythonnet/__init__.py
 }
 
 do_compile[network] = "1"
