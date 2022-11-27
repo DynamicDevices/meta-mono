@@ -19,7 +19,6 @@ PYTHONNET_DEFAULT_RUNTIME ?= "coreclr"
 PYTHONNET_ENV = "#!/bin/bash\n\nexport PYTHONNET_RUNTIME=${PYTHONNET_DEFAULT_RUNTIME}\n"
 
 DEPENDS += " \
-    curl-native \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-clr-loader-native \
     ${PYTHON_PN}-setuptools-scm-native \
@@ -48,12 +47,12 @@ DOTNET_HTTP_PROXY ?= ""
 DOTNET_HTTPS_PROXY ?= ""
 export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
-export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER="0"
-export DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT="0"
 
 do_configure:prepend() {
-    echo '\n__version__ = "${PYTHONNET_VERSION}"\n' >> ${S}/pythonnet/__init__.py
+    printf "\n__version__ = \"%s\"\n" "${PYTHONNET_VERSION}" >> ${S}/pythonnet/__init__.py
 }
+
+do_compile[network] = "1"
 
 do_compile:prepend() {
     python3 setup.py build_dotnet

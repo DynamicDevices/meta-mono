@@ -13,7 +13,6 @@ SRC_URI = "git://github.com/pythonnet/clr-loader.git;protocol=https;branch=maste
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
 DEPENDS += " \
-    curl-native \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-setuptools-scm-native \
     ${PYTHON_PN}-toml-native \
@@ -39,12 +38,12 @@ DOTNET_HTTP_PROXY ?= ""
 DOTNET_HTTPS_PROXY ?= ""
 export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
-export DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER="0"
-export DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT="0"
 
 do_configure:prepend() {
-    echo '\n__version__ = "${CLR_LOADER_VERSION}"\n' >> ${S}/clr_loader/__init__.py
+    printf "\n__version__ = \"%s\"\n" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
 }
+
+do_compile[network] = "1"
 
 do_compile:prepend() {
     python3 setup.py build_dotnet
