@@ -40,7 +40,8 @@ export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
-    printf "\\n__version__ = \"%s\"\\n" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
+    printf '\n' >> ${S}/clr_loader/__init__.py
+    printf "__version__ = \"%s\"" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
 }
 
 do_compile[network] = "1"
