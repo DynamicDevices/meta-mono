@@ -39,7 +39,7 @@ DOTNET_HTTPS_PROXY ?= ""
 export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
 
-do_patch:append() {
+do_configure:prepend() {
     printf "\n__version__ = \"%s\"\n" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
 }
 
