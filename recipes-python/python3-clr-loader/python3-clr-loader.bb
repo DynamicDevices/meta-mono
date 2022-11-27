@@ -34,13 +34,16 @@ export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.
 # Override DOTNET_HTTP_PROXY and DOTNET_HTTPS_PROXY in layer.conf or local.conf if needed
-DOTNET_HTTP_PROXY ?= ""
-DOTNET_HTTPS_PROXY ?= ""
-export http_proxy="${DOTNET_HTTP_PROXY}"
-export https_proxy="${DOTNET_HTTPS_PROXY}"
+#DOTNET_HTTP_PROXY ?= ""
+#DOTNET_HTTPS_PROXY ?= ""
+#export http_proxy="${DOTNET_HTTP_PROXY}"
+#export https_proxy="${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
-    printf "\n__version__ = \"%s\"\n" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
+    if ! grep -Fq __version__ ${S}/clr_loader/__init__.py
+    then
+        printf "\n__version__ = \"${CLR_LOADER_VERSION}\"\n" >> ${S}/clr_loader/__init__.py
+    fi
 }
 
 do_compile[network] = "1"
