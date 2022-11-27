@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=cdef1cb9133877183afac105849a771e"
 
 inherit python_flit_core
 
-CLR_LOADER_VERSION = "0.2.3"
+CLR_LOADER_VERSION = "0.2.4"
 PV = "${CLR_LOADER_VERSION}+git${SRCPV}"
 SRC_URI = "git://github.com/pythonnet/clr-loader.git;protocol=https;branch=master;tag=v${CLR_LOADER_VERSION}"
 
@@ -39,7 +39,7 @@ DOTNET_HTTPS_PROXY ?= ""
 export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
 
-do_configure:prepend() {
+do_patch:append() {
     printf "\n__version__ = \"%s\"\n" "${CLR_LOADER_VERSION}" >> ${S}/clr_loader/__init__.py
 }
 

@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=8e800b2b69ab79d37187ed4eb522060d"
 
 inherit python_flit_core
 
-PYTHONNET_VERSION = "3.0.0"
+PYTHONNET_VERSION = "3.0.1"
 PV = "${PYTHONNET_VERSION}+git${SRCPV}"
 SRC_URI = "git://github.com/pythonnet/pythonnet.git;protocol=https;branch=master;tag=v${PYTHONNET_VERSION}"
 
@@ -48,7 +48,7 @@ DOTNET_HTTPS_PROXY ?= ""
 export http_proxy="${DOTNET_HTTP_PROXY}"
 export https_proxy="${DOTNET_HTTPS_PROXY}"
 
-do_configure:prepend() {
+do_patch:append() {
     printf "\n__version__ = \"%s\"\n" "${PYTHONNET_VERSION}" >> ${S}/pythonnet/__init__.py
 }
 
