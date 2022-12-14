@@ -4,9 +4,7 @@ HOMEPAGE = "http://mono-project.com"
 BUGTRACKER = "http://bugzilla.xamarin.com/"
 SECTION = "devel"
 
-# This include is used in both mono and mono-native variants
-DEPENDS:class-target += "zlib libatomic-ops cmake-native"
-DEPENDS:class-native += "zlib-native libatomic-ops-native cmake-native"
+DEPENDS += "zlib libatomic-ops"
 
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://dllmap-config.in.diff \
