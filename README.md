@@ -6,18 +6,18 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 | Branch | Support Status* | Status of Build & Tests |
 | ------ | --------------- | ----------------------- |
-| mickledore | 	Future  | [![mickledore](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/mickledore?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| langdale | 	May 2023  | [![langdale](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/langdale?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/kirkstone?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| honister | EOL | [![honister](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/honister?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| hardknott | EOL | [![hardknott](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/hardknott?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| gatesgarth | EOL | [![gatesgarth](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/gatesgarth?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| dunfell | 	Supported - Long Term Support (until Apr. 2024) | [![dunfell](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/dunfell?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| zeus | EOL | [![zeus](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/zeus?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| warrior | EOL | [![warrior](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/warrior?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| thud | EOL | [![thud](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/thud?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| sumo | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/sumo?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| morty | EOL | [![sumo](https://img.shields.io/github/workflow/status/dynamicdevices/meta-mono/meta-mono/morty?label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| mickledore | 	Future  | [![mickledore](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=mickledore&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| langdale | 	May 2023  | [![langdale](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=langdale&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| honister | EOL | [![honister](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=honister&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| hardknott | EOL | [![hardknott](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=hardknott&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| gatesgarth | EOL | [![gatesgarth](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=gatesgarth&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| dunfell | 	Supported - Long Term Support (until Apr. 2024) | [![dunfell](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=dunfell&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| zeus | EOL | [![zeus](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=zeus&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| warrior | EOL | [![warrior](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=warrior&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| thud | EOL | [![thud](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=thud&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| sumo | EOL | [![sumo](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=sumo&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| morty | EOL | [![sumo](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=morty&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
 *support status as of 09/11/22, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
