@@ -65,6 +65,9 @@ do_install() {
 
     # Hack to fix liblttng-ust dependency issues
     patchelf --remove-needed liblttng-ust.so.0 ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME}/libcoreclrtraceptprovider.so
+
+    install -d ${D}${libdir}
+    ln -rs ${D}${datadir}/dotnet/host/fxr/${DOTNET_RUNTIME}/libhostfxr.so ${D}${libdir}/libhostfxr.so
 }
 
 do_install:append:x86-64() {
@@ -77,6 +80,7 @@ FILES:${PN} += "\
     ${datadir}/dotnet/*.txt \
     ${datadir}/dotnet/host \
     ${datadir}/dotnet/shared \
+    ${libdir} \
 "
 
 FILES:${PN}-dev = "\
