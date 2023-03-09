@@ -6,8 +6,8 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 | Branch | Support Status* | Status of Build & Tests |
 | ------ | --------------- | ----------------------- |
-| mickledore | 	Future  | |
-| langdale | 	May 2023  | [![langdale](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=langdale&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| mickledore | 	April 2023  | [![mickledore](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=mickledore&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| langdale | 	October 2022  | [![langdale](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=langdale&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | honister | EOL | [![honister](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=honister&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | hardknott | EOL | [![hardknott](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=hardknott&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
