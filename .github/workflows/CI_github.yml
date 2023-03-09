@@ -3,8 +3,7 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
+      - mickledore
   pull_request:
 
 jobs:
@@ -18,7 +17,7 @@ jobs:
       matrix:
         dotnet_version: [7.0.202]
         mono_version: [6.12.0.161]
-        branch: [langdale]
+        branch: [mickledore]
         arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
