@@ -19,8 +19,15 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 #
 
 def mono_workspace_version (d):
-    pvsplit = d.getVar('PV',d,1).split('.')
-    return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
+    pvsplit = d.getVar('PV').split('.')
+    if len(pvsplit) == 3:
+        return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
+    elif len(pvsplit) == 2:
+        return pvsplit[0] + '.' + pvsplit[1]
+    elif len(pvsplit) == 1:
+        return pvsplit[0]
+    else:
+        return 0
 
 S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
