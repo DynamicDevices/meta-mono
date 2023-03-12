@@ -3,7 +3,7 @@ HOMEPAGE = "https://docs.microsoft.com/visualstudio/msbuild/msbuild"
 SECTION = "console/apps"
 LICENSE = "MIT"
 
-DEPENDS = "unzip-native msbuild-libhostfxr-native"
+DEPENDS = "curl-native ca-certificates-native unzip-native msbuild-libhostfxr-native"
 
 RDEPENDS:${PN} = "msbuild-libhostfxr"
 
