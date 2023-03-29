@@ -70,7 +70,7 @@ do_install() {
     ln -rs ${D}${datadir}/dotnet/host/fxr/${DOTNET_RUNTIME}/libhostfxr.so ${D}${libdir}/libhostfxr.so
 }
 
-do_install:append:x86-64() {
+do_install:append:x86-64:class-target () {
     # Set correct interpreter path
     patchelf --set-interpreter ${base_libdir}/ld-linux-x86-64.so.2 ${D}${datadir}/dotnet/dotnet
 }
