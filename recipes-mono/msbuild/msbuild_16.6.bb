@@ -3,9 +3,9 @@ HOMEPAGE = "https://docs.microsoft.com/visualstudio/msbuild/msbuild"
 SECTION = "console/apps"
 LICENSE = "MIT"
 
-DEPENDS = "curl-native ca-certificates-native unzip-native msbuild-libhostfxr-native"
+DEPENDS = "curl-native ca-certificates-native unzip-native dotnet-native"
 
-RDEPENDS:${PN} = "msbuild-libhostfxr"
+RDEPENDS_${PN} = "dotnet"
 
 LIC_FILES_CHKSUM = "file://license;md5=aa2bb45abfacf721bd09860b11b79f5a \
                     file://ref/LicenseHeader.txt;md5=b06c0743af93aeb14a577bb2bfdada8e"
@@ -26,11 +26,8 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main;protoco
 
 S = "${WORKDIR}/git"
 
-LIBHOSTFXR_PATH = "${libdir}/mono/msbuild/Current/bin/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/libhostfxr.so"
-LIBHOSTFXR_PATH:prepend:class-target = "${STAGING_DIR_NATIVE}"
-
 do_configure () {
-    sed "s|%libhostfxr%|${LIBHOSTFXR_PATH}|g" -i ${S}/eng/cibuild_bootstrapped_msbuild.sh
+    sed "s|%libhostfxr%|${STAGING_DIR_TARGET}${libdir}/libhostfxr.so|g" -i ${S}/eng/cibuild_bootstrapped_msbuild.sh
 
     sed "s|\$(HOME)\\\.nuget\\\packages|${NUGET_PACKAGES}|g" -i ${S}/mono/build/common.props
     sed "s|\$(MonoInstallPrefix)\\\lib|${D}${libdir}|g" -i ${S}/mono/build/install.proj
