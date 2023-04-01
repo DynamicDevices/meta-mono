@@ -25,7 +25,7 @@ jobs:
       BRANCH: ${{ matrix.branch }}
     steps:
     - name: Checkout meta-mono
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         clean: false
         path: ${{ matrix.branch }}/meta-mono
@@ -76,3 +76,8 @@ jobs:
         export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
         export TERM=linux
         env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+    - name: Store artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-image-mono-${{ github.sha }}
+        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
