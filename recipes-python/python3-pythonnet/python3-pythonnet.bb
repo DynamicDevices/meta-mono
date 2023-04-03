@@ -57,11 +57,6 @@ do_configure:prepend() {
 
 do_compile[network] = "1"
 
-do_compile:prepend() {
-    python3 setup.py build_dotnet
-    cp -r ${S}/build/lib/pythonnet/runtime/Python.Runtime.*     ${S}/pythonnet/runtime/
-}
-
 do_install:prepend() {
     printf "${PYTHONNET_ENV}" > ${WORKDIR}/dotnet-env.sh
 
