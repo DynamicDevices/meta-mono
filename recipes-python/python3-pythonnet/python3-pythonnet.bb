@@ -63,16 +63,8 @@ do_compile:prepend() {
 }
 
 do_install:prepend() {
-    cwd=$(pwd)
     printf "${PYTHONNET_ENV}" > ${WORKDIR}/dotnet-env.sh
 
     install -d ${D}${sysconfdir}/profile.d
-    install -d ${D}${PYTHON_SITEPACKAGES_DIR}
-
-    install -m 644 ${S}/clr.py                 ${D}${PYTHON_SITEPACKAGES_DIR}
     install -m 644 ${WORKDIR}/dotnet-env.sh    ${D}${sysconfdir}/profile.d
-
-    cd ${D}${PYTHON_SITEPACKAGES_DIR}
-    python3 -m py_compile clr.py
-    cd ${cwd}
 }
