@@ -2,13 +2,15 @@ DESCRIPTION = "Implements a generic interface for loading one of the CLR (.NET) 
 HOMEPAGE = "http://pythonnet.github.io"
 SECTION = "devel/python"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=cdef1cb9133877183afac105849a771e"
+LIC_FILES_CHKSUM = " \
+    file://LICENSE;md5=cdef1cb9133877183afac105849a771e \
+"
 
-inherit python_flit_core
+inherit pypi python_flit_core
 
-CLR_LOADER_VERSION = "0.2.4"
-PV = "${CLR_LOADER_VERSION}+git${SRCPV}"
-SRC_URI = "git://github.com/pythonnet/clr-loader.git;protocol=https;branch=master;tag=v${CLR_LOADER_VERSION}"
+PV = "0.2.5"
+SRC_URI[sha256sum] = "82ed5fb654729d14fd88296e74bb6b84eb2cfb976ff4b7d49d4e449fd78a226b"
+PYPI_PACKAGE = "clr_loader"
 
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
@@ -22,8 +24,6 @@ RDEPENDS:${PN} += " \
     dotnet (>= ${DOTNET_MIN_REQ_VERSION}) \
     ${PYTHON_PN}-cffi \
 "
-
-S = "${WORKDIR}/git"
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
@@ -42,15 +42,10 @@ export https_proxy="${DOTNET_HTTPS_PROXY}"
 do_configure:prepend() {
     if ! grep -Fq __version__ ${S}/clr_loader/__init__.py
     then
-        printf "\n__version__ = \"${CLR_LOADER_VERSION}\"\n" >> ${S}/clr_loader/__init__.py
+        printf "\n__version__ = \"${PV}\"\n" >> ${S}/clr_loader/__init__.py
     fi
 }
 
 do_compile[network] = "1"
-
-do_compile:prepend() {
-    python3 setup.py build_dotnet
-    cp -R ${S}/build/lib/clr_loader/ffi/dlls    ${S}/clr_loader/ffi/
-}
 
 BBCLASSEXTEND = "native"
