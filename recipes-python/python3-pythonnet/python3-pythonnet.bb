@@ -2,13 +2,15 @@ DESCRIPTION = "Python.NET is a package that gives Python programmers nearly seam
 HOMEPAGE = "http://pythonnet.github.io"
 SECTION = "devel/python"
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=8e800b2b69ab79d37187ed4eb522060d"
+LIC_FILES_CHKSUM = " \
+    file://LICENSE;md5=8e800b2b69ab79d37187ed4eb522060d \
+"
 
-inherit python_flit_core
+inherit pypi python_flit_core
 
-PYTHONNET_VERSION = "3.0.1"
-PV = "${PYTHONNET_VERSION}+git${SRCPV}"
-SRC_URI = "git://github.com/pythonnet/pythonnet.git;protocol=https;branch=master;tag=v${PYTHONNET_VERSION}"
+PV = "3.0.1"
+SRC_URI[sha256sum] = "ed4f7f7f95515404112ddb3da1638e1a1013cb56e64c48c4fa60303f02b0a3dd"
+PYPI_PACKAGE = "pythonnet"
 
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
@@ -32,8 +34,6 @@ RDEPENDS:${PN} += " \
     ${PYTHON_PN}-clr-loader \
 "
 
-S = "${WORKDIR}/git"
-
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
 # Use a separated folder for nuget downloads and cache in WORKDIR.
@@ -51,28 +51,15 @@ export https_proxy="${DOTNET_HTTPS_PROXY}"
 do_configure:prepend() {
     if ! grep -Fq __version__ ${S}/pythonnet/__init__.py
     then
-        printf "\n__version__ = \"${PYTHONNET_VERSION}\"\n" >> ${S}/pythonnet/__init__.py
+        printf "\n__version__ = \"${PV}\"\n" >> ${S}/pythonnet/__init__.py
     fi
 }
 
 do_compile[network] = "1"
 
-do_compile:prepend() {
-    python3 setup.py build_dotnet
-    cp -r ${S}/build/lib/pythonnet/runtime/Python.Runtime.*     ${S}/pythonnet/runtime/
-}
-
 do_install:prepend() {
-    cwd=$(pwd)
     printf "${PYTHONNET_ENV}" > ${WORKDIR}/dotnet-env.sh
 
     install -d ${D}${sysconfdir}/profile.d
-    install -d ${D}${PYTHON_SITEPACKAGES_DIR}
-
-    install -m 644 ${S}/clr.py                 ${D}${PYTHON_SITEPACKAGES_DIR}
     install -m 644 ${WORKDIR}/dotnet-env.sh    ${D}${sysconfdir}/profile.d
-
-    cd ${D}${PYTHON_SITEPACKAGES_DIR}
-    python3 -m py_compile clr.py
-    cd ${cwd}
 }
