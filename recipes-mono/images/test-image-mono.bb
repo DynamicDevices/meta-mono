@@ -12,3 +12,4 @@ IMAGE_INSTALL += "msbuild \
 "
 
 IMAGE_BASENAME = "${PN}"
+
