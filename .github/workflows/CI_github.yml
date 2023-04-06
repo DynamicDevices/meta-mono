@@ -17,7 +17,7 @@ jobs:
       matrix:
         mono_version: [6.12.0.122]
         branch: [hardknott]
-        arch: [x86, arm]
+        arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
