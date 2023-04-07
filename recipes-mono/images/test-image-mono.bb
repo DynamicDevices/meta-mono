@@ -8,6 +8,7 @@ DEFAULT_TEST_SUITES:pn-${PN}:prepend = "dotnet "
 IMAGE_INSTALL += "msbuild \
                   dotnet \
                   dotnet-helloworld \
+                  python3-pythonnet \
 "
 
 IMAGE_BASENAME = "${PN}"
