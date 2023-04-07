@@ -1,3 +1,4 @@
+SUMMARY = "Python for .NET"
 DESCRIPTION = "Python.NET is a package that gives Python programmers nearly seamless integration with .NET Framework, .NET Core and Mono runtime on Windows, Linux and macOS."
 HOMEPAGE = "http://pythonnet.github.io"
 SECTION = "devel/python"
