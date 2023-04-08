@@ -65,9 +65,12 @@ do_install() {
 
     # Hack to fix liblttng-ust dependency issues
     patchelf --remove-needed liblttng-ust.so.0 ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME}/libcoreclrtraceptprovider.so
+
+    install -d ${D}${libdir}
+    ln -rs ${D}${datadir}/dotnet/host/fxr/${DOTNET_RUNTIME}/libhostfxr.so ${D}${libdir}/libhostfxr.so
 }
 
-do_install:append:x86-64() {
+do_install:append:x86-64:class-target () {
     # Set correct interpreter path
     patchelf --set-interpreter ${base_libdir}/ld-linux-x86-64.so.2 ${D}${datadir}/dotnet/dotnet
 }
@@ -77,6 +80,7 @@ FILES:${PN} += "\
     ${datadir}/dotnet/*.txt \
     ${datadir}/dotnet/host \
     ${datadir}/dotnet/shared \
+    ${libdir} \
 "
 
 FILES:${PN}-dev = "\
@@ -91,6 +95,6 @@ FILES:${PN}-dbg = "\
 
 RRECOMMENDS:dotnet-dev[nodeprrecs] = "1"
 
-INSANE_SKIP:${PN} = "already-stripped libdir staticdev textrel"
+INSANE_SKIP:${PN} = "already-stripped libdir staticdev textrel dev-so"
 
 BBCLASSEXTEND = "native"
