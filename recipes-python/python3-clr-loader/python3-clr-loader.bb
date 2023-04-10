@@ -50,4 +50,3 @@ do_configure:prepend() {
 do_compile[network] = "1"
 
 BBCLASSEXTEND = "native"
-

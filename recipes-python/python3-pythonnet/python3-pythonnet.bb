@@ -64,4 +64,3 @@ do_install:prepend() {
     install -d ${D}${sysconfdir}/profile.d
     install -m 644 ${WORKDIR}/dotnet-env.sh    ${D}${sysconfdir}/profile.d
 }
-
