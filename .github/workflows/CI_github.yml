@@ -9,18 +9,21 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted, linux, X64]
+    timeout-minutes: 600
     container:
       image: dynamicdevices/yocto-ci-build:latest
-      options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
+      options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
-        mono_version: [6.12.0.122]
+        dotnet_version: [7.0.202]
+        mono_version: [6.12.0.161]
         branch: [hardknott]
         arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
+      DOTNET_VERSION: ${{ matrix.dotnet_version }}
       ARCH: ${{ matrix.arch }}
       BRANCH: ${{ matrix.branch }}
     steps:
@@ -64,18 +67,20 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_dotnet"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
 
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_dotnet="${DOTNET_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_EXTRAWHITE="${BB_ENV_EXTRAWHITE} MACHINE DL_DIR"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="BB_ENV_PASSTHROUGH_ADDITIONS PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_dotnet"
+        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
         export TERM=linux
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_dotnet="${DOTNET_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
     - name: Store artifacts
       uses: actions/upload-artifact@v3
       with:
