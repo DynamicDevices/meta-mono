@@ -35,6 +35,10 @@ inherit python3native
 # avoids build breaks when using no-static-libs.inc
 DISABLE_STATIC = ""
 
+# Fedora builds Mono with -O1, maybe for a reason
+BUILD_OPTIMIZATION = "-O1 -pipe"
+FULL_OPTIMIZATION = "-O1 -pipe ${DEBUG_FLAGS}"
+
 EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure:prepend() {
