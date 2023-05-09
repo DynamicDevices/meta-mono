@@ -27,6 +27,7 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${BASEPV}.tar.xz \
            file://0036-Revert-2020-02-Start-a-dedicated-thread-for-MERP-cra.patch \
            file://0037-Allow-nfloat-to-be-in-the-ObjCRuntime-namespace-and-.patch \
            file://0039-aot-Prepend-the-assembly-name-to-the-names-of-gshare.patch \
+           file://disable-mmap-MAP_32BIT-support.patch \
 "
 
 addtask fixup_config after do_patch before do_configure
