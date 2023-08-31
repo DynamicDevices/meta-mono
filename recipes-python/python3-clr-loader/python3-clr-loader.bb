@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = " \
 
 inherit pypi python_flit_core
 
-PV = "0.2.5"
+PV = "0.2.6"
 SRC_URI[sha256sum] = "82ed5fb654729d14fd88296e74bb6b84eb2cfb976ff4b7d49d4e449fd78a226b"
 PYPI_PACKAGE = "clr_loader"
 
