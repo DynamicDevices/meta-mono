@@ -9,8 +9,8 @@ LIC_FILES_CHKSUM = " \
 
 inherit pypi python_flit_core
 
-PV = "3.0.1"
-SRC_URI[sha256sum] = "ed4f7f7f95515404112ddb3da1638e1a1013cb56e64c48c4fa60303f02b0a3dd"
+PV = "3.0.2"
+SRC_URI[sha256sum] = "2cdd1ccedc64a7c9bd711be3d0fd0c4a78932474139dc54aa697bedde741c746"
 PYPI_PACKAGE = "pythonnet"
 
 DOTNET_MIN_REQ_VERSION ?= "6.0.0"
