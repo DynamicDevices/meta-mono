@@ -3,8 +3,6 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
       - mickledore
   pull_request:
 
