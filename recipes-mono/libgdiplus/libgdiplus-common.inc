@@ -5,7 +5,17 @@ BUGTRACKER = "http://bugzilla.xamarin.com/"
 SECTION = "libs"
 LICENSE = "MIT"
 
-SRC_URI = "https://github.com/mono/libgdiplus/archive/${PV}.tar.gz;downloadfilename=${BPN}-${PV}.tar.gz"
+BRANCH ?= "main"
+
+BRANCH_googletest ?= "v1.8.x"
+SRCREV_googletest = "dea0216d0c6bc5e63cf5f6c8651cd268668032ec"
+
+SRC_URI = " \
+	git://github.com/mono/libgdiplus.git;protocol=https;branch=${BRANCH} \
+	gitsm://github.com/google/googletest.git;protocol=https;name=googletest;branch=${BRANCH_googletest};destsuffix=git/external/googletest \
+"
+
+S = "${WORKDIR}/git"
 
 inherit autotools pkgconfig
 

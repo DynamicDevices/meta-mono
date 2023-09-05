@@ -7,7 +7,7 @@ RPROVIDES:${PN} += "nativesdk-mono"
 PROVIDES += "nativesdk-mono"
 
 do_compile() {
-    make EXTERNAL_MCS="${S}/mcs/class/lib/monolite/basic.exe" EXTERNAL_RUNTIME="${S}/foo/bar/mono"
+    oe_runmake EXTERNAL_MCS="${S}/mcs/class/lib/monolite/basic.exe" EXTERNAL_RUNTIME="${S}/foo/bar/mono"
 }
 
 EDEPENDS_X11 =+ "libgdiplus-native"

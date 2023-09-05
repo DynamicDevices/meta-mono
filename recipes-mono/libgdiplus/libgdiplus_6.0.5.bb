@@ -7,5 +7,5 @@ SRC_URI += " \
 		file://0001-fix-cross-compile.patch \
 		"
 
-SRC_URI[md5sum] = "8079300e708c7ea9b4254d4b2eeba463"
-SRC_URI[sha256sum] = "1fd034f4b636214cc24e94c563cd10b3f3444d9f0660927b60e63fd4131d97fa"
+BRANCH = "release/6.0"
+SRCREV = "110bdc284272258a0d9c95db0de8fcf34b6888b0"
