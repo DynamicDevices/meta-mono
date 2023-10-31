@@ -7,12 +7,8 @@ LICENSE = "MIT"
 
 BRANCH ?= "main"
 
-BRANCH_googletest ?= "v1.8.x"
-SRCREV_googletest = "dea0216d0c6bc5e63cf5f6c8651cd268668032ec"
-
 SRC_URI = " \
-	git://github.com/mono/libgdiplus.git;protocol=https;branch=${BRANCH} \
-	gitsm://github.com/google/googletest.git;protocol=https;name=googletest;branch=${BRANCH_googletest};destsuffix=git/external/googletest \
+	gitsm://github.com/mono/libgdiplus.git;protocol=https;branch=${BRANCH} \
 "
 
 S = "${WORKDIR}/git"
