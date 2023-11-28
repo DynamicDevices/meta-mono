@@ -41,6 +41,7 @@ do_install () {
     cp -r --no-preserve=ownership ${B}/${PN} ${D}/opt
 
     if [ "${SRC_ARCH}" = "x64" ]; then
+        install -d ${D}/lib64/
         ln -s ${base_libdir} ${D}/lib64
     fi
 }
