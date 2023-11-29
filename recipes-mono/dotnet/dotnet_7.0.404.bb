@@ -38,7 +38,7 @@ SRC_URI = "https://download.visualstudio.microsoft.com/download/pr/${SRC_FETCH_I
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-DOTNET_RUNTIME = "7.0.10"
+DOTNET_RUNTIME = "7.0.14"
 do_install[vardeps] += "DOTNET_RUNTIME"
 
 do_install() {
