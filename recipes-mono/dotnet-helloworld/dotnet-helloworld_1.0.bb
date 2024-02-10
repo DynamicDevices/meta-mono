@@ -33,7 +33,9 @@ do_compile () {
     dotnet build ${S}/${PN}.csproj --output ${B}/${PN} --configuration release --runtime linux-${SRC_ARCH}
 
     #FIXME: remove the following line. if the lttng-ust conflict is solved
-    rm ${B}/${PN}/libcoreclrtraceptprovider.so
+    #FIXME: dotnet 8 doesn't produce libcoreclrtraceptprovider.so for the helloworld applications
+    # When dotnet 6 and 7 reach end of life remove the following line.
+    rm -f ${B}/${PN}/libcoreclrtraceptprovider.so
 }
 
 do_install () {
