@@ -7,7 +7,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS:append = " dotnet-native"
 
+# Note for self-contained compilation dotnet can be removed from RDEPENDS
 RDEPENDS:${PN}:append = " \
+    dotnet \
     icu \
     libgssapi-krb5 \
     zlib \
