@@ -1,4 +1,4 @@
-DEPENDS = "mono-native"
+DEPENDS += "mono-native"
 
 EXTRA_OECONF += " --disable-mcs-build mono_cv_clang=no "
 
