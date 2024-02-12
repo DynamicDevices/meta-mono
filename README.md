@@ -122,6 +122,28 @@ For a walkthrough on building Mono for Raspberry Pi see:
 
 * [Getting Mono Running on a Raspberry Pi Using Yocto](http://www.codeproject.com/Articles/840489/Getting-Mono-Running-on-a-Raspberry-Pi-Using-Yocto)
 
+## CI Setup
+
+The current CI system runs in a ProxMox container supporting nested Docker operation. A couple of specific settings are needed to support QEMU testing (/dev/net/tun, /dev/kvm) and the lxc configuration file is documented here for future reference
+
+```
+arch: amd64
+cores: 4
+features: keyctl=1,mknod=1,nesting=1
+hostname: github-runner
+memory: 24576
+net0: name=eth0,bridge=vmbr2,firewall=1,gw=10.21.21.254,hwaddr=1A:EC:5A:0D:A3:B8,ip=10.21.21.100/32,type=veth
+onboot: 1
+ostype: debian
+rootfs: lvm:vm-101-disk-0,size=1T
+swap: 8192
+unprivileged: 1
+lxc.cgroup2.devices.allow: c 10:200 rwm
+lxc.mount.entry: /dev/net dev/net none bind,create=dir
+lxc.cgroup2.devices.allow: c 10:232 rwm
+lxc.mount.entry: /dev/kvm dev/kvm none bind,create=file 0 0
+```
+
 ## Contributors
 
 * Alex J Lennon
