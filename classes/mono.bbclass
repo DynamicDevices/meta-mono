@@ -1,8 +1,8 @@
 # Class for building C# packages. If your package is all-managed, add
 # PACKAGE_ARCH="all"
 
-DEPENDS:append = " mono-native ca-certificates-native mono"
-RDEPENDS:${PN}:append = " mono"
+DEPENDS += "mono-native ca-certificates-native mono"
+RDEPENDS:${PN} += "mono"
 
 FILES:${PN}:append = " \
   ${libdir}/mono/*/*.exe \
