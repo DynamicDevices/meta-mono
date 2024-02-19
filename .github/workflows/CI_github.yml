@@ -53,6 +53,7 @@ jobs:
         fi 
     - name: Configuring
       run: |
+        rm -f conf/local.conf
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         if [[ ! $(grep meta-mono/meta-mono/${BRANCH}/meta-mono conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
@@ -63,10 +64,12 @@ jobs:
         if [[ ! $(grep PREFERRED_VERSION_mono conf/local.conf) ]]; then
           echo "PREFERRED_VERSION_mono='${MONO_VERSION}'" >> conf/local.conf
           echo "PREFERRED_VERSION_mono-native='${MONO_VERSION}'" >> conf/local.conf
+          echo "mono version: ${MONO_VERSION}"
         fi
         if [[ ! $(grep PREFERRED_VERSION_dotnet conf/local.conf) ]]; then
           echo "PREFERRED_VERSION_dotnet='${DOTNET_VERSION}'" >> conf/local.conf
           echo "PREFERRED_VERSION_dotnet-native='${DOTNET_VERSION}'" >> conf/local.conf
+          echo "dotnet version: ${DOTNET_VERSION}"
         fi
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
