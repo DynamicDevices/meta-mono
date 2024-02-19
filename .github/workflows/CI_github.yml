@@ -53,7 +53,7 @@ jobs:
         fi 
     - name: Configuring
       run: |
-        echo "Starting to configure local.conf"
+        echo "### Starting to configure local.conf and bblayers.conf ###"
         rm -f ${BRANCH}/build/conf/local.conf
         rm -f ${BRANCH}/build/conf/bblayers.conf
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
