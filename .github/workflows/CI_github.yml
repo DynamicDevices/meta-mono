@@ -55,6 +55,7 @@ jobs:
       run: |
         echo "Starting to configure local.conf"
         rm -f ${BRANCH}/build/conf/local.conf
+        rm -f ${BRANCH}/build/conf/bblayers.conf
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         if [[ ! $(grep meta-mono/meta-mono/${BRANCH}/meta-mono conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
