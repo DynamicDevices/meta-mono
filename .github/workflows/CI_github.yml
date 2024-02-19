@@ -60,6 +60,14 @@ jobs:
         if [[ ! $(grep meta-openembedded conf/bblayers.conf) ]]; then
           echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
         fi
+        if [[ ! $(grep PREFERRED_VERSION_mono conf/local.conf) ]]; then
+          echo "PREFERRED_VERSION_mono='${MONO_VERSION}'" >> conf/local.conf
+          echo "PREFERRED_VERSION_mono-native='${MONO_VERSION}'" >> conf/local.conf
+        fi
+        if [[ ! $(grep PREFERRED_VERSION_dotnet conf/local.conf) ]]; then
+          echo "PREFERRED_VERSION_dotnet='${DOTNET_VERSION}'" >> conf/local.conf
+          echo "PREFERRED_VERSION_dotnet-native='${DOTNET_VERSION}'" >> conf/local.conf
+        fi
         if [[ ! $(grep rm_work conf/local.conf) ]]; then
           echo "INHERIT += ' rm_work '" >> conf/local.conf
         fi
@@ -68,20 +76,15 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_dotnet"
         export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
-
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_dotnet="${DOTNET_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
+        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        export BB_ENV_PASSTHROUGH_ADDITIONS="BB_ENV_PASSTHROUGH_ADDITIONS PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_dotnet"
         export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
         export TERM=linux
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_dotnet="${DOTNET_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+        env MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
     - name: Store artifacts
       uses: actions/upload-artifact@v3
       with:
