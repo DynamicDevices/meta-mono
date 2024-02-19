@@ -96,5 +96,6 @@ FILES:${PN}-dbg = "\
 RRECOMMENDS:dotnet-dev[nodeprrecs] = "1"
 
 INSANE_SKIP:${PN} = "already-stripped libdir staticdev textrel dev-so"
+INSANE_SKIP:${PN}-dbg = "libdir"
 
 BBCLASSEXTEND = "native"
