@@ -5,8 +5,6 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=9fc642ff452b28d62ab19b7eea50dfb9"
 
 COMPATIBLE_HOST ?= "(x86_64|aarch64|arm).*-linux"
 
-inherit create-spdx
-
 DEPENDS = "patchelf-native"
 
 #FIXME add lttng-ust as soon as dotnet core supports liblttng-ust.so.1
