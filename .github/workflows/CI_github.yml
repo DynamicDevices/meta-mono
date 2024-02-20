@@ -79,7 +79,7 @@ jobs:
     - name: Cleaning
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -c cleanall test-image-mono mono mono-native mono-helloworld msbuild msbuild-native dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
+        bitbake -c cleanall test-image-mono dotnet dotnet-native
     - name: Building
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build

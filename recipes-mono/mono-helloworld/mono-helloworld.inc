@@ -4,7 +4,7 @@ AUTHOR = "Alex J Lennon <ajlennon@dynamicdevices.co.uk>"
 HOMEPAGE = "http://www.dynamicdevices.co.uk"
 SECTION = "mono/applications"
 PRIORITY = "optional"
-LICENSE = "GPLv3"
+LICENSE = "GPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=783b7e40cdfb4a1344d15b1f7081af66"
 
 SRC_URI = "https://github.com/DynamicDevices/mono-helloworld/releases/download/v${PV}/mono-helloworld-${PV}.tar.gz"
