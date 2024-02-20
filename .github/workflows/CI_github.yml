@@ -90,7 +90,7 @@ jobs:
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: test-image-mono-${{ github.sha }}
+        name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
