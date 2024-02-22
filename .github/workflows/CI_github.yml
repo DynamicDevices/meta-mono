@@ -17,17 +17,19 @@ jobs:
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
+        dotnet_version: [8.0.201, 6.0.419]
         mono_version: [6.12.0.161]
         branch: [kirkstone]
         arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
+      DOTNET_VERSION: ${{ matrix.dotnet_version }}
       ARCH: ${{ matrix.arch }}
       BRANCH: ${{ matrix.branch }}
     steps:
     - name: Checkout meta-mono
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         clean: false
         path: ${{ matrix.branch }}/meta-mono
@@ -51,35 +53,44 @@ jobs:
         fi 
     - name: Configuring
       run: |
+        rm -f ${BRANCH}/build/conf/local.conf
+        rm -f ${BRANCH}/build/conf/bblayers.conf
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        if [[ ! $(grep meta-mono/meta-mono/${BRANCH}/meta-mono conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
-        fi
-        if [[ ! $(grep meta-openembedded conf/bblayers.conf) ]]; then
-          echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
-        fi
-        if [[ ! $(grep rm_work conf/local.conf) ]]; then
-          echo "INHERIT += ' rm_work '" >> conf/local.conf
-        fi
+
+        # Append custom variables for regenerated local.conf and bblayers.conf samples
+        echo "### Starting to configure local.conf and bblayers.conf ###"
+        echo "mono version: $MONO_VERSION"
+        echo "dotnet version: $DOTNET_VERSION"
+
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
+
+        echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
+        echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
+
+        echo "PREFERRED_VERSION_mono=\"${MONO_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_mono-native=\"${MONO_VERSION}\"" >> conf/local.conf
+
+        echo "PREFERRED_VERSION_dotnet=\"${DOTNET_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_dotnet-native=\"${DOTNET_VERSION}\"" >> conf/local.conf
+
+        echo "INHERIT += \" rm_work \"" >> conf/local.conf
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
+    - name: Cleaning
+      run: |
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        bitbake -c cleanall test-image-mono dotnet dotnet-native
     - name: Building
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
-
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake -k test-image-mono
+        bitbake -k test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-
-        export BB_ENV_PASSTHROUGH_ADDITIONS="BB_ENV_PASSTHROUGH_ADDITIONS PREFERRED_VERSION_mono PREFERRED_VERSION_mono-native"
-        export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} MACHINE DL_DIR"
         export TERM=linux
-        env PREFERRED_VERSION_mono="${MONO_VERSION}" PREFERRED_VERSION_mono-native="${MONO_VERSION}" MACHINE="qemu${ARCH}" DL_DIR="$GITHUB_WORKSPACE/downloads" bitbake test-image-mono -c testimage
+        bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: test-image-mono-${{ github.sha }}
+        name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
