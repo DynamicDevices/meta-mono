@@ -19,16 +19,16 @@ RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
 PR = "r0"
 
 SRC_ARCH:aarch64 = "arm64"
-SRC_FETCH_ID:aarch64 = "72d1f83c-ad2c-4c9b-88b1-15196f411b9d/a0b863cabea9ac0fe7b92dc70c8d4ef0"
-SRC_SHA512SUM:aarch64 = "7d48d8a3814694a978b09a7c4b61c8e0dae9b5efe8195c15339d2f777fa4b85084d386117ee03b05f543d3d64b9484942e1e212001382b2e67277b30f5254b9f"
+SRC_FETCH_ID:aarch64 = "3bebb4ec-8bb7-4854-b0a2-064bf50805eb/38e6972473f83f11963245ffd940b396"
+SRC_SHA512SUM:aarch64 = "37e230970cfeffdc3873e42595b79ecdf6bfe266a01ace6953725e69a2b64313ce144bf4d4f861130f61f680ead9b4d8a819dd5543c5470c37bbc13d88a78c80"
 
 SRC_ARCH:arm = "arm"
-SRC_FETCH_ID:arm = "7325ec17-70e8-479d-b8b6-fcbab8d6a053/8abb075436b62424378cbee076c895f5"
-SRC_SHA512SUM:arm = "3f9ba3b05e4c1ef61a6afbdf97a61c42b3eff06ef9189f0f11934fa399674440602e51823190cdf1c43deba3fef7a3ebe7d1ea92933d1d07f59516aefd399aae"
+SRC_FETCH_ID:arm = "2344ad1d-ce80-4d98-bf9c-f935576deb39/591ea75057045e2284a7d70d5dd01bc5"
+SRC_SHA512SUM:arm = "92760c4a4f3bf559daa41b8b87d7f10995aa5ae11783af053d854e8b9e8b042cf6e984bda40490aff051e4463f7cc8ed25d905090e5cee029c81afdb7f8b32c2"
 
 SRC_ARCH:x86-64 = "x64"
-SRC_FETCH_ID:x86-64 = "868b2f38-62ca-4fd8-93ea-e640cf4d2c5b/1e615b6044c0cf99806b8f6e19c97e03"
-SRC_SHA512SUM:x86-64 = "3cc230f21c0d60ffa4955c01d79cbb41887a41f4e97d0708170e4be8e4dc5bc261269c788c738416c28bbc7e8c6940a89cf3d010f16d1dc4cf25bbb0e2c033c1"
+SRC_FETCH_ID:x86-64 = "85bcc525-4e9c-471e-9c1d-96259aa1a315/930833ef34f66fe9ee2643b0ba21621a"
+SRC_SHA512SUM:x86-64 = "310cf54f595698435b533931b12f86d49f89d27243cf7c87a5b926e0c676b80e869aa58aaff17b5095536c432f377c67d92bf0ca8941b9d891d4b3879637d488"
 
 SRC_URI[vardeps] += "SRC_FETCH_ID SRC_ARCH"
 SRC_URI[sha512sum] = "${SRC_SHA512SUM}"
@@ -38,7 +38,7 @@ SRC_URI = "https://download.visualstudio.microsoft.com/download/pr/${SRC_FETCH_I
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 
-DOTNET_RUNTIME = "6.0.15"
+DOTNET_RUNTIME = "8.0.2"
 do_install[vardeps] += "DOTNET_RUNTIME"
 
 do_install() {
@@ -96,5 +96,6 @@ FILES:${PN}-dbg = "\
 RRECOMMENDS:dotnet-dev[nodeprrecs] = "1"
 
 INSANE_SKIP:${PN} = "already-stripped libdir staticdev textrel dev-so"
+INSANE_SKIP:${PN}-dbg = "libdir"
 
 BBCLASSEXTEND = "native"
