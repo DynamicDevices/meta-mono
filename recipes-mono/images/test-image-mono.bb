@@ -9,6 +9,7 @@ IMAGE_INSTALL += "msbuild \
                   dotnet \
                   dotnet-helloworld \
                   python3-pythonnet \
+                  mono-xsp \
 "
 
 IMAGE_BASENAME = "${PN}"
