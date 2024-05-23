@@ -1,0 +1,40 @@
+From a1ada04a58a69c792e0bb37021e98b9c0b0dc686 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Aleksey=20Kliger=20=28=CE=BBgeek=29?= <alklig@microsoft.com>
+Date: Mon, 30 Aug 2021 19:17:56 -0400
+Subject: [PATCH 30/39] [2020-02][linux] Some pseudo-tty fixes (#21205)
+
+* Ignore EINVAL errors on ioctl TIOCMGET/TIOCMSET so (#20219)
+
+pseudo-ttys are usable. (#20218)
+
+* Fix pseudo-ttys for kernel versions >= 5.13 (#21203)
+
+Co-authored-by: csanchezdll <csanchezdll@gmail.com>
+---
+ support/serial.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/support/serial.c b/support/serial.c
+index 74c54b0a21c..30542da9dd4 100644
+--- a/support/serial.c
++++ b/support/serial.c
+@@ -510,7 +510,15 @@ set_signal (int fd, MonoSerialSignal signal, gboolean value)
+ 
+ 	expected = get_signal_code (signal);
+ 	if (ioctl (fd, TIOCMGET, &signals) == -1)
+-		return -1;
++		{
++			/* Return successfully for pseudo-ttys.
++			 * Linux kernels < 5.13 return EINVAL,
++			 * but versions >=5.13 return ENOTTY. */
++			if (errno == EINVAL || errno == ENOTTY)
++				return 1;
++
++			return -1;
++		}
+ 	
+ 	activated = (signals & expected) != 0;
+ 	if (activated == value) /* Already set */
+-- 
+2.33.1
+

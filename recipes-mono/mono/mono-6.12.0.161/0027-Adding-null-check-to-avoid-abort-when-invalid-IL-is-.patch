@@ -1,0 +1,31 @@
+From f41fc8b1333ac74e21e31ffdfa56281e7b20816e Mon Sep 17 00:00:00 2001
+From: "github-actions[bot]"
+ <41898282+github-actions[bot]@users.noreply.github.com>
+Date: Thu, 19 Aug 2021 15:41:09 +0200
+Subject: [PATCH 27/32] Adding null check to avoid abort when invalid IL is
+ encountered (#21195)
+
+When a callvirt instruction is encountered on a static method, there is
+a hard abort/crash. This commit avoids the problem.
+
+Co-authored-by: Bill Holmes <bill.holmes@unity3d.com>
+---
+ mono/mini/method-to-ir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mono/mini/method-to-ir.c b/mono/mini/method-to-ir.c
+index a2639dc7431..056e8776400 100644
+--- a/mono/mini/method-to-ir.c
++++ b/mono/mini/method-to-ir.c
+@@ -7222,7 +7222,7 @@ mono_method_to_ir (MonoCompile *cfg, MonoMethod *method, MonoBasicBlock *start_b
+ 
+ 			sp -= n;
+ 
+-			if (virtual_ && cmethod && sp [0]->opcode == OP_TYPED_OBJREF) {
++			if (virtual_ && cmethod && sp [0] && sp [0]->opcode == OP_TYPED_OBJREF) {
+ 				ERROR_DECL (error);
+ 
+ 				MonoMethod *new_cmethod = mono_class_get_virtual_method (sp [0]->klass, cmethod, FALSE, error);
+-- 
+2.31.1
+

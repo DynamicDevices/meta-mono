@@ -1,0 +1,21 @@
+From be8f534947136661bfec11410da7767e92adb1f3 Mon Sep 17 00:00:00 2001
+From: Nicolas Jeker <n.jeker@gmx.net>
+Date: Fri, 22 Jan 2021 10:41:27 +0100
+Subject: [PATCH] Copy hostfxr
+
+---
+ eng/cibuild_bootstrapped_msbuild.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/eng/cibuild_bootstrapped_msbuild.sh b/eng/cibuild_bootstrapped_msbuild.sh
+index 759c75f..cfa3c28 100755
+--- a/eng/cibuild_bootstrapped_msbuild.sh
++++ b/eng/cibuild_bootstrapped_msbuild.sh
+@@ -61,6 +61,7 @@ function DownloadMSBuildForMono {
+     unzip -q "$msbuild_zip" -d "$artifacts_dir"
+     # rename just to make it obvious when reading logs!
+     mv $artifacts_dir/msbuild $mono_msbuild_dir
++    cp %libhostfxr% $artifacts_dir/mono-msbuild/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/
+     sed -i 's#/sh$#/bash#' $artifacts_dir/mono-msbuild/msbuild
+     chmod +x $artifacts_dir/mono-msbuild/MSBuild.dll
+ 

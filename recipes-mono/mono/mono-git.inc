@@ -12,7 +12,8 @@ SRCREV = "${AUTOREV}"
 
 SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH}\
            file://dllmap-config.in.diff \
-	   file://0002-prevent-threadpool-exception5-test-hanging.patch \
+           file://0001-mcs-aot-compiler-Fixes-GNU-Make-4.3-incompatibility.patch \
+           file://0002-prevent-threadpool-exception5-test-hanging.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
@@ -34,11 +35,6 @@ EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
-    sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/mono-wrapper.in
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/monodis-wrapper.in
 }
 
 EDEPENDS_X11 = "libgdiplus"

@@ -21,7 +21,14 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 
 def mono_workspace_version (d):
     pvsplit = d.getVar('PV',d,1).split('.')
-    return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
+    if len(pvsplit) == 3:
+        return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
+    elif len(pvsplit) == 2:
+        return pvsplit[0] + '.' + pvsplit[1]
+    elif len(pvsplit) == 1:
+        return pvsplit[0]
+    else:
+        return 0
 
 S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
 
@@ -40,13 +47,6 @@ EXTRA_OECONF += " mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no "
 
 do_configure:prepend() {
     ${S}/autogen.sh --verbose || bbnote "${PN} failed to autogen.sh"
-    sed -e "s|slash\}libtool|slash\}${HOST_SYS}-libtool|" -i acinclude.m4
-    sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i libgc/acinclude.m4
-    if [ -f "eglib/acinclude.m4" ]; then
-      sed -e "s|slash\}libtool|slash\}../${HOST_SYS}-libtool|" -i eglib/acinclude.m4
-    fi
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/mono-wrapper.in
-    sed -e "s|r/libtool|r/${HOST_SYS}-libtool|" -i runtime/monodis-wrapper.in
     find . -name "*.pc.in" -exec sed -i -e 's:^\([^=]*=\).*pcfiledir.*/\.\./\.\.:\1@prefix@:g' {} \;
 }
 

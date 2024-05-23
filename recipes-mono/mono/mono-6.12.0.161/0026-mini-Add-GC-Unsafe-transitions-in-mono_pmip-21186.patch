@@ -1,0 +1,70 @@
+From 8b6809243db21a9ab3e2c21570958ab9c537ce29 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Aleksey=20Kliger=20=28=CE=BBgeek=29?= <alklig@microsoft.com>
+Date: Thu, 12 Aug 2021 20:29:41 -0400
+Subject: [PATCH 26/32] [mini] Add GC Unsafe transitions in mono_pmip (#21186)
+
+Add a new mono_pmip_u that doesn't do the transition.
+
+The intent is that Mono developers in the debugger can call still call
+mono_pmip_u if the thread state machine is in a broken state.
+---
+ mono/mini/mini-runtime.c | 20 ++++++++++++++++++++
+ mono/mini/mini-runtime.h |  1 +
+ 2 files changed, 21 insertions(+)
+
+diff --git a/mono/mini/mini-runtime.c b/mono/mini/mini-runtime.c
+index e04626d7ff2..18d99134fbc 100644
+--- a/mono/mini/mini-runtime.c
++++ b/mono/mini/mini-runtime.c
+@@ -191,9 +191,23 @@ find_tramp (gpointer key, gpointer value, gpointer user_data)
+ 		ud->method = (MonoMethod*)key;
+ }
+ 
++static char*
++mono_get_method_from_ip_u (void *ip);
++
+ /* debug function */
+ char*
+ mono_get_method_from_ip (void *ip)
++{
++	char *result;
++	MONO_ENTER_GC_UNSAFE;
++	result = mono_get_method_from_ip_u (ip);
++	MONO_EXIT_GC_UNSAFE;
++	return result;
++}
++
++/* debug function */
++static char*
++mono_get_method_from_ip_u (void *ip)
+ {
+ 	MonoJitInfo *ji;
+ 	MonoMethod *method;
+@@ -263,6 +277,12 @@ mono_pmip (void *ip)
+ 	return mono_get_method_from_ip (ip);
+ }
+ 
++G_GNUC_UNUSED char *
++mono_pmip_u (void *ip)
++{
++	return mono_get_method_from_ip_u (ip);
++}
++
+ /**
+  * mono_print_method_from_ip:
+  * \param ip an instruction pointer address
+diff --git a/mono/mini/mini-runtime.h b/mono/mini/mini-runtime.h
+index 122b107e5d3..ebe6f607e83 100644
+--- a/mono/mini/mini-runtime.h
++++ b/mono/mini/mini-runtime.h
+@@ -495,6 +495,7 @@ MONO_LLVM_INTERNAL const char*mono_ji_type_to_string           (MonoJumpInfoType
+ void      mono_print_ji                     (const MonoJumpInfo *ji);
+ MONO_API void      mono_print_method_from_ip         (void *ip);
+ MONO_API char     *mono_pmip                         (void *ip);
++MONO_API char     *mono_pmip_u                       (void *ip);
+ MONO_API int mono_ee_api_version (void);
+ gboolean  mono_debug_count                  (void);
+ 
+-- 
+2.31.1
+

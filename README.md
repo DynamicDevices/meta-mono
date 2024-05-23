@@ -1,24 +1,18 @@
 ## Introduction
 
-meta-mono is an OpenEmbedded layer that builds mono runtime and mono
-libraries to allow users to run .NET applications under linux built
-using OE. For more info about mono, see mono project's website. For
-more info on OpenEmbedded, see OE's website.
+meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono libraries to allow users to run .NET applications under linux built using OE. For more info about mono, see mono project's website. For more info on OpenEmbedded, see OE's website.
 
 ## Build status
 
-| Branch | Status of Build & Tests |
-| ------ | ----------------------- |
-| master | [![master](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=master)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | [![kirkstone](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=kirkstone)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| honister | [![honister](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=honister)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| hardknott | [![hardknott](https://github.com//dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=hardknott)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| gatesgarth | [![gatesgarth](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=gatesgarth)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| dunfell | [![dunfell](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=dunfell)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| zeus | [![zeus](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=zeus)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| warrior | [![warrior](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=warrior)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| thud | [![thud](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=thud)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| sumo | [![sumo](https://github.com/dynamicdevices/meta-mono/actions/workflows/CI_github.yml/badge.svg?branch=sumo)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| Branch | Support Status* | Status of Build & Tests |
+| ------ | --------------- | ----------------------- |
+| nanbield | 	May 2024  | [![nanbield](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=nanbield&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | 	Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| dunfell | 	Supported - Long Term Support (until Apr. 2024) | [![dunfell](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=dunfell&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+
+*support status as of 22/02/24, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
+
+NOTE: 24/01/22 - This [patch](https://patchwork.openembedded.org/patch/171349/) is needed to Poky for branch morty, sumo (and perhaps others) to fix a gcc version build error.
 
 ## Layer Dependencies
 
@@ -30,28 +24,7 @@ branch: master
 
 ## Detail
 
-This README pertains to meta-mono layer support for Mono 6.8.x - 6.12.x
-
-For Mono release notes please see:
-
-* [Mono Release Notes](https://www.mono-project.com/docs/about-mono/releases)
-
-NOTE: Mono TLS vulnerabilities. 3.12.1+ includes the fix in the release archive.
-
-http://www.mono-project.com/news/2015/03/07/mono-tls-vulnerability/
-
-NOTE: ARM hardfp support
-
-Since Mono 3.2.7 there is initial support for the ARM hardfp ABI which should 
-enable us to use hardfp builds of e.g. Yocto/Poky. However there are issues with 
-using this, namely exceptions when using Windows Forms components. For details see:
-
-https://bugzilla.xamarin.com/show_bug.cgi?id=20239
-
-For now the recommendation is to use softfp only when using Mono.
-
-There may be a solution to this issue in Mono 3.10.0 / 3.12.0+ but this is as yet untested.
-Feedback on testing with armhf would be appreciated and incorporated into this README.
+For Mono release notes please see [here](https://www.mono-project.com/docs/about-mono/releases)
 
 ## Layer Dependencies
 
@@ -121,12 +94,9 @@ Currently only core-image-mono is working.
 
 There are mono-helloworld and a mono-helloworld-xbuild recipes in recipes-mono
 
-These show two ways of building C# projects for deployment to the target. Each
-downloads a tarball release from a git repository, although they could just as
-easily download and checkout a commit from the git repository.
+These show two ways of building C# projects for deployment to the target. Each downloads a tarball release from a git repository, although they could just as easily download and checkout a commit from the git repository.
 
-mono-helloworld then implements the recommended autotools files for build with
-autoconf. This is based on the Mono example, mono-skel.
+mono-helloworld then implements the recommended autotools files for build with autoconf. This is based on the Mono example, mono-skel.
 
 For a walkthrough on building .NET recipes from first principles see:
 
@@ -136,13 +106,33 @@ For details see:
 
 * [Mono Application Deployment Guidelines](http://mono-project.com/Guidelines:Application_Deployment)
 
-mono-helloworld-xbuild implements a Visual Studio 2010 solution and projects 
-which allow us to checkout and build using Visual Studio on a Windows host, 
-or alternatively using Mono xbuild within a Yocto/OpenEmbedded recipe.
+mono-helloworld-xbuild implements a Visual Studio 2010 solution and projects which allow us to checkout and build using Visual Studio on a Windows host, or alternatively using Mono xbuild within a Yocto/OpenEmbedded recipe.
 
 For a walkthrough on building Mono for Raspberry Pi see:
 
 * [Getting Mono Running on a Raspberry Pi Using Yocto](http://www.codeproject.com/Articles/840489/Getting-Mono-Running-on-a-Raspberry-Pi-Using-Yocto)
+
+## CI Setup
+
+The current CI system runs in a ProxMox container supporting nested Docker operation. A couple of specific settings are needed to support QEMU testing (/dev/net/tun, /dev/kvm) and the lxc configuration file is documented here for future reference
+
+```
+arch: amd64
+cores: 4
+features: keyctl=1,mknod=1,nesting=1
+hostname: github-runner
+memory: 24576
+net0: name=eth0,bridge=vmbr2,firewall=1,gw=10.21.21.254,hwaddr=1A:EC:5A:0D:A3:B8,ip=10.21.21.100/32,type=veth
+onboot: 1
+ostype: debian
+rootfs: lvm:vm-101-disk-0,size=1T
+swap: 8192
+unprivileged: 1
+lxc.cgroup2.devices.allow: c 10:200 rwm
+lxc.mount.entry: /dev/net dev/net none bind,create=dir
+lxc.cgroup2.devices.allow: c 10:232 rwm
+lxc.mount.entry: /dev/kvm dev/kvm none bind,create=file 0 0
+```
 
 ## Contributors
 
@@ -169,159 +159,14 @@ Follow Yocto change submission policy, detailed here, for formatting:
 * Fork master on github.com/dynamicdevices/meta-mono
 * Commit your changes to your fork referencing the issue number prefixed with #
 * Create a pull request (PR) to the main repository
+* Your PR will trigger a number of CI builds which will run tests to ensure nothing is broken. The CI builds must pass for your PR to be merged by a maintainer. If your PR does not build correctly please address and update the PR with a fix.
 * If the maintainer doesn't respond after a reasonable time email them a reminder
 
 ## Copyright
 
 MIT/GPLv2 - following the lead of libgdiplus and mono
 
-## Current State - x86 emulation: Works
-
-#### 14/06/2018
-
-5.12.0.226
-
-* Maintainer has tested Poky (pyro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-#### 30/05/2017
-
-4.8.1.0
-
-* Maintainer has tested Poky (master, morty) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-#### 28/07/2015
-
-3.12.1
-
-* Maintainer has tested a Poky build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-## Current State - PPC emulation: Works
-
-#### 22/12/2016
-
-4.8.0.382
-
-* Maintainer has tested a Poky (master) build on a qemuppc platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-  (Not convinced that the test applications are exiting reliably)
-
-## Current State - ARM emulation: Works
-
-#### 14/06/2018
-
-5.12.0.226
-
-* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-#### 28/07/2015
-
-4.0.3.19
-
-* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-#### 28/07/2015
-
-3.12.1
-
-* Maintainer has tested a Poky build on a qemuarm platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-## Current State - ARM vfp: Works
-
-4.6.1
-
-* Has been tested on Cortex-A9
-
-#### 27/04/2014
-
-4.0.1
-
-* Maintainer has tested a Poky build on a Freescale i.MX6 platform with console helloworld and Matchbox UI helloworldform
-
-#### 09/03/2015
-
-3.12.1
-
-* Maintainer has tested a Poky build on a Freescale i.MX6 platform with console helloworld and Matchbox UI helloworldform
-
-#### 25/02/2014
-
-* Maintainer has tested a Poky build on a Freescale i.MX6 platform, with a simple console application and a simple Windows Forms application. 
-
-## Current State - ARM hardfp: Works / Issues with Windows Forms components
-
-#### 22/04/2014
-
-* Builds and runs on i.MX6 platform with hardfp enabled. 
-
-## Current State - MIPS: Unknown
-
-* More investigation is needed, if there is an interest in getting mono to work perfectly on MIPS, please contact the maintainer.
-
-## Current State - PPC
-
-#### 25/06/2017
-
-5.4.0.56
-
-* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
-
-a simple console application, helloworld which RUNS
-a simple Windows Forms application, helloworldform which RUNS
-a simple GTK# application hellloworldgtk, which RUNS
-
-#### 01/07/2017
-
-5.2.0.196
-
-* Maintainer has tested a Poky (master) build on a qemuppc platform, with  
-
-a simple console application, helloworld which RUNS
-a simple Windows Forms application, helloworldform which RUNS
-a simple GTK# application hellloworldgtk, which RUNS
-
-#### 14/02/2016
-
-4.2.0.179
-
-* Maintainer has tested a Poky (Jethro) build on a qemuppc platform, with 
-
-a simple console application, helloworld which RUNS
-a simple Windows Forms application, helloworldform which FAILS
-a simple GTK# application hellloworldgtk, which RUNS
-
-#### 14/02/2016
-
-4.0.1.34
-
-* Maintainer has tested a Poky (Jethro) build on a qemux86 platform, with a simple console application, a simple Windows Forms application, and a simple GTK# application
-
-#### 14/02/2016
-
-3.12.1
-
-Fails to link building Poky (Jethro) with:
-
-| mono/3.12.1-r0/mono-3.12.1/mono/metadata/loader.c:2322: undefined reference to `mono_sigctx_to_monoctx'
-
-## Current State - alpha, amd64, hppa, ia64, s390 & sparc: Unknown
-
-* When qemu provided by Yocto supports one of these machines, the maintainer will support these architectures.
-
-## TODO
-
-* see if mono works for amd64, seems like qemux86-64 is available
-* investigate why windows forms apps dont run on MIPS
-* run mono runtime tests for ARM
-* run mono runtime tests for MIPS
-* run mono runtime tests for PPC
-* run mono library tests for ARM
-* run mono library tests for MIPS
-* run mono library tests for PPC
-* write recipes to create packages for runtime tests
-* write recipes to create packages for mscorlib library tests
-* write recipes to create packages for System.dll library tests
-* try mono on beagleboard (email maintainer when you do this, he will thank you)
-
-## HitCount
+## Hit Count
 
 [![HitCount](http://hits.dwyl.com/dynamicdevices/meta-mono.svg)](http://hits.dwyl.com/dynamicdevices/meta-mono)
 
