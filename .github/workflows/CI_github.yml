@@ -3,9 +3,8 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
-      - nanbield
+      - honister
+      - honister-next
   pull_request:
 
 jobs:
@@ -19,7 +18,7 @@ jobs:
       matrix:
         dotnet_version: [8.0.301, 6.0.423]
         mono_version: [6.12.0.182]
-        branch: [nanbield]
+        branch: [honister]
         arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
