@@ -38,3 +38,7 @@ do_install:append() {
   find ${D} -name *.dll -exec chown -h root:root {} \;
 }
 
+ALLOW_EMPTY:${PN} = "1"
+ALLOW_EMPTY:${PN}-dbg = "1"
+ALLOW_EMPTY:${PN}-dev = "1"
+ALLOW_EMPTY:${PN}-doc = "1"
