@@ -32,8 +32,6 @@ FILES:${PN}-dev = "\
   ${datadir}/* \
 "
 
-DIRFILES = "1"
-
 do_install:append() {
   find ${D} -name *.dll -exec chown -h root:root {} \;
 }
