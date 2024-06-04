@@ -49,4 +49,4 @@ do_install:append:x86-64 () {
 }
 
 FILES:${PN}:append = " /opt/${PN}/"
-FILES:${PN}:append:x86-64 = " /lib64"
+FILES:${PN}:append:x86-64 = " /opt/${PN}/ /lib64"
