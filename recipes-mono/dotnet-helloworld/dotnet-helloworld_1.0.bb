@@ -22,6 +22,7 @@ SRC_ARCH:x86-64 = "x64"
 INSANE_SKIP:${PN} += "\
     already-stripped \
     staticdev \
+    buildpaths \
 "
 
 S = "${WORKDIR}/src"
