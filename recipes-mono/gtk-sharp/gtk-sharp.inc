@@ -2,7 +2,7 @@ SUMMARY = "GUI toolkit for Mono"
 DESCRIPTION = "GTK+ bindings for Mono"
 SECTION = "devel/mono"
 BUGTRACKER = "http://bugzilla.xamarin.com"
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 RDEPENDS:${PN}-dev += "perl"
 
 inherit autotools
@@ -32,9 +32,6 @@ FILES:${PN}-dev = "\
   ${datadir}/* \
 "
 
-DIRFILES = "1"
-
 do_install:append() {
   find ${D} -name *.dll -exec chown -h root:root {} \;
 }
-

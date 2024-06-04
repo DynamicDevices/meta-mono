@@ -22,6 +22,7 @@ SRC_ARCH:x86-64 = "x64"
 INSANE_SKIP:${PN} += "\
     already-stripped \
     staticdev \
+    buildpaths \
 "
 
 S = "${WORKDIR}/src"
@@ -41,10 +42,11 @@ do_compile () {
 do_install () {
     install -d ${D}/opt/
     cp -r --no-preserve=ownership ${B}/${PN} ${D}/opt
-
-    if [ "${SRC_ARCH}" = "x64" ]; then
-        ln -s ${base_libdir} ${D}/lib64
-    fi
 }
 
-FILES:${PN}:append = " /opt/${PN}/ /lib64"
+do_install:append:x86-64 () {
+    ln -s ${base_libdir} ${D}/lib64
+}
+
+FILES:${PN}:append = " /opt/${PN}/"
+FILES:${PN}:append:x86-64 = " /opt/${PN}/ /lib64"
