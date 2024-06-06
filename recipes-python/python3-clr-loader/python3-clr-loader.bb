@@ -28,9 +28,9 @@ RDEPENDS:${PN} += " \
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
-# Use a separated folder for nuget downloads and cache in WORKDIR.
-export NUGET_PACKAGES="${WORKDIR}/nuget-packages"
-export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
+# Use a separated folder for nuget downloads and cache in UNPACKDIR.
+export NUGET_PACKAGES="${UNPACKDIR}/nuget-packages"
+export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/nuget-http-cache"
 
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.

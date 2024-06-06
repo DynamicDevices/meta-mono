@@ -20,15 +20,16 @@ SRC_URI = " \
 SRC_URI[lic.md5sum] = "3b83ef96387f14655fc854ddc3c6bd57"
 SRC_URI[lic.sha256sum] = "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
 
-S = "${WORKDIR}"
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
 
 do_install () {
 	install -d -m0755 ${D}${bindir}
-	install -m0755 ${WORKDIR}/nuget.sh.in ${D}${bindir}/nuget
+	install -m0755 ${UNPACKDIR}/nuget.sh.in ${D}${bindir}/nuget
 	sed -i -e 's:@bindir@:${bindir}:g' -e 's:@libdir@:${libdir}:g' ${D}${bindir}/nuget
 
 	install -d -m0755 ${D}${libdir}/mono/nuget
-	install -m0755 ${WORKDIR}/NuGet-v${PV}.exe ${D}${libdir}/mono/nuget/NuGet.exe
+	install -m0755 ${UNPACKDIR}/NuGet-v${PV}.exe ${D}${libdir}/mono/nuget/NuGet.exe
 }
 
 FILES:${PN} += "${libdir}/mono/nuget"
@@ -37,7 +38,7 @@ SYSROOT_PREPROCESS_FUNCS += "nuget_sysroot_preprocess"
 
 nuget_sysroot_preprocess () {
 	install -d -m0755 ${SYSROOT_DESTDIR}${bindir_crossscripts}/
-	install -m0755 ${WORKDIR}/nuget.sh.in ${SYSROOT_DESTDIR}${bindir_crossscripts}/nuget
+	install -m0755 ${UNPACKDIR}/nuget.sh.in ${SYSROOT_DESTDIR}${bindir_crossscripts}/nuget
 	sed -i -e 's:@bindir@:${STAGING_BINDIR_NATIVE}:g' -e 's:@libdir@:${STAGING_LIBDIR}:g' ${SYSROOT_DESTDIR}${bindir_crossscripts}/nuget
 }
 
