@@ -18,7 +18,6 @@ LIC_FILES_CHKSUM = "file://../certdata.txt;md5=b5b009a1c475f7bb95ac8c55f80442f3"
 
 SRC_URI = "file://certdata.txt"
 
-SRC_URI[md5sum] = "b5b009a1c475f7bb95ac8c55f80442f3"
 SRC_URI[sha256sum] = "ea89ac8ae495e69586abae22941816842ca5811a32a20dc9e1adb95859802879"
 
 do_install:append() {
