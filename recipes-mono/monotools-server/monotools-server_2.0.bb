@@ -7,7 +7,6 @@ PR = "r0"
 
 # Download from Mono site
 SRC_URI = "http://download.mono-project.com/monotools/latest/monotools-server-2.0.tar.bz2" 
-SRC_URI[md5sum] = "44177a0933d0116a2ebb732395399689"
 SRC_URI[sha256sum] = "dd0bc56e25f96e8c8525f327154940729fba2585de5d74b68a69d2ea30aee34b"
 
 # Preferred download from Hg

@@ -17,7 +17,6 @@ def gtk_sharp_download_versionN(d):
 SRC_URI = "https://download.gnome.org/sources/gtk-sharp/${SDIRVERN}/gtk-sharp-${PV}.tar.xz \
            file://0001-fixup-gmcs-to-mcs.patch"
 
-SRC_URI[md5sum] = "2120ff15abe655e4de8aa5aadf0d5d12"
 SRC_URI[sha256sum] = "6440f571416267ae0cb5698071d087b31e3084693fa2c829b1db37ca7ea2c3a2"
 
 S = "${WORKDIR}/gtk-sharp-${PV}"

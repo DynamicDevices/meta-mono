@@ -21,6 +21,5 @@ do_compile() {
 EDEPENDS_X11 =+ "libgdiplus-native"
 PACKAGECONFIG[x11] = ",,${EDEPENDS_X11}"
 
-SRC_URI[md5sum] = "24762be2b396cb8d4c5b49dc863bc2fd"
 SRC_URI[sha256sum] = "220125938cb85482a398e11ed90265eecf4df5defb259ade7e30208ecb859c04"
 
