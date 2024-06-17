@@ -15,6 +15,7 @@ RDEPENDS:${PN} = "\
 "
 
 RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
+RDEPENDS:${PN}:remove:class-nativesdk = "libgssapi-krb5"
 
 PR = "r0"
 
