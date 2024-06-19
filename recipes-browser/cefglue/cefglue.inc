@@ -16,7 +16,7 @@ SRC_URI = "https://bitbucket.org/xilium/xilium.cefglue/get/v${PV}.tar.bz2 \
 inherit autotools-brokensep
 
 do_configure() {
-  cp -f ${WORKDIR}/build_4.0_client_profile.sh ${S}
+  cp -f ${UNPACKDIR}/build_4.0_client_profile.sh ${S}
 }
 
 do_compile() {
