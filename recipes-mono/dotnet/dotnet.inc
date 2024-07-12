@@ -8,14 +8,9 @@ COMPATIBLE_HOST ?= "(x86_64|aarch64|arm).*-linux"
 DEPENDS = "patchelf-native"
 
 #FIXME add lttng-ust as soon as dotnet core supports liblttng-ust.so.1
-RDEPENDS:${PN} = "\
-    icu \
-    libgssapi-krb5 \
-    zlib \
-"
-
-RDEPENDS:${PN}:remove:class-native = "libgssapi-krb5"
-RDEPENDS:${PN}:remove:class-nativesdk = "libgssapi-krb5"
+RDEPENDS:${PN}:class-target = "icu zlib libgssapi-krb5"
+RDEPENDS:${PN}:class-native = "icu zlib"
+RDEPENDS:${PN}:class-nativesdk = "icu zlib"
 
 PR = "r0"
 
