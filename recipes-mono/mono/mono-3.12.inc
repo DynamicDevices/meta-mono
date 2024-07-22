@@ -13,7 +13,6 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 	   file://dllmap-config.in.diff \
           "
 
-SRC_URI[md5sum] = "0fbca17e5bfce5124d4bc915faa697d7"
 SRC_URI[sha256sum] = "8fdc69329c8d669d1c5e5bc922a5df8a3ed61a72344b92e5a073809bf1b36783"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"

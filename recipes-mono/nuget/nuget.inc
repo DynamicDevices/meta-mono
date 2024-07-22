@@ -17,7 +17,6 @@ SRC_URI = " \
 			file://nuget.sh.in \
 		"
 
-SRC_URI[lic.md5sum] = "3b83ef96387f14655fc854ddc3c6bd57"
 SRC_URI[lic.sha256sum] = "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
 
 S = "${WORKDIR}"
