@@ -35,8 +35,8 @@ export MONO_CFG_DIR="${STAGING_ETCDIR_NATIVE}"
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
-export NUGET_PACKAGES="${WORKDIR}/mono-nuget-packages"
-export NUGET_HTTP_CACHE_PATH="${WORKDIR}/mono-nuget-http-cache"
+export NUGET_PACKAGES="${UNPACKDIR}/mono-nuget-packages"
+export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/mono-nuget-http-cache"
 
 do_configure:prepend() {
 	mkdir -p ${NUGET_PACKAGES} ${NUGET_HTTP_CACHE_PATH}

@@ -41,8 +41,8 @@ export CURL_CA_BUNDLE="${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt"
 do_compile[network] = "1"
 
 do_compile () {
-    mkdir -p ${WORKDIR}/build-home-dir
-    export HOME=${WORKDIR}/build-home-dir
+    mkdir -p ${UNPACKDIR}/build-home-dir
+    export HOME=${UNPACKDIR}/build-home-dir
 
     # Sync Mono certificate store with ca-certificates
     cert-sync --user ${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt
@@ -57,7 +57,7 @@ do_compile () {
 }
 
 do_install () {
-    export HOME=${WORKDIR}/build-home-dir
+    export HOME=${UNPACKDIR}/build-home-dir
 
     ./stage1/mono-msbuild/msbuild mono/build/install.proj /p:MonoInstallPrefix="${D}" /p:Configuration=Release-MONO /p:IgnoreDiffFailure=true
 }
