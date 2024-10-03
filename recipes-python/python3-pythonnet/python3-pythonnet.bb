@@ -23,16 +23,16 @@ PYTHONNET_ENV = "#!/bin/bash\n\nexport PYTHONNET_RUNTIME=${PYTHONNET_DEFAULT_RUN
 
 DEPENDS += " \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-clr-loader-native \
-    ${PYTHON_PN}-setuptools-scm-native \
-    ${PYTHON_PN}-toml-native \
+    python3-clr-loader-native \
+    python3-setuptools-scm-native \
+    python3-toml-native \
 "
 
 RDEPENDS:${PN} += " \
     bash \
     dotnet (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-pycparser \
-    ${PYTHON_PN}-clr-loader \
+    python3-pycparser \
+    python3-clr-loader \
 "
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
