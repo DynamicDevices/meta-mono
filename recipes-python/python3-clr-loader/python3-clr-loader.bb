@@ -17,13 +17,13 @@ DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
 DEPENDS += " \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-setuptools-scm-native \
-    ${PYTHON_PN}-toml-native \
+    python3-setuptools-scm-native \
+    python3-toml-native \
 "
 
 RDEPENDS:${PN} += " \
     dotnet (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-cffi \
+    python3-cffi \
 "
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
