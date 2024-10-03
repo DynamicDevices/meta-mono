@@ -14,8 +14,6 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 *support status as of 03/10/24, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
-NOTE: 24/01/22 - This [patch](https://patchwork.openembedded.org/patch/171349/) is needed to Poky for branch morty, sumo (and perhaps others) to fix a gcc version build error.
-
 ## Layer Dependencies
 
 This layer depends on:
