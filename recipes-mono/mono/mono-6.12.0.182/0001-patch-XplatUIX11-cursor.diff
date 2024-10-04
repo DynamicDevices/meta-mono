@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 diff -ur mono-6.8.0.96.org/mcs/class/System.Windows.Forms/System.Windows.Forms/XplatUIX11.cs mono-6.8.0.96/mcs/class/System.Windows.Forms/System.Windows.Forms/XplatUIX11.cs
 --- mono-6.8.0.96.org/mcs/class/System.Windows.Forms/System.Windows.Forms/XplatUIX11.cs	2020-01-15 07:46:01.000000000 +0000
 +++ mono-6.8.0.96/mcs/class/System.Windows.Forms/System.Windows.Forms/XplatUIX11.cs	2020-02-08 21:22:11.059830600 +0000
