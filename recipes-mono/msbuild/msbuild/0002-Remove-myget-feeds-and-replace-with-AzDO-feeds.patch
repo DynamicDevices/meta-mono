@@ -3,6 +3,7 @@ From: =?UTF-8?q?Alexander=20K=C3=B6plinger?= <alex.koeplinger@outlook.com>
 Date: Fri, 15 Jan 2021 12:39:49 +0100
 Subject: [PATCH] Remove myget feeds and replace with AzDO feeds
 
+Upstream-Status: Inappropriate [Yocto specific]
 ---
  NuGet.config | 18 +++---------------
  1 file changed, 3 insertions(+), 15 deletions(-)

@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 diff --git a/cibuild.sh b/cibuild.sh
 index 82a3694..5278b35 100755
 --- a/cibuild.sh
