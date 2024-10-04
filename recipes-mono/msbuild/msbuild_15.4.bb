@@ -18,7 +18,7 @@ SRC_URI = " \
 			file://cibuild.sh-debug.patch \
 		"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 do_compile () {
 	./cibuild.sh --scope Compile --host Mono --target Mono --config Release --bootstrap-only

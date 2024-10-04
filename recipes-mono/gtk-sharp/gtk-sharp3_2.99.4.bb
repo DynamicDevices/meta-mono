@@ -11,7 +11,7 @@ SRCREV = "9a72bb67fff7e4845b7bb430a608282668c3e4da"
 SRC_URI = "git://github.com/mono/gtk-sharp.git;protocol=https;branch=master \
            file://0001-fixup-gmcs-to-mcs.patch"
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 do_configure:prepend() {
   export PROFILER_CFLAGS="-D_REENTRANT -I${STAGING_DIR_TARGET}/usr/include/glib-2.0 -I${STAGING_DIR_TARGET}/usr/lib/glib-2.0 -I${STAGING_DIR_TARGET}/usr/lib/glib-2.0/include -I${STAGING_DIR_TARGET}/usr/include/mono-2.0"

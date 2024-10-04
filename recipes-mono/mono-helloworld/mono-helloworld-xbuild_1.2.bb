@@ -4,7 +4,7 @@ SRC_URI[sha256sum] = "365360d674bd63ab7ca1762e64e3d5d6c6d4841edf6e59f67ff8b40faf
 
 REALPN = "mono-helloworld"
 
-S = "${WORKDIR}/${REALPN}-${PV}"
+S = "${UNPACKDIR}/${REALPN}-${PV}"
 
 CONFIGURATION = "Debug"
 

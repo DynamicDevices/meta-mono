@@ -1,3 +1,3 @@
 SRC_URI[sha256sum] = "f0636baa0c1399805526142e799cb697ddccf736e506cf1a30a870eaa2830a89"
 
-S = "${WORKDIR}/mono-${PV}"
+S = "${UNPACKDIR}/mono-${PV}"

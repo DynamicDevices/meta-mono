@@ -30,7 +30,7 @@ def mono_workspace_version (d):
     else:
         return 0
 
-S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
+S = "${UNPACKDIR}/mono-${@mono_workspace_version(d)}"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-5.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"

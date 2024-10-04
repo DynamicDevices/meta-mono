@@ -16,7 +16,7 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}-${PV}:"
 SRC_URI = "git://github.com/mono/mono-upnp.git;protocol=https;branch=${SRCBRANCH} \
 "
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 inherit autotools-brokensep pkgconfig
 

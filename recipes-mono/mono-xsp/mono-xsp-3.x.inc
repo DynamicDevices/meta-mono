@@ -19,7 +19,7 @@ do_configure () {
     set -e
 }
 
-S = "${WORKDIR}/xsp-${PV}"
+S = "${UNPACKDIR}/xsp-${PV}"
 
 PACKAGES += "${PN}-test \
 	${PN}-unittest \

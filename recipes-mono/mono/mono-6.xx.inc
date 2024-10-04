@@ -22,7 +22,7 @@ def mono_workspace_version (d):
     pvsplit = d.getVar('PV',d,1).split('.')
     return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
 
-S = "${WORKDIR}/mono-${@mono_workspace_version(d)}"
+S = "${UNPACKDIR}/mono-${@mono_workspace_version(d)}"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-6.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"

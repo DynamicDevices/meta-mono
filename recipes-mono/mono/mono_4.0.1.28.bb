@@ -5,7 +5,7 @@ DEPENDS = "mono-native"
 
 EXTRA_OECONF += "--disable-mcs-build mono_cv_clang=no mono_cv_uscore=no --with-sigaltstack=no --with-mcs-docs=no"
 
-S = "${WORKDIR}/${PN}-4.0.1"
+S = "${UNPACKDIR}/${PN}-4.0.1"
 
 do_install:append() {
         cp -af ${STAGING_DIR_NATIVE}${sysconfdir}/${PN} ${D}${sysconfdir}

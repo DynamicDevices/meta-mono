@@ -25,7 +25,7 @@ INSANE_SKIP:${PN} += "\
     buildpaths \
 "
 
-S = "${WORKDIR}/src"
+S = "${UNPACKDIR}/src"
 
 do_compile[network] = "1"
 
