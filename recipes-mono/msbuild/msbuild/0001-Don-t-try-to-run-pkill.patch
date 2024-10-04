@@ -3,6 +3,7 @@ From: Nicolas Jeker <n.jeker@delisys.ch>
 Date: Fri, 6 Nov 2020 11:19:38 +0100
 Subject: [PATCH] Don't try to run pkill
 
+Upstream-Status: Inappropriate [Yocto specific]
 ---
  eng/cibuild_bootstrapped_msbuild.sh | 2 --
  1 file changed, 2 deletions(-)

@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 Index: xamarin-pkg-msbuild/gen_build_info.sh
 ===================================================================
 --- xamarin-pkg-msbuild.orig/gen_build_info.sh
