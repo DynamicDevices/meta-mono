@@ -8,6 +8,8 @@ kernels. Disable MAP_32BIT support for now.
 
 Reference: https://lore.kernel.org/linux-mm/cb8dc31a-fef2-1d09-f133-e9f7b9f9e77a@sony.com/
 Reference: https://lore.kernel.org/all/20230414185919.4175572-1-Liam.Howlett@oracle.com/T/#m00a0ac8a72bf2f26711b7f8cc56612a8ef62c3d0
+
+Upstream-Status: Inappropriate [Yocto specific]
 ---
  mono/mini/mini-amd64.h    | 2 --
  mono/utils/mono-codeman.c | 4 ----
