@@ -4,6 +4,7 @@ Date: Sat, 18 Apr 2020 11:00:39 +0200
 Subject: [PATCH] configure: Fix build with Gentoo pango
 
 Signed-off-by: Kai Krakow <kai@kaishome.de>
+Upstream-Status: Inappropriate [Yocto specific]
 ---
  configure.ac | 6 +++---
  2 files changed, 6 insertions(+), 6 deletions(-)
