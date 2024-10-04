@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 diff -ur gtk-sharp-2.99.3.org/configure.ac gtk-sharp-2.99.3/configure.ac
 --- gtk-sharp-2.99.3.org/configure.ac	2014-06-06 14:03:34.000000000 +0100
 +++ gtk-sharp-2.99.3/configure.ac	2015-09-28 11:27:29.157332268 +0100
