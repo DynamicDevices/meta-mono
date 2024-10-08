@@ -1,0 +1,2699 @@
+From 105ad7fe092341b4ac138912e62c19b1630ebc9c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Tue, 8 Oct 2024 07:50:54 +0200
+Subject: [PATCH] Allow passing external /mapfile: C# build options
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Inappropriate [oe specific]
+---
+ mcs/class/Accessibility/Makefile                               | 1 +
+ mcs/class/Commons.Xml.Relaxng/Makefile                         | 1 +
+ mcs/class/Cscompmgd/Makefile                                   | 1 +
+ mcs/class/CustomMarshalers/Makefile                            | 1 +
+ .../Facades/Microsoft.Win32.Registry.AccessControl/Makefile    | 1 +
+ mcs/class/Facades/System.IO.FileSystem.AccessControl/Makefile  | 1 +
+ mcs/class/Facades/System.Reflection.TypeExtensions/Makefile    | 1 +
+ .../Facades/System.ServiceProcess.ServiceController/Makefile   | 1 +
+ mcs/class/Facades/System.Text.Encoding.CodePages/Makefile      | 1 +
+ mcs/class/Facades/System.Threading.AccessControl/Makefile      | 1 +
+ mcs/class/I18N/CJK/Makefile                                    | 2 +-
+ mcs/class/I18N/Common/Makefile                                 | 2 +-
+ mcs/class/I18N/Makefile                                        | 1 +
+ mcs/class/I18N/MidEast/Makefile                                | 2 +-
+ mcs/class/I18N/Other/Makefile                                  | 2 +-
+ mcs/class/I18N/Rare/Makefile                                   | 2 +-
+ mcs/class/I18N/West/Makefile                                   | 2 +-
+ mcs/class/IBM.Data.DB2/Makefile                                | 1 +
+ mcs/class/ICSharpCode.SharpZipLib/Makefile                     | 1 +
+ mcs/class/Microsoft.Build.Engine/Makefile                      | 1 +
+ mcs/class/Microsoft.Build.Framework/Makefile                   | 1 +
+ mcs/class/Microsoft.Build.Tasks/Makefile                       | 1 +
+ mcs/class/Microsoft.Build.Utilities/Makefile                   | 1 +
+ mcs/class/Microsoft.Build/Makefile                             | 1 +
+ mcs/class/Microsoft.CSharp/Makefile                            | 1 +
+ mcs/class/Microsoft.NuGet.Build.Tasks/Makefile                 | 1 +
+ mcs/class/Microsoft.VisualC/Makefile                           | 1 +
+ mcs/class/Microsoft.Web.Infrastructure/Makefile                | 1 +
+ mcs/class/Mono.Btls.Interface/Makefile                         | 1 +
+ mcs/class/Mono.C5/Makefile                                     | 1 +
+ mcs/class/Mono.CSharp/Makefile                                 | 1 +
+ mcs/class/Mono.Cairo/Makefile                                  | 1 +
+ mcs/class/Mono.Cecil.Mdb/Makefile                              | 1 +
+ mcs/class/Mono.Cecil/Makefile                                  | 1 +
+ mcs/class/Mono.CodeContracts/Makefile                          | 1 +
+ mcs/class/Mono.CompilerServices.SymbolWriter/Makefile          | 1 +
+ mcs/class/Mono.Data.Sqlite/Makefile                            | 1 +
+ mcs/class/Mono.Data.Tds/Makefile                               | 1 +
+ mcs/class/Mono.Debugger.Soft/Makefile                          | 1 +
+ mcs/class/Mono.Directory.LDAP/Makefile                         | 1 +
+ mcs/class/Mono.Http/Makefile                                   | 1 +
+ mcs/class/Mono.Management/Makefile                             | 1 +
+ mcs/class/Mono.Messaging.RabbitMQ/Makefile                     | 1 +
+ mcs/class/Mono.Messaging/Makefile                              | 1 +
+ mcs/class/Mono.Options/Makefile                                | 1 +
+ mcs/class/Mono.Parallel/Makefile                               | 1 +
+ mcs/class/Mono.Posix/Makefile                                  | 1 +
+ mcs/class/Mono.Profiler.Log/Makefile                           | 1 +
+ mcs/class/Mono.Reactive.Testing/Makefile                       | 1 +
+ mcs/class/Mono.Runtime.Tests/Makefile                          | 1 +
+ mcs/class/Mono.Security.Win32/Makefile                         | 1 +
+ mcs/class/Mono.Security/Makefile                               | 2 +-
+ mcs/class/Mono.ServiceModel.IdentitySelectors/Makefile         | 1 +
+ mcs/class/Mono.Simd/Makefile                                   | 1 +
+ mcs/class/Mono.Tasklets/Makefile                               | 1 +
+ mcs/class/Mono.WebBrowser/Makefile                             | 1 +
+ mcs/class/Mono.XBuild.Tasks/Makefile                           | 1 +
+ mcs/class/Mono.Xml.Ext/Makefile                                | 1 +
+ mcs/class/Novell.Directory.Ldap/Makefile                       | 1 +
+ mcs/class/PEAPI/Makefile                                       | 1 +
+ mcs/class/RabbitMQ.Client/src/apigen/Makefile                  | 2 +-
+ mcs/class/RabbitMQ.Client/src/client/Makefile                  | 1 +
+ mcs/class/SMDiagnostics/Makefile                               | 1 +
+ mcs/class/System.ComponentModel.Composition.4.5/Makefile       | 1 +
+ mcs/class/System.ComponentModel.DataAnnotations/Makefile       | 1 +
+ mcs/class/System.Configuration.Install/Makefile                | 1 +
+ mcs/class/System.Configuration/Makefile                        | 2 +-
+ mcs/class/System.Core/Makefile                                 | 1 +
+ mcs/class/System.Data.DataSetExtensions/Makefile               | 1 +
+ mcs/class/System.Data.Entity/Makefile                          | 1 +
+ mcs/class/System.Data.Linq/Makefile                            | 1 +
+ mcs/class/System.Data.OracleClient/Makefile                    | 1 +
+ mcs/class/System.Data.Services.Client/Makefile                 | 1 +
+ mcs/class/System.Data.Services/Makefile                        | 1 +
+ mcs/class/System.Data/Makefile                                 | 1 +
+ mcs/class/System.Deployment/Makefile                           | 1 +
+ mcs/class/System.Design/Makefile                               | 1 +
+ mcs/class/System.DirectoryServices.Protocols/Makefile          | 1 +
+ mcs/class/System.DirectoryServices/Makefile                    | 1 +
+ mcs/class/System.Drawing.Design/Makefile                       | 1 +
+ mcs/class/System.Drawing/Makefile                              | 1 +
+ mcs/class/System.Dynamic/Makefile                              | 1 +
+ mcs/class/System.EnterpriseServices/Makefile                   | 1 +
+ mcs/class/System.IO.Compression.FileSystem/Makefile            | 1 +
+ mcs/class/System.IO.Compression/Makefile                       | 1 +
+ mcs/class/System.IdentityModel.Selectors/Makefile              | 1 +
+ mcs/class/System.IdentityModel/Makefile                        | 1 +
+ mcs/class/System.Interactive.Async/Makefile                    | 1 +
+ mcs/class/System.Interactive.Providers/Makefile                | 1 +
+ mcs/class/System.Interactive/Makefile                          | 1 +
+ mcs/class/System.Json.Microsoft/Makefile                       | 1 +
+ mcs/class/System.Json/Makefile                                 | 1 +
+ mcs/class/System.Management/Makefile                           | 1 +
+ mcs/class/System.Messaging/Makefile                            | 1 +
+ mcs/class/System.Net.Http.Formatting/Makefile                  | 1 +
+ mcs/class/System.Net.Http.WebRequest/Makefile                  | 1 +
+ mcs/class/System.Net.Http.WinHttpHandler/Makefile              | 1 +
+ mcs/class/System.Net.Http/Makefile                             | 1 +
+ mcs/class/System.Net/Makefile                                  | 1 +
+ mcs/class/System.Numerics.Vectors/Makefile                     | 1 +
+ mcs/class/System.Numerics/Makefile                             | 1 +
+ mcs/class/System.Reactive.Core/Makefile                        | 1 +
+ mcs/class/System.Reactive.Debugger/Makefile                    | 1 +
+ mcs/class/System.Reactive.Experimental/Makefile                | 1 +
+ mcs/class/System.Reactive.Interfaces/Makefile                  | 1 +
+ mcs/class/System.Reactive.Linq/Makefile                        | 1 +
+ mcs/class/System.Reactive.Observable.Aliases/Makefile          | 1 +
+ mcs/class/System.Reactive.PlatformServices/Makefile            | 1 +
+ mcs/class/System.Reactive.Providers/Makefile                   | 1 +
+ mcs/class/System.Reactive.Runtime.Remoting/Makefile            | 1 +
+ mcs/class/System.Reactive.Windows.Forms/Makefile               | 1 +
+ mcs/class/System.Reactive.Windows.Threading/Makefile           | 1 +
+ mcs/class/System.Reflection.Context/Makefile                   | 1 +
+ mcs/class/System.Runtime.Caching/Makefile                      | 1 +
+ mcs/class/System.Runtime.CompilerServices.Unsafe/Makefile      | 1 +
+ mcs/class/System.Runtime.DurableInstancing/Makefile            | 1 +
+ mcs/class/System.Runtime.Remoting/Makefile                     | 1 +
+ .../System.Runtime.Serialization.Formatters.Soap/Makefile      | 1 +
+ mcs/class/System.Runtime.Serialization/Makefile                | 1 +
+ mcs/class/System.Security/Makefile                             | 2 +-
+ mcs/class/System.ServiceModel.Activation/Makefile              | 1 +
+ mcs/class/System.ServiceModel.Discovery/Makefile               | 1 +
+ mcs/class/System.ServiceModel.Internals/Makefile               | 1 +
+ mcs/class/System.ServiceModel.Routing/Makefile                 | 1 +
+ mcs/class/System.ServiceModel.Web.Extensions/Makefile          | 1 +
+ mcs/class/System.ServiceModel.Web/Makefile                     | 1 +
+ mcs/class/System.ServiceModel/Makefile                         | 1 +
+ mcs/class/System.ServiceProcess/Makefile                       | 1 +
+ mcs/class/System.Threading.Tasks.Dataflow/Makefile             | 1 +
+ mcs/class/System.Transactions/Makefile                         | 1 +
+ mcs/class/System.Web.Abstractions/Makefile                     | 1 +
+ mcs/class/System.Web.ApplicationServices/Makefile              | 1 +
+ mcs/class/System.Web.DynamicData/Makefile                      | 1 +
+ mcs/class/System.Web.Extensions.Design/Makefile                | 1 +
+ mcs/class/System.Web.Extensions/Makefile                       | 1 +
+ mcs/class/System.Web.Http.SelfHost/Makefile                    | 1 +
+ mcs/class/System.Web.Http.WebHost/Makefile                     | 1 +
+ mcs/class/System.Web.Http/Makefile                             | 1 +
+ mcs/class/System.Web.Mobile/Makefile                           | 1 +
+ mcs/class/System.Web.Mvc3/Makefile                             | 1 +
+ mcs/class/System.Web.Razor/Makefile                            | 1 +
+ mcs/class/System.Web.RegularExpressions/Makefile               | 1 +
+ mcs/class/System.Web.Routing/Makefile                          | 1 +
+ mcs/class/System.Web.Services/Makefile                         | 1 +
+ mcs/class/System.Web.WebPages.Deployment/Makefile              | 1 +
+ mcs/class/System.Web.WebPages.Razor/Makefile                   | 1 +
+ mcs/class/System.Web.WebPages/Makefile                         | 1 +
+ mcs/class/System.Web/Makefile                                  | 1 +
+ mcs/class/System.Windows.Forms.DataVisualization/Makefile      | 1 +
+ mcs/class/System.Windows.Forms/Makefile                        | 1 +
+ mcs/class/System.Windows/Makefile                              | 1 +
+ mcs/class/System.Workflow.Activities/Makefile                  | 1 +
+ mcs/class/System.Workflow.ComponentModel/Makefile              | 1 +
+ mcs/class/System.Workflow.Runtime/Makefile                     | 1 +
+ mcs/class/System.XML/Makefile                                  | 1 +
+ mcs/class/System.Xaml/Makefile                                 | 1 +
+ mcs/class/System.Xml.Linq/Makefile                             | 1 +
+ mcs/class/System.Xml.Serialization/Makefile                    | 1 +
+ mcs/class/System/Makefile                                      | 1 +
+ mcs/class/SystemWebTestShim/Makefile                           | 1 +
+ mcs/class/WebMatrix.Data/Makefile                              | 2 +-
+ mcs/class/WindowsBase/Makefile                                 | 1 +
+ mcs/class/corlib/Makefile                                      | 2 +-
+ mcs/class/legacy/Mono.Cecil/Makefile                           | 1 +
+ mcs/class/monodoc/Makefile                                     | 2 +-
+ mcs/ilasm/Makefile                                             | 1 +
+ mcs/mcs/Makefile                                               | 2 +-
+ mcs/tools/al/Makefile                                          | 2 +-
+ mcs/tools/aprofutil/Makefile                                   | 1 +
+ mcs/tools/browsercaps-updater/Makefile                         | 2 +-
+ mcs/tools/cccheck/Makefile                                     | 2 +-
+ mcs/tools/ccrewrite/Makefile                                   | 2 +-
+ mcs/tools/cil-strip/Makefile                                   | 2 +-
+ mcs/tools/corcompare/Makefile                                  | 2 +-
+ mcs/tools/csharp/Makefile                                      | 2 +-
+ mcs/tools/culevel/Makefile                                     | 1 +
+ mcs/tools/disco/Makefile                                       | 2 +-
+ mcs/tools/dtd2rng/Makefile                                     | 2 +-
+ mcs/tools/dtd2xsd/Makefile                                     | 2 +-
+ mcs/tools/gacutil/Makefile                                     | 2 +-
+ mcs/tools/genxs/Makefile                                       | 2 +-
+ mcs/tools/ictool/Makefile                                      | 2 +-
+ mcs/tools/ikdasm/Makefile                                      | 3 ++-
+ mcs/tools/installutil/Makefile                                 | 2 +-
+ mcs/tools/installvst/Makefile                                  | 2 +-
+ mcs/tools/lc/Makefile                                          | 2 +-
+ mcs/tools/linker-analyzer/Makefile                             | 2 +-
+ mcs/tools/linker/Makefile                                      | 2 +-
+ mcs/tools/macpack/Makefile                                     | 2 +-
+ mcs/tools/mconfig/Makefile                                     | 2 +-
+ mcs/tools/mdbrebase/Makefile                                   | 2 +-
+ mcs/tools/mdoc/Makefile                                        | 2 +-
+ mcs/tools/mkbundle/Makefile                                    | 2 +-
+ mcs/tools/mod/Makefile                                         | 2 +-
+ mcs/tools/mono-api-diff/Makefile                               | 2 +-
+ mcs/tools/mono-api-html/Makefile                               | 2 +-
+ mcs/tools/mono-configuration-crypto/cli/Makefile               | 2 +-
+ mcs/tools/mono-configuration-crypto/lib/Makefile               | 2 +-
+ mcs/tools/mono-service/Makefile                                | 2 +-
+ mcs/tools/mono-shlib-cop/Makefile                              | 2 +-
+ mcs/tools/mono-symbolicate/Makefile                            | 2 +-
+ mcs/tools/mono-xmltool/Makefile                                | 2 +-
+ mcs/tools/mono-xsd/Makefile                                    | 2 +-
+ mcs/tools/monop/Makefile                                       | 2 +-
+ mcs/tools/pdb2mdb/Makefile                                     | 2 +-
+ mcs/tools/resgen/Makefile                                      | 2 +-
+ mcs/tools/security/Makefile                                    | 2 +-
+ mcs/tools/sgen/Makefile                                        | 2 +-
+ mcs/tools/soapsuds/Makefile                                    | 2 +-
+ mcs/tools/sqlmetal/Makefile                                    | 1 +
+ mcs/tools/sqlsharp/Makefile                                    | 2 +-
+ mcs/tools/svcutil/Makefile                                     | 2 +-
+ mcs/tools/wsdl/Makefile                                        | 2 +-
+ mcs/tools/xbuild/Makefile                                      | 2 +-
+ 214 files changed, 215 insertions(+), 58 deletions(-)
+
+diff --git a/mcs/class/Accessibility/Makefile b/mcs/class/Accessibility/Makefile
+index 435a3c7b044..70ed061b8b2 100644
+--- a/mcs/class/Accessibility/Makefile
++++ b/mcs/class/Accessibility/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Accessibility
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Accessibility.dll
+diff --git a/mcs/class/Commons.Xml.Relaxng/Makefile b/mcs/class/Commons.Xml.Relaxng/Makefile
+index c508f063be7..b228b96d779 100644
+--- a/mcs/class/Commons.Xml.Relaxng/Makefile
++++ b/mcs/class/Commons.Xml.Relaxng/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Commons.Xml.Relaxng
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_FILES = resources/relaxng.rng
+diff --git a/mcs/class/Cscompmgd/Makefile b/mcs/class/Cscompmgd/Makefile
+index 8f52ee52cf7..4e57afa208d 100644
+--- a/mcs/class/Cscompmgd/Makefile
++++ b/mcs/class/Cscompmgd/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Cscompmgd
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Cscompmgd.dll
+diff --git a/mcs/class/CustomMarshalers/Makefile b/mcs/class/CustomMarshalers/Makefile
+index 96da1f60b22..70884b3cb13 100644
+--- a/mcs/class/CustomMarshalers/Makefile
++++ b/mcs/class/CustomMarshalers/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/CustomMarshalers
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = CustomMarshalers.dll
+diff --git a/mcs/class/Facades/Microsoft.Win32.Registry.AccessControl/Makefile b/mcs/class/Facades/Microsoft.Win32.Registry.AccessControl/Makefile
+index 6f39a8b55c0..3199d4d20c3 100644
+--- a/mcs/class/Facades/Microsoft.Win32.Registry.AccessControl/Makefile
++++ b/mcs/class/Facades/Microsoft.Win32.Registry.AccessControl/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/Microsoft.Win32.Registry.AccessControl
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/Facades/System.IO.FileSystem.AccessControl/Makefile b/mcs/class/Facades/System.IO.FileSystem.AccessControl/Makefile
+index ad10cb9bf17..adc0be60d8e 100644
+--- a/mcs/class/Facades/System.IO.FileSystem.AccessControl/Makefile
++++ b/mcs/class/Facades/System.IO.FileSystem.AccessControl/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/System.IO.FileSystem.AccessControl
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/Facades/System.Reflection.TypeExtensions/Makefile b/mcs/class/Facades/System.Reflection.TypeExtensions/Makefile
+index bcc4bc697d5..12c0a4dc0e4 100644
+--- a/mcs/class/Facades/System.Reflection.TypeExtensions/Makefile
++++ b/mcs/class/Facades/System.Reflection.TypeExtensions/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/System.Reflection.TypeExtensions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/Facades/System.ServiceProcess.ServiceController/Makefile b/mcs/class/Facades/System.ServiceProcess.ServiceController/Makefile
+index ecd265aa685..d14ab782bdb 100644
+--- a/mcs/class/Facades/System.ServiceProcess.ServiceController/Makefile
++++ b/mcs/class/Facades/System.ServiceProcess.ServiceController/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/System.ServiceProcess.ServiceController
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/Facades/System.Text.Encoding.CodePages/Makefile b/mcs/class/Facades/System.Text.Encoding.CodePages/Makefile
+index a6298e86969..3296aa643b0 100644
+--- a/mcs/class/Facades/System.Text.Encoding.CodePages/Makefile
++++ b/mcs/class/Facades/System.Text.Encoding.CodePages/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/System.Text.Encoding.CodePages
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/Facades/System.Threading.AccessControl/Makefile b/mcs/class/Facades/System.Threading.AccessControl/Makefile
+index 1339538dad0..783ecfffb52 100644
+--- a/mcs/class/Facades/System.Threading.AccessControl/Makefile
++++ b/mcs/class/Facades/System.Threading.AccessControl/Makefile
+@@ -2,6 +2,7 @@ MCS_BUILD_DIR = ../../../build
+ 
+ thisdir = class/Facades/System.Threading.AccessControl
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include $(MCS_BUILD_DIR)/rules.make
+ 
+ LIBRARY_SUBDIR = Facades
+diff --git a/mcs/class/I18N/CJK/Makefile b/mcs/class/I18N/CJK/Makefile
+index 1ea7140353f..a950282011b 100644
+--- a/mcs/class/I18N/CJK/Makefile
++++ b/mcs/class/I18N/CJK/Makefile
+@@ -5,7 +5,7 @@ include ../../../build/rules.make
+ LIBRARY = I18N.CJK.dll
+ LIB_REFS = I18N
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe /resource:big5.table /resource:gb2312.table /resource:jis.table /resource:ks.table /resource:gb18030.table /define:DISABLE_UNSAFE
++LOCAL_MCS_FLAGS = /unsafe /resource:big5.table /resource:gb2312.table /resource:jis.table /resource:ks.table /resource:gb18030.table /define:DISABLE_UNSAFE $(BUILD_MAPFILE)
+ TEST_LIB_REFS = I18N
+ 
+ TEST_RESOURCE_FILES = $(wildcard Test/texts/*.txt)
+diff --git a/mcs/class/I18N/Common/Makefile b/mcs/class/I18N/Common/Makefile
+index 232eff09a5b..0790b78afc0 100644
+--- a/mcs/class/I18N/Common/Makefile
++++ b/mcs/class/I18N/Common/Makefile
+@@ -4,7 +4,7 @@ include ../../../build/rules.make
+ 
+ LIBRARY = I18N.dll
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe /define:DISABLE_UNSAFE
++LOCAL_MCS_FLAGS = /unsafe /define:DISABLE_UNSAFE $(BUILD_MAPFILE)
+ NO_TEST = yes
+ 
+ include ../../../build/library.make
+diff --git a/mcs/class/I18N/Makefile b/mcs/class/I18N/Makefile
+index fd84fe53dd9..2b46d7e907a 100644
+--- a/mcs/class/I18N/Makefile
++++ b/mcs/class/I18N/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/I18N
+ SUBDIRS = Common West MidEast Other Rare CJK
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ DISTFILES = \
+diff --git a/mcs/class/I18N/MidEast/Makefile b/mcs/class/I18N/MidEast/Makefile
+index 9b9cba15146..ca05d8c2b9b 100644
+--- a/mcs/class/I18N/MidEast/Makefile
++++ b/mcs/class/I18N/MidEast/Makefile
+@@ -5,7 +5,7 @@ include ../../../build/rules.make
+ LIBRARY = I18N.MidEast.dll
+ LIB_REFS = I18N
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe
++LOCAL_MCS_FLAGS = /unsafe $(BUILD_MAPFILE)
+ TEST_LIB_REFS = I18N
+ 
+ TEST_RESOURCE_FILES = $(wildcard Test/texts/*.txt)
+diff --git a/mcs/class/I18N/Other/Makefile b/mcs/class/I18N/Other/Makefile
+index a3a33addba8..04f629e900f 100644
+--- a/mcs/class/I18N/Other/Makefile
++++ b/mcs/class/I18N/Other/Makefile
+@@ -5,7 +5,7 @@ include ../../../build/rules.make
+ LIBRARY = I18N.Other.dll
+ LIB_REFS = I18N
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe
++LOCAL_MCS_FLAGS = /unsafe $(BUILD_MAPFILE)
+ TEST_LIB_REFS = I18N
+ 
+ EXTRA_DISTFILES = $(wildcard *.ucm)
+diff --git a/mcs/class/I18N/Rare/Makefile b/mcs/class/I18N/Rare/Makefile
+index aa6d282d9b1..78787f95ff0 100644
+--- a/mcs/class/I18N/Rare/Makefile
++++ b/mcs/class/I18N/Rare/Makefile
+@@ -5,7 +5,7 @@ include ../../../build/rules.make
+ LIBRARY = I18N.Rare.dll
+ LIB_REFS = I18N
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe
++LOCAL_MCS_FLAGS = /unsafe $(BUILD_MAPFILE)
+ TEST_LIB_REFS = I18N
+ 
+ TEST_RESOURCE_FILES = $(wildcard Test/texts/*.txt)
+diff --git a/mcs/class/I18N/West/Makefile b/mcs/class/I18N/West/Makefile
+index 7c2786b0b86..c3db6e03670 100644
+--- a/mcs/class/I18N/West/Makefile
++++ b/mcs/class/I18N/West/Makefile
+@@ -5,7 +5,7 @@ include ../../../build/rules.make
+ LIBRARY = I18N.West.dll
+ LIB_REFS = I18N
+ KEYFILE = ../../mono.pub
+-LOCAL_MCS_FLAGS = /unsafe
++LOCAL_MCS_FLAGS = /unsafe $(BUILD_MAPFILE)
+ 
+ TEST_RESOURCE_FILES = $(wildcard Test/texts/*.txt)
+ TEST_MCS_FLAGS = $(foreach r, $(TEST_RESOURCE_FILES), -resource:$(r),$(r))
+diff --git a/mcs/class/IBM.Data.DB2/Makefile b/mcs/class/IBM.Data.DB2/Makefile
+index f95fea1fd71..d08fa54f9c2 100644
+--- a/mcs/class/IBM.Data.DB2/Makefile
++++ b/mcs/class/IBM.Data.DB2/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/IBM.Data.DB2
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = IBM.Data.DB2.dll
+diff --git a/mcs/class/ICSharpCode.SharpZipLib/Makefile b/mcs/class/ICSharpCode.SharpZipLib/Makefile
+index c99cde5cbf9..7a182463be1 100644
+--- a/mcs/class/ICSharpCode.SharpZipLib/Makefile
++++ b/mcs/class/ICSharpCode.SharpZipLib/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/ICSharpCode.SharpZipLib
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = ICSharpCode.SharpZipLib.dll
+diff --git a/mcs/class/Microsoft.Build.Engine/Makefile b/mcs/class/Microsoft.Build.Engine/Makefile
+index a79619f9559..a5f20b5f83b 100644
+--- a/mcs/class/Microsoft.Build.Engine/Makefile
++++ b/mcs/class/Microsoft.Build.Engine/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Build.Engine
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.Build.Framework/Makefile b/mcs/class/Microsoft.Build.Framework/Makefile
+index d1b0cd09382..a143faffbca 100644
+--- a/mcs/class/Microsoft.Build.Framework/Makefile
++++ b/mcs/class/Microsoft.Build.Framework/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Build.Framework
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.Build.Tasks/Makefile b/mcs/class/Microsoft.Build.Tasks/Makefile
+index c481ebbd627..639faeda4bc 100644
+--- a/mcs/class/Microsoft.Build.Tasks/Makefile
++++ b/mcs/class/Microsoft.Build.Tasks/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Build.Tasks
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.Build.Utilities/Makefile b/mcs/class/Microsoft.Build.Utilities/Makefile
+index 7d4f990ef8e..417b58caf21 100644
+--- a/mcs/class/Microsoft.Build.Utilities/Makefile
++++ b/mcs/class/Microsoft.Build.Utilities/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Build.Utilities
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.Build/Makefile b/mcs/class/Microsoft.Build/Makefile
+index 932e596bf5c..01728255c19 100644
+--- a/mcs/class/Microsoft.Build/Makefile
++++ b/mcs/class/Microsoft.Build/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Build
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.CSharp/Makefile b/mcs/class/Microsoft.CSharp/Makefile
+index a9e79c9571d..65bc3854bd1 100644
+--- a/mcs/class/Microsoft.CSharp/Makefile
++++ b/mcs/class/Microsoft.CSharp/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.CSharp
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Microsoft.CSharp.dll
+diff --git a/mcs/class/Microsoft.NuGet.Build.Tasks/Makefile b/mcs/class/Microsoft.NuGet.Build.Tasks/Makefile
+index e3561d4fb47..ef22cf5cbad 100644
+--- a/mcs/class/Microsoft.NuGet.Build.Tasks/Makefile
++++ b/mcs/class/Microsoft.NuGet.Build.Tasks/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.NuGet.Build.Tasks
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Microsoft.VisualC/Makefile b/mcs/class/Microsoft.VisualC/Makefile
+index 26661e4955a..0e74829dead 100644
+--- a/mcs/class/Microsoft.VisualC/Makefile
++++ b/mcs/class/Microsoft.VisualC/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.VisualC
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Microsoft.VisualC.dll
+diff --git a/mcs/class/Microsoft.Web.Infrastructure/Makefile b/mcs/class/Microsoft.Web.Infrastructure/Makefile
+index edf1ff0755a..6bd2a08eda4 100644
+--- a/mcs/class/Microsoft.Web.Infrastructure/Makefile
++++ b/mcs/class/Microsoft.Web.Infrastructure/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Microsoft.Web.Infrastructure
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Microsoft.Web.Infrastructure.dll
+diff --git a/mcs/class/Mono.Btls.Interface/Makefile b/mcs/class/Mono.Btls.Interface/Makefile
+index aa5b54c83f9..a8f42e13eed 100644
+--- a/mcs/class/Mono.Btls.Interface/Makefile
++++ b/mcs/class/Mono.Btls.Interface/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Btls.Interface
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Btls.Interface.dll
+diff --git a/mcs/class/Mono.C5/Makefile b/mcs/class/Mono.C5/Makefile
+index 7be812689ec..57c9217dfa9 100644
+--- a/mcs/class/Mono.C5/Makefile
++++ b/mcs/class/Mono.C5/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.C5
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.C5.dll
+diff --git a/mcs/class/Mono.CSharp/Makefile b/mcs/class/Mono.CSharp/Makefile
+index a1c1e6314f9..f237cc0d908 100644
+--- a/mcs/class/Mono.CSharp/Makefile
++++ b/mcs/class/Mono.CSharp/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.CSharp
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.CSharp.dll
+diff --git a/mcs/class/Mono.Cairo/Makefile b/mcs/class/Mono.Cairo/Makefile
+index eaad983d6f0..3d12bb46fdf 100644
+--- a/mcs/class/Mono.Cairo/Makefile
++++ b/mcs/class/Mono.Cairo/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Cairo
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Cairo.dll
+diff --git a/mcs/class/Mono.Cecil.Mdb/Makefile b/mcs/class/Mono.Cecil.Mdb/Makefile
+index c24284631b7..567a8bace4f 100644
+--- a/mcs/class/Mono.Cecil.Mdb/Makefile
++++ b/mcs/class/Mono.Cecil.Mdb/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/Mono.Cecil.Mdb
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Cecil.Mdb.dll
+diff --git a/mcs/class/Mono.Cecil/Makefile b/mcs/class/Mono.Cecil/Makefile
+index f5b4d2ce358..6ffae0fb6b5 100644
+--- a/mcs/class/Mono.Cecil/Makefile
++++ b/mcs/class/Mono.Cecil/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/Mono.Cecil
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Cecil.dll
+diff --git a/mcs/class/Mono.CodeContracts/Makefile b/mcs/class/Mono.CodeContracts/Makefile
+index 5c2a816ba1e..d7dfe2da685 100644
+--- a/mcs/class/Mono.CodeContracts/Makefile
++++ b/mcs/class/Mono.CodeContracts/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.CodeContracts
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.CodeContracts.dll
+diff --git a/mcs/class/Mono.CompilerServices.SymbolWriter/Makefile b/mcs/class/Mono.CompilerServices.SymbolWriter/Makefile
+index 1ddf854e171..836bb38b28f 100644
+--- a/mcs/class/Mono.CompilerServices.SymbolWriter/Makefile
++++ b/mcs/class/Mono.CompilerServices.SymbolWriter/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.CompilerServices.SymbolWriter
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.CompilerServices.SymbolWriter.dll
+diff --git a/mcs/class/Mono.Data.Sqlite/Makefile b/mcs/class/Mono.Data.Sqlite/Makefile
+index 8ac64602af0..49834d44d6d 100644
+--- a/mcs/class/Mono.Data.Sqlite/Makefile
++++ b/mcs/class/Mono.Data.Sqlite/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Data.Sqlite
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESX_RESOURCES = resources/SR.resources
+diff --git a/mcs/class/Mono.Data.Tds/Makefile b/mcs/class/Mono.Data.Tds/Makefile
+index 6a265b8dd96..5e4474e0482 100644
+--- a/mcs/class/Mono.Data.Tds/Makefile
++++ b/mcs/class/Mono.Data.Tds/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Data.Tds
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Data.Tds.dll
+diff --git a/mcs/class/Mono.Debugger.Soft/Makefile b/mcs/class/Mono.Debugger.Soft/Makefile
+index e5b67d2b9be..8b836f6de67 100644
+--- a/mcs/class/Mono.Debugger.Soft/Makefile
++++ b/mcs/class/Mono.Debugger.Soft/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/Mono.Debugger.Soft
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Debugger.Soft.dll
+diff --git a/mcs/class/Mono.Directory.LDAP/Makefile b/mcs/class/Mono.Directory.LDAP/Makefile
+index 040a1801e1c..33cf8a54507 100644
+--- a/mcs/class/Mono.Directory.LDAP/Makefile
++++ b/mcs/class/Mono.Directory.LDAP/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Directory.LDAP
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Directory.LDAP.dll
+diff --git a/mcs/class/Mono.Http/Makefile b/mcs/class/Mono.Http/Makefile
+index dd0047afa2a..6e7c6d9a039 100644
+--- a/mcs/class/Mono.Http/Makefile
++++ b/mcs/class/Mono.Http/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Http
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Http.dll
+diff --git a/mcs/class/Mono.Management/Makefile b/mcs/class/Mono.Management/Makefile
+index 4aba679060d..fd81ba53112 100644
+--- a/mcs/class/Mono.Management/Makefile
++++ b/mcs/class/Mono.Management/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Management
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Management.dll
+diff --git a/mcs/class/Mono.Messaging.RabbitMQ/Makefile b/mcs/class/Mono.Messaging.RabbitMQ/Makefile
+index 447e0287b23..ed47a24da01 100644
+--- a/mcs/class/Mono.Messaging.RabbitMQ/Makefile
++++ b/mcs/class/Mono.Messaging.RabbitMQ/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Messaging.RabbitMQ
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Messaging.RabbitMQ.dll
+diff --git a/mcs/class/Mono.Messaging/Makefile b/mcs/class/Mono.Messaging/Makefile
+index 7ff0d87bd58..db9a0802cff 100644
+--- a/mcs/class/Mono.Messaging/Makefile
++++ b/mcs/class/Mono.Messaging/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Messaging
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Messaging.dll
+diff --git a/mcs/class/Mono.Options/Makefile b/mcs/class/Mono.Options/Makefile
+index 6c4c9194d76..e111102b6c1 100644
+--- a/mcs/class/Mono.Options/Makefile
++++ b/mcs/class/Mono.Options/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Options
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Options.dll
+diff --git a/mcs/class/Mono.Parallel/Makefile b/mcs/class/Mono.Parallel/Makefile
+index 9a97ff305e5..08faf3cc201 100644
+--- a/mcs/class/Mono.Parallel/Makefile
++++ b/mcs/class/Mono.Parallel/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Parallel
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIB_REFS = System.Core System
+diff --git a/mcs/class/Mono.Posix/Makefile b/mcs/class/Mono.Posix/Makefile
+index 15b9c0cf2db..012f96cc8f8 100644
+--- a/mcs/class/Mono.Posix/Makefile
++++ b/mcs/class/Mono.Posix/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Posix
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Posix.dll
+diff --git a/mcs/class/Mono.Profiler.Log/Makefile b/mcs/class/Mono.Profiler.Log/Makefile
+index e4658d01d1c..28b17d7d3fe 100644
+--- a/mcs/class/Mono.Profiler.Log/Makefile
++++ b/mcs/class/Mono.Profiler.Log/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/Mono.Profiler.Log
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Profiler.Log.dll
+diff --git a/mcs/class/Mono.Reactive.Testing/Makefile b/mcs/class/Mono.Reactive.Testing/Makefile
+index 25038b344bf..d3b7243d3f6 100644
+--- a/mcs/class/Mono.Reactive.Testing/Makefile
++++ b/mcs/class/Mono.Reactive.Testing/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Reactive.Testing
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Reactive.Testing.dll
+diff --git a/mcs/class/Mono.Runtime.Tests/Makefile b/mcs/class/Mono.Runtime.Tests/Makefile
+index 1f3a0e12972..cd8d5cb7de8 100644
+--- a/mcs/class/Mono.Runtime.Tests/Makefile
++++ b/mcs/class/Mono.Runtime.Tests/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Runtime.Tests
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ #
+diff --git a/mcs/class/Mono.Security.Win32/Makefile b/mcs/class/Mono.Security.Win32/Makefile
+index 3d44f96a571..85ad0712508 100644
+--- a/mcs/class/Mono.Security.Win32/Makefile
++++ b/mcs/class/Mono.Security.Win32/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Security.Win32
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Security.Win32.dll
+diff --git a/mcs/class/Mono.Security/Makefile b/mcs/class/Mono.Security/Makefile
+index bac61387c53..4a3ce13787f 100644
+--- a/mcs/class/Mono.Security/Makefile
++++ b/mcs/class/Mono.Security/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Security.dll
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ API_BIN_REFS = System
+ KEYFILE = ../mono.pub
+ LIB_MCS_FLAGS = -unsafe -nowarn:1030,3009
+diff --git a/mcs/class/Mono.ServiceModel.IdentitySelectors/Makefile b/mcs/class/Mono.ServiceModel.IdentitySelectors/Makefile
+index a0d7a20f575..4b5f67ffb1f 100644
+--- a/mcs/class/Mono.ServiceModel.IdentitySelectors/Makefile
++++ b/mcs/class/Mono.ServiceModel.IdentitySelectors/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.ServiceModel.IdentitySelectors
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_FILES = \
+diff --git a/mcs/class/Mono.Simd/Makefile b/mcs/class/Mono.Simd/Makefile
+index 8fda9237ff5..2104de08755 100644
+--- a/mcs/class/Mono.Simd/Makefile
++++ b/mcs/class/Mono.Simd/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Simd
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Simd.dll
+diff --git a/mcs/class/Mono.Tasklets/Makefile b/mcs/class/Mono.Tasklets/Makefile
+index d9940e6ded8..a913a5c7887 100644
+--- a/mcs/class/Mono.Tasklets/Makefile
++++ b/mcs/class/Mono.Tasklets/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Tasklets
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Tasklets.dll
+diff --git a/mcs/class/Mono.WebBrowser/Makefile b/mcs/class/Mono.WebBrowser/Makefile
+index 93cf7f68576..5d8e2d0860d 100644
+--- a/mcs/class/Mono.WebBrowser/Makefile
++++ b/mcs/class/Mono.WebBrowser/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.WebBrowser
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.WebBrowser.dll
+diff --git a/mcs/class/Mono.XBuild.Tasks/Makefile b/mcs/class/Mono.XBuild.Tasks/Makefile
+index 476b57f1982..4dbf802e66e 100644
+--- a/mcs/class/Mono.XBuild.Tasks/Makefile
++++ b/mcs/class/Mono.XBuild.Tasks/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.XBuild.Tasks
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ XBUILD_DIR=$(topdir)/tools/xbuild
+diff --git a/mcs/class/Mono.Xml.Ext/Makefile b/mcs/class/Mono.Xml.Ext/Makefile
+index 16498215a38..d8037c47d98 100644
+--- a/mcs/class/Mono.Xml.Ext/Makefile
++++ b/mcs/class/Mono.Xml.Ext/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Mono.Xml.Ext
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Mono.Xml.Ext.dll
+diff --git a/mcs/class/Novell.Directory.Ldap/Makefile b/mcs/class/Novell.Directory.Ldap/Makefile
+index e7ffb40774e..e18a0388aef 100644
+--- a/mcs/class/Novell.Directory.Ldap/Makefile
++++ b/mcs/class/Novell.Directory.Ldap/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/Novell.Directory.Ldap
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = Novell.Directory.Ldap.dll
+diff --git a/mcs/class/PEAPI/Makefile b/mcs/class/PEAPI/Makefile
+index 84ff98691fb..d0847e86070 100644
+--- a/mcs/class/PEAPI/Makefile
++++ b/mcs/class/PEAPI/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/PEAPI
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = PEAPI.dll
+diff --git a/mcs/class/RabbitMQ.Client/src/apigen/Makefile b/mcs/class/RabbitMQ.Client/src/apigen/Makefile
+index 9c48a40e29d..573deba7461 100644
+--- a/mcs/class/RabbitMQ.Client/src/apigen/Makefile
++++ b/mcs/class/RabbitMQ.Client/src/apigen/Makefile
+@@ -5,6 +5,6 @@ include ../../../../build/rules.make
+ 
+ PROGRAM = RabbitMQ.Client.Apigen.exe
+ LIB_REFS = System System.Xml
+-LOCAL_MCS_FLAGS = /main:RabbitMQ.Client.Apigen.Apigen
++LOCAL_MCS_FLAGS = /main:RabbitMQ.Client.Apigen.Apigen $(BUILD_MAPFILE)
+ 
+ include ../../../../build/executable.make
+diff --git a/mcs/class/RabbitMQ.Client/src/client/Makefile b/mcs/class/RabbitMQ.Client/src/client/Makefile
+index 82873f0983e..e39e5f36d23 100644
+--- a/mcs/class/RabbitMQ.Client/src/client/Makefile
++++ b/mcs/class/RabbitMQ.Client/src/client/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/RabbitMQ.Client/src/client
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../../../build/rules.make
+ 
+ LIBRARY = RabbitMQ.Client.dll
+diff --git a/mcs/class/SMDiagnostics/Makefile b/mcs/class/SMDiagnostics/Makefile
+index 685d7f5ff1a..92c2c9f174b 100644
+--- a/mcs/class/SMDiagnostics/Makefile
++++ b/mcs/class/SMDiagnostics/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/SMDiagnostics
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = SMDiagnostics.dll
+diff --git a/mcs/class/System.ComponentModel.Composition.4.5/Makefile b/mcs/class/System.ComponentModel.Composition.4.5/Makefile
+index 2b9e35cfb9f..c37024fc38d 100644
+--- a/mcs/class/System.ComponentModel.Composition.4.5/Makefile
++++ b/mcs/class/System.ComponentModel.Composition.4.5/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ComponentModel.Composition.4.5
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ComponentModel.Composition.dll
+diff --git a/mcs/class/System.ComponentModel.DataAnnotations/Makefile b/mcs/class/System.ComponentModel.DataAnnotations/Makefile
+index e23f7cfccb9..2f2769a1466 100644
+--- a/mcs/class/System.ComponentModel.DataAnnotations/Makefile
++++ b/mcs/class/System.ComponentModel.DataAnnotations/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ComponentModel.DataAnnotations
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ComponentModel.DataAnnotations.dll
+diff --git a/mcs/class/System.Configuration.Install/Makefile b/mcs/class/System.Configuration.Install/Makefile
+index 612aa9cb9b2..1c6b40d70a7 100644
+--- a/mcs/class/System.Configuration.Install/Makefile
++++ b/mcs/class/System.Configuration.Install/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/System.Configuration.Install
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Configuration.Install.dll
+diff --git a/mcs/class/System.Configuration/Makefile b/mcs/class/System.Configuration/Makefile
+index e5405751bdc..0c62e9ced40 100644
+--- a/mcs/class/System.Configuration/Makefile
++++ b/mcs/class/System.Configuration/Makefile
+@@ -5,7 +5,7 @@ include ../../build/rules.make
+ 
+ LIBRARY = System.Configuration.dll
+ 
+-LOCAL_MCS_FLAGS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Security System System.Xml
+ KEYFILE = ../msfinal.pub
+ LIB_MCS_FLAGS = -nowarn:618
+diff --git a/mcs/class/System.Core/Makefile b/mcs/class/System.Core/Makefile
+index e69d451c49f..01db5665b2d 100644
+--- a/mcs/class/System.Core/Makefile
++++ b/mcs/class/System.Core/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Core
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Core.dll
+diff --git a/mcs/class/System.Data.DataSetExtensions/Makefile b/mcs/class/System.Data.DataSetExtensions/Makefile
+index 4b3a395a2b4..1e72ac7599b 100644
+--- a/mcs/class/System.Data.DataSetExtensions/Makefile
++++ b/mcs/class/System.Data.DataSetExtensions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.DataSetExtensions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.DataSetExtensions.dll
+diff --git a/mcs/class/System.Data.Entity/Makefile b/mcs/class/System.Data.Entity/Makefile
+index 59e87ccac24..61b69b00cb6 100644
+--- a/mcs/class/System.Data.Entity/Makefile
++++ b/mcs/class/System.Data.Entity/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.Entity
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.Entity.dll
+diff --git a/mcs/class/System.Data.Linq/Makefile b/mcs/class/System.Data.Linq/Makefile
+index 0d34e7ef445..2d8384f51fa 100644
+--- a/mcs/class/System.Data.Linq/Makefile
++++ b/mcs/class/System.Data.Linq/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.Linq
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.Linq.dll
+diff --git a/mcs/class/System.Data.OracleClient/Makefile b/mcs/class/System.Data.OracleClient/Makefile
+index cebaa9b6ad7..b67bc83dc8d 100644
+--- a/mcs/class/System.Data.OracleClient/Makefile
++++ b/mcs/class/System.Data.OracleClient/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.OracleClient
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.OracleClient.dll
+diff --git a/mcs/class/System.Data.Services.Client/Makefile b/mcs/class/System.Data.Services.Client/Makefile
+index 73c724a151c..5ec92ff3639 100644
+--- a/mcs/class/System.Data.Services.Client/Makefile
++++ b/mcs/class/System.Data.Services.Client/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.Services.Client
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.Services.Client.dll
+diff --git a/mcs/class/System.Data.Services/Makefile b/mcs/class/System.Data.Services/Makefile
+index c1cb788e648..24dac2e3ba7 100644
+--- a/mcs/class/System.Data.Services/Makefile
++++ b/mcs/class/System.Data.Services/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data.Services
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.Services.dll
+diff --git a/mcs/class/System.Data/Makefile b/mcs/class/System.Data/Makefile
+index fb2eca01d3e..b9a75efad49 100644
+--- a/mcs/class/System.Data/Makefile
++++ b/mcs/class/System.Data/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Data
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Data.dll
+diff --git a/mcs/class/System.Deployment/Makefile b/mcs/class/System.Deployment/Makefile
+index 87b8ba7aaec..94155f8a3de 100644
+--- a/mcs/class/System.Deployment/Makefile
++++ b/mcs/class/System.Deployment/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Deployment
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Deployment.dll
+diff --git a/mcs/class/System.Design/Makefile b/mcs/class/System.Design/Makefile
+index 08aaa81de86..66a904d639f 100644
+--- a/mcs/class/System.Design/Makefile
++++ b/mcs/class/System.Design/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Design
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Design.dll
+diff --git a/mcs/class/System.DirectoryServices.Protocols/Makefile b/mcs/class/System.DirectoryServices.Protocols/Makefile
+index 4fa33aba1af..80b307ee2e5 100644
+--- a/mcs/class/System.DirectoryServices.Protocols/Makefile
++++ b/mcs/class/System.DirectoryServices.Protocols/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.DirectoryServices.Protocols
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.DirectoryServices.Protocols.dll
+diff --git a/mcs/class/System.DirectoryServices/Makefile b/mcs/class/System.DirectoryServices/Makefile
+index 44058ce5db1..100fa229532 100644
+--- a/mcs/class/System.DirectoryServices/Makefile
++++ b/mcs/class/System.DirectoryServices/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.DirectoryServices
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.DirectoryServices.dll
+diff --git a/mcs/class/System.Drawing.Design/Makefile b/mcs/class/System.Drawing.Design/Makefile
+index 79c4f90dd38..4628aed8438 100644
+--- a/mcs/class/System.Drawing.Design/Makefile
++++ b/mcs/class/System.Drawing.Design/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Drawing.Design
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Drawing.Design.dll
+diff --git a/mcs/class/System.Drawing/Makefile b/mcs/class/System.Drawing/Makefile
+index 61478a9edb1..17087a296ec 100644
+--- a/mcs/class/System.Drawing/Makefile
++++ b/mcs/class/System.Drawing/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/System.Drawing
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ SUBDIRS = 
+ 
+diff --git a/mcs/class/System.Dynamic/Makefile b/mcs/class/System.Dynamic/Makefile
+index bc384dc2057..24a267b1a38 100644
+--- a/mcs/class/System.Dynamic/Makefile
++++ b/mcs/class/System.Dynamic/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Dynamic
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Dynamic.dll
+diff --git a/mcs/class/System.EnterpriseServices/Makefile b/mcs/class/System.EnterpriseServices/Makefile
+index c2e327221c8..029a03e537a 100644
+--- a/mcs/class/System.EnterpriseServices/Makefile
++++ b/mcs/class/System.EnterpriseServices/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.EnterpriseServices
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.EnterpriseServices.dll
+diff --git a/mcs/class/System.IO.Compression.FileSystem/Makefile b/mcs/class/System.IO.Compression.FileSystem/Makefile
+index 73fb0a1faec..6db06e1aa4d 100644
+--- a/mcs/class/System.IO.Compression.FileSystem/Makefile
++++ b/mcs/class/System.IO.Compression.FileSystem/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.IO.Compression.FileSystem
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.IO.Compression.FileSystem.dll
+diff --git a/mcs/class/System.IO.Compression/Makefile b/mcs/class/System.IO.Compression/Makefile
+index 401eff5f290..1193e7f3afb 100644
+--- a/mcs/class/System.IO.Compression/Makefile
++++ b/mcs/class/System.IO.Compression/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.IO.Compression
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.IO.Compression.dll
+diff --git a/mcs/class/System.IdentityModel.Selectors/Makefile b/mcs/class/System.IdentityModel.Selectors/Makefile
+index cb72dfddcb1..15b1db493b1 100644
+--- a/mcs/class/System.IdentityModel.Selectors/Makefile
++++ b/mcs/class/System.IdentityModel.Selectors/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.IdentityModel.Selectors
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.IdentityModel.Selectors.dll
+diff --git a/mcs/class/System.IdentityModel/Makefile b/mcs/class/System.IdentityModel/Makefile
+index 3685c90da40..b20a1961d16 100644
+--- a/mcs/class/System.IdentityModel/Makefile
++++ b/mcs/class/System.IdentityModel/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.IdentityModel
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ ifndef NO_MONO_SECURITY
+diff --git a/mcs/class/System.Interactive.Async/Makefile b/mcs/class/System.Interactive.Async/Makefile
+index 074236261cd..6a5b182894f 100644
+--- a/mcs/class/System.Interactive.Async/Makefile
++++ b/mcs/class/System.Interactive.Async/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Interactive.Async
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Interactive.Async.dll
+diff --git a/mcs/class/System.Interactive.Providers/Makefile b/mcs/class/System.Interactive.Providers/Makefile
+index 45ff7df72b9..0e167ed65f8 100644
+--- a/mcs/class/System.Interactive.Providers/Makefile
++++ b/mcs/class/System.Interactive.Providers/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Interactive.Providers
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Interactive.Providers.dll
+diff --git a/mcs/class/System.Interactive/Makefile b/mcs/class/System.Interactive/Makefile
+index 64318f07277..3b681e9dc8d 100644
+--- a/mcs/class/System.Interactive/Makefile
++++ b/mcs/class/System.Interactive/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Interactive
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Interactive.dll
+diff --git a/mcs/class/System.Json.Microsoft/Makefile b/mcs/class/System.Json.Microsoft/Makefile
+index 8938fa7e3c6..8e075bf41ca 100644
+--- a/mcs/class/System.Json.Microsoft/Makefile
++++ b/mcs/class/System.Json.Microsoft/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Json.Microsoft
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_DEFS = System.Json.Properties.Resources,System.Json/Properties/Resources.resx
+diff --git a/mcs/class/System.Json/Makefile b/mcs/class/System.Json/Makefile
+index 01343f223f8..9a7f43969b4 100644
+--- a/mcs/class/System.Json/Makefile
++++ b/mcs/class/System.Json/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Json
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Json.dll
+diff --git a/mcs/class/System.Management/Makefile b/mcs/class/System.Management/Makefile
+index c5d34b93931..ef768705b99 100644
+--- a/mcs/class/System.Management/Makefile
++++ b/mcs/class/System.Management/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Management
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Management.dll
+diff --git a/mcs/class/System.Messaging/Makefile b/mcs/class/System.Messaging/Makefile
+index 97f9fcc1398..10151084e05 100644
+--- a/mcs/class/System.Messaging/Makefile
++++ b/mcs/class/System.Messaging/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Messaging
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Messaging.dll
+diff --git a/mcs/class/System.Net.Http.Formatting/Makefile b/mcs/class/System.Net.Http.Formatting/Makefile
+index 43895c07c86..ba2b919eee5 100644
+--- a/mcs/class/System.Net.Http.Formatting/Makefile
++++ b/mcs/class/System.Net.Http.Formatting/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Net.Http.Formatting
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Net.Http.Formatting.dll
+diff --git a/mcs/class/System.Net.Http.WebRequest/Makefile b/mcs/class/System.Net.Http.WebRequest/Makefile
+index 7c9e87b4fab..3fd7e804dda 100644
+--- a/mcs/class/System.Net.Http.WebRequest/Makefile
++++ b/mcs/class/System.Net.Http.WebRequest/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Net.Http.WebRequest
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Net.Http.WebRequest.dll
+diff --git a/mcs/class/System.Net.Http.WinHttpHandler/Makefile b/mcs/class/System.Net.Http.WinHttpHandler/Makefile
+index 026c4644a46..1027457ee20 100644
+--- a/mcs/class/System.Net.Http.WinHttpHandler/Makefile
++++ b/mcs/class/System.Net.Http.WinHttpHandler/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Net.Http.WinHttpHandler
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Net.Http.WinHttpHandler.dll
+diff --git a/mcs/class/System.Net.Http/Makefile b/mcs/class/System.Net.Http/Makefile
+index 9e56625a14d..e65718c2192 100644
+--- a/mcs/class/System.Net.Http/Makefile
++++ b/mcs/class/System.Net.Http/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Net.Http
+ 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Net.Http.dll
+diff --git a/mcs/class/System.Net/Makefile b/mcs/class/System.Net/Makefile
+index 1aecf90689c..5ea6d98466b 100644
+--- a/mcs/class/System.Net/Makefile
++++ b/mcs/class/System.Net/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Net
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Net.dll
+diff --git a/mcs/class/System.Numerics.Vectors/Makefile b/mcs/class/System.Numerics.Vectors/Makefile
+index 5e66c3955ba..981d14d48a8 100644
+--- a/mcs/class/System.Numerics.Vectors/Makefile
++++ b/mcs/class/System.Numerics.Vectors/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Numerics.Vectors
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Numerics.Vectors.dll
+diff --git a/mcs/class/System.Numerics/Makefile b/mcs/class/System.Numerics/Makefile
+index d400cd54274..5d2c5f608e3 100644
+--- a/mcs/class/System.Numerics/Makefile
++++ b/mcs/class/System.Numerics/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Numerics
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Numerics.dll
+diff --git a/mcs/class/System.Reactive.Core/Makefile b/mcs/class/System.Reactive.Core/Makefile
+index 819b9adb9d3..55d9b799015 100644
+--- a/mcs/class/System.Reactive.Core/Makefile
++++ b/mcs/class/System.Reactive.Core/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Core
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Core.dll
+diff --git a/mcs/class/System.Reactive.Debugger/Makefile b/mcs/class/System.Reactive.Debugger/Makefile
+index ef54db5c923..6aeaba8380b 100644
+--- a/mcs/class/System.Reactive.Debugger/Makefile
++++ b/mcs/class/System.Reactive.Debugger/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Debugger
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Debugger.dll
+diff --git a/mcs/class/System.Reactive.Experimental/Makefile b/mcs/class/System.Reactive.Experimental/Makefile
+index 7a7a65c028c..684222e6f03 100644
+--- a/mcs/class/System.Reactive.Experimental/Makefile
++++ b/mcs/class/System.Reactive.Experimental/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Experimental
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Experimental.dll
+diff --git a/mcs/class/System.Reactive.Interfaces/Makefile b/mcs/class/System.Reactive.Interfaces/Makefile
+index 9edbd350a13..f6af10d5c6b 100644
+--- a/mcs/class/System.Reactive.Interfaces/Makefile
++++ b/mcs/class/System.Reactive.Interfaces/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Interfaces
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Interfaces.dll
+diff --git a/mcs/class/System.Reactive.Linq/Makefile b/mcs/class/System.Reactive.Linq/Makefile
+index 2c79f2d1089..474ef293c32 100644
+--- a/mcs/class/System.Reactive.Linq/Makefile
++++ b/mcs/class/System.Reactive.Linq/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Linq
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Linq.dll
+diff --git a/mcs/class/System.Reactive.Observable.Aliases/Makefile b/mcs/class/System.Reactive.Observable.Aliases/Makefile
+index 04c0101248d..8dcd97aa447 100644
+--- a/mcs/class/System.Reactive.Observable.Aliases/Makefile
++++ b/mcs/class/System.Reactive.Observable.Aliases/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Observable.Aliases
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Observable.Aliases.dll
+diff --git a/mcs/class/System.Reactive.PlatformServices/Makefile b/mcs/class/System.Reactive.PlatformServices/Makefile
+index 43addad7f8f..ed98a1e51bd 100644
+--- a/mcs/class/System.Reactive.PlatformServices/Makefile
++++ b/mcs/class/System.Reactive.PlatformServices/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.PlatformServices
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.PlatformServices.dll
+diff --git a/mcs/class/System.Reactive.Providers/Makefile b/mcs/class/System.Reactive.Providers/Makefile
+index 019b9ed8e49..c3380abb250 100644
+--- a/mcs/class/System.Reactive.Providers/Makefile
++++ b/mcs/class/System.Reactive.Providers/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Providers
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Providers.dll
+diff --git a/mcs/class/System.Reactive.Runtime.Remoting/Makefile b/mcs/class/System.Reactive.Runtime.Remoting/Makefile
+index d3178b70df5..11d4f8a4eda 100644
+--- a/mcs/class/System.Reactive.Runtime.Remoting/Makefile
++++ b/mcs/class/System.Reactive.Runtime.Remoting/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Runtime.Remoting
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Runtime.Remoting.dll
+diff --git a/mcs/class/System.Reactive.Windows.Forms/Makefile b/mcs/class/System.Reactive.Windows.Forms/Makefile
+index 9967af9ebca..c671d80855f 100644
+--- a/mcs/class/System.Reactive.Windows.Forms/Makefile
++++ b/mcs/class/System.Reactive.Windows.Forms/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Windows.Forms
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Windows.Forms.dll
+diff --git a/mcs/class/System.Reactive.Windows.Threading/Makefile b/mcs/class/System.Reactive.Windows.Threading/Makefile
+index e2ff9614e06..d23e780db8c 100644
+--- a/mcs/class/System.Reactive.Windows.Threading/Makefile
++++ b/mcs/class/System.Reactive.Windows.Threading/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reactive.Windows.Threading
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reactive.Windows.Threading.dll
+diff --git a/mcs/class/System.Reflection.Context/Makefile b/mcs/class/System.Reflection.Context/Makefile
+index 4d29c7b2dde..0179305026f 100644
+--- a/mcs/class/System.Reflection.Context/Makefile
++++ b/mcs/class/System.Reflection.Context/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Reflection.Context
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Reflection.Context.dll
+diff --git a/mcs/class/System.Runtime.Caching/Makefile b/mcs/class/System.Runtime.Caching/Makefile
+index 95742640616..19fe4e44729 100644
+--- a/mcs/class/System.Runtime.Caching/Makefile
++++ b/mcs/class/System.Runtime.Caching/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.Caching
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Runtime.Caching.dll
+diff --git a/mcs/class/System.Runtime.CompilerServices.Unsafe/Makefile b/mcs/class/System.Runtime.CompilerServices.Unsafe/Makefile
+index 207310ec073..47d70253e91 100644
+--- a/mcs/class/System.Runtime.CompilerServices.Unsafe/Makefile
++++ b/mcs/class/System.Runtime.CompilerServices.Unsafe/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.CompilerServices.Unsafe
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Runtime.CompilerServices.Unsafe.dll
+diff --git a/mcs/class/System.Runtime.DurableInstancing/Makefile b/mcs/class/System.Runtime.DurableInstancing/Makefile
+index e3369f2d139..303199a0d17 100644
+--- a/mcs/class/System.Runtime.DurableInstancing/Makefile
++++ b/mcs/class/System.Runtime.DurableInstancing/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.DurableInstancing
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Runtime.DurableInstancing.dll
+diff --git a/mcs/class/System.Runtime.Remoting/Makefile b/mcs/class/System.Runtime.Remoting/Makefile
+index 3b4b390b4f6..51c54c1936a 100644
+--- a/mcs/class/System.Runtime.Remoting/Makefile
++++ b/mcs/class/System.Runtime.Remoting/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.Remoting
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Runtime.Remoting.dll
+diff --git a/mcs/class/System.Runtime.Serialization.Formatters.Soap/Makefile b/mcs/class/System.Runtime.Serialization.Formatters.Soap/Makefile
+index 930a7908aff..55bce44f85f 100644
+--- a/mcs/class/System.Runtime.Serialization.Formatters.Soap/Makefile
++++ b/mcs/class/System.Runtime.Serialization.Formatters.Soap/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.Serialization.Formatters.Soap
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ # bet you can't say this ten times fast
+diff --git a/mcs/class/System.Runtime.Serialization/Makefile b/mcs/class/System.Runtime.Serialization/Makefile
+index f9cec3125aa..91757691643 100644
+--- a/mcs/class/System.Runtime.Serialization/Makefile
++++ b/mcs/class/System.Runtime.Serialization/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Runtime.Serialization
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_FILES =
+diff --git a/mcs/class/System.Security/Makefile b/mcs/class/System.Security/Makefile
+index 3b776595772..1f0e8bd0ee2 100644
+--- a/mcs/class/System.Security/Makefile
++++ b/mcs/class/System.Security/Makefile
+@@ -12,7 +12,7 @@ LIB_REFS = $(MONO_SECURITY) System System.Xml
+ KEYFILE = ../msfinal.pub
+ LIB_MCS_FLAGS = -unsafe -nowarn:414,618 -d:SECURITY_DEP
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ TEST_RESOURCE_FILES = \
+ 	Test/System.Security.Cryptography.Xml/sample.pfx \
+diff --git a/mcs/class/System.ServiceModel.Activation/Makefile b/mcs/class/System.ServiceModel.Activation/Makefile
+index 26249a02ac8..34340c2037c 100644
+--- a/mcs/class/System.ServiceModel.Activation/Makefile
++++ b/mcs/class/System.ServiceModel.Activation/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Activation
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceModel.Activation.dll
+diff --git a/mcs/class/System.ServiceModel.Discovery/Makefile b/mcs/class/System.ServiceModel.Discovery/Makefile
+index a56da1ee8af..58223eff1ef 100644
+--- a/mcs/class/System.ServiceModel.Discovery/Makefile
++++ b/mcs/class/System.ServiceModel.Discovery/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Discovery
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceModel.Discovery.dll
+diff --git a/mcs/class/System.ServiceModel.Internals/Makefile b/mcs/class/System.ServiceModel.Internals/Makefile
+index c6ec76df04e..76da7b13b59 100644
+--- a/mcs/class/System.ServiceModel.Internals/Makefile
++++ b/mcs/class/System.ServiceModel.Internals/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Internals
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ ifndef NO_MULTIPLE_APPDOMAINS
+diff --git a/mcs/class/System.ServiceModel.Routing/Makefile b/mcs/class/System.ServiceModel.Routing/Makefile
+index 4c5b0a74817..766ec50a7dd 100644
+--- a/mcs/class/System.ServiceModel.Routing/Makefile
++++ b/mcs/class/System.ServiceModel.Routing/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Routing
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceModel.Routing.dll
+diff --git a/mcs/class/System.ServiceModel.Web.Extensions/Makefile b/mcs/class/System.ServiceModel.Web.Extensions/Makefile
+index 489cdd451f4..6f5eb6de435 100644
+--- a/mcs/class/System.ServiceModel.Web.Extensions/Makefile
++++ b/mcs/class/System.ServiceModel.Web.Extensions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Web.Extensions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceModel.Web.Extensions.dll
+diff --git a/mcs/class/System.ServiceModel.Web/Makefile b/mcs/class/System.ServiceModel.Web/Makefile
+index bd254996e78..44dcf25f67d 100644
+--- a/mcs/class/System.ServiceModel.Web/Makefile
++++ b/mcs/class/System.ServiceModel.Web/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel.Web
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceModel.Web.dll
+diff --git a/mcs/class/System.ServiceModel/Makefile b/mcs/class/System.ServiceModel/Makefile
+index b7e91a5eec3..542b88f0b40 100644
+--- a/mcs/class/System.ServiceModel/Makefile
++++ b/mcs/class/System.ServiceModel/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceModel
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_FILES = \
+diff --git a/mcs/class/System.ServiceProcess/Makefile b/mcs/class/System.ServiceProcess/Makefile
+index 13195ce8eb2..5680e4bf39e 100644
+--- a/mcs/class/System.ServiceProcess/Makefile
++++ b/mcs/class/System.ServiceProcess/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.ServiceProcess
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.ServiceProcess.dll
+diff --git a/mcs/class/System.Threading.Tasks.Dataflow/Makefile b/mcs/class/System.Threading.Tasks.Dataflow/Makefile
+index dedd2ad6102..26722fda762 100644
+--- a/mcs/class/System.Threading.Tasks.Dataflow/Makefile
++++ b/mcs/class/System.Threading.Tasks.Dataflow/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Threading.Tasks.Dataflow
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Threading.Tasks.Dataflow.dll
+diff --git a/mcs/class/System.Transactions/Makefile b/mcs/class/System.Transactions/Makefile
+index bc3825dbf95..531181fda61 100644
+--- a/mcs/class/System.Transactions/Makefile
++++ b/mcs/class/System.Transactions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Transactions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Transactions.dll
+diff --git a/mcs/class/System.Web.Abstractions/Makefile b/mcs/class/System.Web.Abstractions/Makefile
+index 76896b0f42a..d60ee0da0b8 100644
+--- a/mcs/class/System.Web.Abstractions/Makefile
++++ b/mcs/class/System.Web.Abstractions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Abstractions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Abstractions.dll
+diff --git a/mcs/class/System.Web.ApplicationServices/Makefile b/mcs/class/System.Web.ApplicationServices/Makefile
+index 2a8fb964bf8..007cb483eef 100644
+--- a/mcs/class/System.Web.ApplicationServices/Makefile
++++ b/mcs/class/System.Web.ApplicationServices/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.ApplicationServices
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.ApplicationServices.dll
+diff --git a/mcs/class/System.Web.DynamicData/Makefile b/mcs/class/System.Web.DynamicData/Makefile
+index a256a4f4234..ee464b13c9c 100644
+--- a/mcs/class/System.Web.DynamicData/Makefile
++++ b/mcs/class/System.Web.DynamicData/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.DynamicData
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.DynamicData.dll
+diff --git a/mcs/class/System.Web.Extensions.Design/Makefile b/mcs/class/System.Web.Extensions.Design/Makefile
+index 38b7c6647ba..9bb0aeb4f8f 100644
+--- a/mcs/class/System.Web.Extensions.Design/Makefile
++++ b/mcs/class/System.Web.Extensions.Design/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Extensions.Design
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Extensions.Design.dll
+diff --git a/mcs/class/System.Web.Extensions/Makefile b/mcs/class/System.Web.Extensions/Makefile
+index 720ee63d00a..7071520bb7f 100644
+--- a/mcs/class/System.Web.Extensions/Makefile
++++ b/mcs/class/System.Web.Extensions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Extensions
+ SUBDIRS = Test
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Extensions.dll
+diff --git a/mcs/class/System.Web.Http.SelfHost/Makefile b/mcs/class/System.Web.Http.SelfHost/Makefile
+index f4ff7d46645..bcffd7b9e34 100644
+--- a/mcs/class/System.Web.Http.SelfHost/Makefile
++++ b/mcs/class/System.Web.Http.SelfHost/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Http.SelfHost
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Http.SelfHost.dll
+diff --git a/mcs/class/System.Web.Http.WebHost/Makefile b/mcs/class/System.Web.Http.WebHost/Makefile
+index b022ea314cf..b05955798ab 100644
+--- a/mcs/class/System.Web.Http.WebHost/Makefile
++++ b/mcs/class/System.Web.Http.WebHost/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Http.WebHost
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Http.WebHost.dll
+diff --git a/mcs/class/System.Web.Http/Makefile b/mcs/class/System.Web.Http/Makefile
+index 22be8256d94..e50e4af44d5 100644
+--- a/mcs/class/System.Web.Http/Makefile
++++ b/mcs/class/System.Web.Http/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Http
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Http.dll
+diff --git a/mcs/class/System.Web.Mobile/Makefile b/mcs/class/System.Web.Mobile/Makefile
+index c2c977e829d..62968da1af7 100644
+--- a/mcs/class/System.Web.Mobile/Makefile
++++ b/mcs/class/System.Web.Mobile/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Mobile
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Mobile.dll
+diff --git a/mcs/class/System.Web.Mvc3/Makefile b/mcs/class/System.Web.Mvc3/Makefile
+index 20b0edc2325..469af32f3eb 100644
+--- a/mcs/class/System.Web.Mvc3/Makefile
++++ b/mcs/class/System.Web.Mvc3/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Mvc3
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Mvc3.dll
+diff --git a/mcs/class/System.Web.Razor/Makefile b/mcs/class/System.Web.Razor/Makefile
+index c329613bdf4..ebcc8485ac3 100644
+--- a/mcs/class/System.Web.Razor/Makefile
++++ b/mcs/class/System.Web.Razor/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Razor
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Razor.dll
+diff --git a/mcs/class/System.Web.RegularExpressions/Makefile b/mcs/class/System.Web.RegularExpressions/Makefile
+index a16648ccec6..0ddd78cdabf 100644
+--- a/mcs/class/System.Web.RegularExpressions/Makefile
++++ b/mcs/class/System.Web.RegularExpressions/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.RegularExpressions
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.RegularExpressions.dll
+diff --git a/mcs/class/System.Web.Routing/Makefile b/mcs/class/System.Web.Routing/Makefile
+index 7fc38d155aa..2f9d5ffe30c 100644
+--- a/mcs/class/System.Web.Routing/Makefile
++++ b/mcs/class/System.Web.Routing/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Routing
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Routing.dll
+diff --git a/mcs/class/System.Web.Services/Makefile b/mcs/class/System.Web.Services/Makefile
+index e6a633d9d5d..efccd3d002a 100644
+--- a/mcs/class/System.Web.Services/Makefile
++++ b/mcs/class/System.Web.Services/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.Services
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.Services.dll
+diff --git a/mcs/class/System.Web.WebPages.Deployment/Makefile b/mcs/class/System.Web.WebPages.Deployment/Makefile
+index bb1cd40bfd4..0c6d89d7ef9 100644
+--- a/mcs/class/System.Web.WebPages.Deployment/Makefile
++++ b/mcs/class/System.Web.WebPages.Deployment/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.WebPages.Deployment
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.WebPages.Deployment.dll
+diff --git a/mcs/class/System.Web.WebPages.Razor/Makefile b/mcs/class/System.Web.WebPages.Razor/Makefile
+index b9f7f8f5cc4..142bb0d654f 100644
+--- a/mcs/class/System.Web.WebPages.Razor/Makefile
++++ b/mcs/class/System.Web.WebPages.Razor/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.WebPages.Razor
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.WebPages.Razor.dll
+diff --git a/mcs/class/System.Web.WebPages/Makefile b/mcs/class/System.Web.WebPages/Makefile
+index 91e15810c7d..6069a91ff1f 100644
+--- a/mcs/class/System.Web.WebPages/Makefile
++++ b/mcs/class/System.Web.WebPages/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web.WebPages
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.WebPages.dll
+diff --git a/mcs/class/System.Web/Makefile b/mcs/class/System.Web/Makefile
+index 375c3f0bce3..deb02c4df88 100644
+--- a/mcs/class/System.Web/Makefile
++++ b/mcs/class/System.Web/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Web
+ SUBDIRS = Test
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Web.dll
+diff --git a/mcs/class/System.Windows.Forms.DataVisualization/Makefile b/mcs/class/System.Windows.Forms.DataVisualization/Makefile
+index ec81308ae52..3fd0b9e666c 100644
+--- a/mcs/class/System.Windows.Forms.DataVisualization/Makefile
++++ b/mcs/class/System.Windows.Forms.DataVisualization/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Windows.Forms.DataVisualization
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Windows.Forms.DataVisualization.dll
+diff --git a/mcs/class/System.Windows.Forms/Makefile b/mcs/class/System.Windows.Forms/Makefile
+index 8877bcc19d2..13a20681cc2 100644
+--- a/mcs/class/System.Windows.Forms/Makefile
++++ b/mcs/class/System.Windows.Forms/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/System.Windows.Forms
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Windows.Forms.dll
+diff --git a/mcs/class/System.Windows/Makefile b/mcs/class/System.Windows/Makefile
+index de1c0bf5c7f..9110ab42393 100644
+--- a/mcs/class/System.Windows/Makefile
++++ b/mcs/class/System.Windows/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Windows
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Windows.dll
+diff --git a/mcs/class/System.Workflow.Activities/Makefile b/mcs/class/System.Workflow.Activities/Makefile
+index bda9e386ab5..1eea4fd9eaa 100644
+--- a/mcs/class/System.Workflow.Activities/Makefile
++++ b/mcs/class/System.Workflow.Activities/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Workflow.Activities
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Workflow.Activities.dll
+diff --git a/mcs/class/System.Workflow.ComponentModel/Makefile b/mcs/class/System.Workflow.ComponentModel/Makefile
+index 6b988f27641..27846518b8e 100644
+--- a/mcs/class/System.Workflow.ComponentModel/Makefile
++++ b/mcs/class/System.Workflow.ComponentModel/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Workflow.ComponentModel
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Workflow.ComponentModel.dll
+diff --git a/mcs/class/System.Workflow.Runtime/Makefile b/mcs/class/System.Workflow.Runtime/Makefile
+index d8c4f7c16bb..81ed38b44a2 100644
+--- a/mcs/class/System.Workflow.Runtime/Makefile
++++ b/mcs/class/System.Workflow.Runtime/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Workflow.Runtime
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Workflow.Runtime.dll
+diff --git a/mcs/class/System.XML/Makefile b/mcs/class/System.XML/Makefile
+index 88de2763fb0..5451b4799d4 100644
+--- a/mcs/class/System.XML/Makefile
++++ b/mcs/class/System.XML/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.XML
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Xml.dll
+diff --git a/mcs/class/System.Xaml/Makefile b/mcs/class/System.Xaml/Makefile
+index 1651967c3cd..f28a69d9809 100644
+--- a/mcs/class/System.Xaml/Makefile
++++ b/mcs/class/System.Xaml/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Xaml
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ RESOURCE_FILES = 
+diff --git a/mcs/class/System.Xml.Linq/Makefile b/mcs/class/System.Xml.Linq/Makefile
+index be37556db98..f3066fe525c 100644
+--- a/mcs/class/System.Xml.Linq/Makefile
++++ b/mcs/class/System.Xml.Linq/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Xml.Linq
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Xml.Linq.dll
+diff --git a/mcs/class/System.Xml.Serialization/Makefile b/mcs/class/System.Xml.Serialization/Makefile
+index 230c5cd25fb..0a551107e9d 100644
+--- a/mcs/class/System.Xml.Serialization/Makefile
++++ b/mcs/class/System.Xml.Serialization/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System.Xml.Serialization
+ SUBDIRS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = System.Xml.Serialization.dll
+diff --git a/mcs/class/System/Makefile b/mcs/class/System/Makefile
+index ed30dfc6fcb..442d2a4f685 100644
+--- a/mcs/class/System/Makefile
++++ b/mcs/class/System/Makefile
+@@ -1,5 +1,6 @@
+ thisdir = class/System
+ SUBDIRS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ export __SECURITY_BOOTSTRAP_DB=$(topdir)/class/lib/$(PROFILE)
+ 
+diff --git a/mcs/class/SystemWebTestShim/Makefile b/mcs/class/SystemWebTestShim/Makefile
+index 3cfede1ab10..87f8e0c22ef 100644
+--- a/mcs/class/SystemWebTestShim/Makefile
++++ b/mcs/class/SystemWebTestShim/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/SystemWebTestShim
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = SystemWebTestShim.dll
+diff --git a/mcs/class/WebMatrix.Data/Makefile b/mcs/class/WebMatrix.Data/Makefile
+index d307728357c..6823063f9e2 100644
+--- a/mcs/class/WebMatrix.Data/Makefile
++++ b/mcs/class/WebMatrix.Data/Makefile
+@@ -6,7 +6,7 @@ LIBRARY = WebMatrix.Data.dll
+ 
+ LIB_REFS = System System.Data System.Core System.Configuration
+ KEYFILE = ../mono.pub
+-LIB_MCS_FLAGS =
++LIB_MCS_FLAGS = $(BUILD_MAPFILE)
+ TEST_RESOURCE_FILES = Test/resources/testsqlite.db
+ TEST_MCS_FLAGS = $(foreach r, $(TEST_RESOURCE_FILES), -resource:$(r),$(r))
+ TEST_LIB_REFS = System System.Core System.Data Mono.Data.Sqlite Microsoft.CSharp
+diff --git a/mcs/class/WindowsBase/Makefile b/mcs/class/WindowsBase/Makefile
+index 05c2e6e2015..69fdf728130 100644
+--- a/mcs/class/WindowsBase/Makefile
++++ b/mcs/class/WindowsBase/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/WindowsBase
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../build/rules.make
+ 
+ LIBRARY = WindowsBase.dll
+diff --git a/mcs/class/corlib/Makefile b/mcs/class/corlib/Makefile
+index e3996318868..8a051d12695 100644
+--- a/mcs/class/corlib/Makefile
++++ b/mcs/class/corlib/Makefile
+@@ -6,7 +6,7 @@ export __SECURITY_BOOTSTRAP_DB=$(topdir)/class/corlib
+ LIBRARY = corlib.dll
+ LIBRARY_NAME = mscorlib.dll
+ 
+-LIB_MCS_FLAGS = $(REFERENCE_SOURCES_FLAGS) $(RESOURCE_FILES:%=-resource:%) $(UNICODECHARINFO:%=-resource:%)
++LIB_MCS_FLAGS = $(REFERENCE_SOURCES_FLAGS) $(RESOURCE_FILES:%=-resource:%) $(UNICODECHARINFO:%=-resource:%) $(BUILD_MAPFILE)
+ 
+ USE_XTEST_REMOTE_EXECUTOR = YES
+ LIBRARY_WARN_AS_ERROR = yes
+diff --git a/mcs/class/legacy/Mono.Cecil/Makefile b/mcs/class/legacy/Mono.Cecil/Makefile
+index 8128987f33a..1562691f44a 100644
+--- a/mcs/class/legacy/Mono.Cecil/Makefile
++++ b/mcs/class/legacy/Mono.Cecil/Makefile
+@@ -1,4 +1,5 @@
+ thisdir = class/legacy/Mono.Cecil
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ include ../../../build/rules.make
+ 
+ LIBRARY = Mono.Cecil.dll
+diff --git a/mcs/class/monodoc/Makefile b/mcs/class/monodoc/Makefile
+index 90ce49077ec..0290dee2a22 100644
+--- a/mcs/class/monodoc/Makefile
++++ b/mcs/class/monodoc/Makefile
+@@ -7,7 +7,7 @@ LIBRARY_PACKAGE = monodoc
+ KEYFILE = ../../class/mono.snk
+ # Remove a bunch of "obsolete"-type warning for Lucene.NET
+ # also activate legacy mode to compile old monodoc.dll api
+-LOCAL_MCS_FLAGS = /nowarn:618,612,672,809,414,649 /define:LEGACY_MODE
++LOCAL_MCS_FLAGS = /nowarn:618,612,672,809,414,649 /define:LEGACY_MODE $(BUILD_MAPFILE)
+ 
+ IMAGES = \
+ 	Resources/images/bc_bg.png		\
+diff --git a/mcs/ilasm/Makefile b/mcs/ilasm/Makefile
+index 434764e55af..1a28341edbd 100644
+--- a/mcs/ilasm/Makefile
++++ b/mcs/ilasm/Makefile
+@@ -5,6 +5,7 @@ include ../build/rules.make
+ PROGRAM = ilasm.exe
+ BUILT_SOURCES = ILParser.cs
+ 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = PEAPI System
+ 
+ API_BUILD := $(filter build, $(PROFILE))
+diff --git a/mcs/mcs/Makefile b/mcs/mcs/Makefile
+index dbf040afdd6..48ee6020aba 100644
+--- a/mcs/mcs/Makefile
++++ b/mcs/mcs/Makefile
+@@ -15,7 +15,7 @@ EXTRA_DISTFILES = \
+ 	mcs.exe.sources
+ 
+ LIB_REFS = System.Core System.Xml System
+-LOCAL_MCS_FLAGS += -d:STATIC,NO_SYMBOL_WRITER,NO_AUTHENTICODE
++LOCAL_MCS_FLAGS += -d:STATIC,NO_SYMBOL_WRITER,NO_AUTHENTICODE $(BUILD_MAPFILE)
+ 
+ ifndef NO_THREAD_ABORT
+ REFERENCE_SOURCES_FLAGS += -d:MONO_FEATURE_THREAD_ABORT
+diff --git a/mcs/tools/al/Makefile b/mcs/tools/al/Makefile
+index d2cea54c02e..c23f86198df 100644
+--- a/mcs/tools/al/Makefile
++++ b/mcs/tools/al/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/al
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System System.Core Mono.Security System.Security Mono.CompilerServices.SymbolWriter
+ PROGRAM = al.exe
+ 
+diff --git a/mcs/tools/aprofutil/Makefile b/mcs/tools/aprofutil/Makefile
+index 13384952bc7..4d0cde60bb9 100644
+--- a/mcs/tools/aprofutil/Makefile
++++ b/mcs/tools/aprofutil/Makefile
+@@ -1,6 +1,7 @@
+ thisdir = tools/aprofutil
+ include ../../build/rules.make
+ 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ PROGRAM = aprofutil.exe
+ 
+ LIB_REFS = System System.Core Mono.Profiler.Log
+diff --git a/mcs/tools/browsercaps-updater/Makefile b/mcs/tools/browsercaps-updater/Makefile
+index 6d2df98702d..ab58bc06a93 100644
+--- a/mcs/tools/browsercaps-updater/Makefile
++++ b/mcs/tools/browsercaps-updater/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/browsercaps-updater
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System
+ 
+ PROGRAM = browsercaps-updater.exe
+diff --git a/mcs/tools/cccheck/Makefile b/mcs/tools/cccheck/Makefile
+index 52d624ffed4..4713f04ed9c 100644
+--- a/mcs/tools/cccheck/Makefile
++++ b/mcs/tools/cccheck/Makefile
+@@ -4,7 +4,7 @@ include ../../build/rules.make
+ 
+ PROGRAM = cccheck.exe
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.CodeContracts System
+ 
+ include ../../build/executable.make
+diff --git a/mcs/tools/ccrewrite/Makefile b/mcs/tools/ccrewrite/Makefile
+index 00e711b2795..513862351f1 100644
+--- a/mcs/tools/ccrewrite/Makefile
++++ b/mcs/tools/ccrewrite/Makefile
+@@ -4,7 +4,7 @@ include ../../build/rules.make
+ 
+ PROGRAM = ccrewrite.exe
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.CodeContracts System System.Core
+ 
+ include ../../build/executable.make
+diff --git a/mcs/tools/cil-strip/Makefile b/mcs/tools/cil-strip/Makefile
+index 80a4caf2a95..f03e6b8b001 100644
+--- a/mcs/tools/cil-strip/Makefile
++++ b/mcs/tools/cil-strip/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/cil-strip
+ SUBDIRS =
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System
+ 
+ # IMPORTANT: we need to keep the old copy of Cecil we have in this folder since newer Cecil
+diff --git a/mcs/tools/corcompare/Makefile b/mcs/tools/corcompare/Makefile
+index 2f4a664387a..01874b3ded9 100644
+--- a/mcs/tools/corcompare/Makefile
++++ b/mcs/tools/corcompare/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIB_REFS = Mono.Cecil System.Xml System.Core System
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ PROGRAM = mono-api-info.exe
+ 
+diff --git a/mcs/tools/csharp/Makefile b/mcs/tools/csharp/Makefile
+index 1c3a80355ee..1e2af2789b8 100644
+--- a/mcs/tools/csharp/Makefile
++++ b/mcs/tools/csharp/Makefile
+@@ -6,7 +6,7 @@ include ../../build/rules.make
+ 
+ // 3021: CLS attribute not needed since assembly is not CLS compliant
+ NOWARNS = -nowarn:3021
+-LOCAL_MCS_FLAGS = -unsafe $(NOWARNS)
++LOCAL_MCS_FLAGS = -unsafe $(NOWARNS) $(BUILD_MAPFILE)
+ LIB_REFS = Mono.CSharp Mono.Posix Mono.Management System 
+ 
+ PROGRAM = csharp.exe
+diff --git a/mcs/tools/culevel/Makefile b/mcs/tools/culevel/Makefile
+index c186b8e74a2..c3e1a9d6413 100644
+--- a/mcs/tools/culevel/Makefile
++++ b/mcs/tools/culevel/Makefile
+@@ -2,6 +2,7 @@ thisdir = tools/culevel
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System System.Xml
+ PROGRAM = culevel.exe
+ 
+diff --git a/mcs/tools/disco/Makefile b/mcs/tools/disco/Makefile
+index 77721fa1df1..033543afbc6 100644
+--- a/mcs/tools/disco/Makefile
++++ b/mcs/tools/disco/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/disco
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System.Web.Services System
+ PROGRAM = disco.exe
+ 
+diff --git a/mcs/tools/dtd2rng/Makefile b/mcs/tools/dtd2rng/Makefile
+index 14f8c2906b9..e9ebe48f955 100644
+--- a/mcs/tools/dtd2rng/Makefile
++++ b/mcs/tools/dtd2rng/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/dtd2rng
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml Commons.Xml.Relaxng
+ PROGRAM = dtd2rng.exe
+ 
+diff --git a/mcs/tools/dtd2xsd/Makefile b/mcs/tools/dtd2xsd/Makefile
+index fa500c8c679..960527e13cd 100755
+--- a/mcs/tools/dtd2xsd/Makefile
++++ b/mcs/tools/dtd2xsd/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/dtd2xsd
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml
+ PROGRAM = dtd2xsd.exe
+ 
+diff --git a/mcs/tools/gacutil/Makefile b/mcs/tools/gacutil/Makefile
+index ff66d61364c..4cfa995f379 100644
+--- a/mcs/tools/gacutil/Makefile
++++ b/mcs/tools/gacutil/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIB_REFS = System Mono.Security System.Security
+-LOCAL_MCS_FLAGS = -unsafe -define:NO_SYMBOL_WRITER
++LOCAL_MCS_FLAGS = -unsafe -define:NO_SYMBOL_WRITER $(BUILD_MAPFILE)
+ 
+ PROGRAM = gacutil.exe
+ 
+diff --git a/mcs/tools/genxs/Makefile b/mcs/tools/genxs/Makefile
+index 71819a2eb52..a5d6f8246bc 100644
+--- a/mcs/tools/genxs/Makefile
++++ b/mcs/tools/genxs/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/genxs
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml
+ PROGRAM = genxs.exe
+ 
+diff --git a/mcs/tools/ictool/Makefile b/mcs/tools/ictool/Makefile
+index f34409878c3..d567da4c00c 100644
+--- a/mcs/tools/ictool/Makefile
++++ b/mcs/tools/ictool/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/ictool
+ SUBDIRS =
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml
+ 
+ PROGRAM = ictool.exe
+diff --git a/mcs/tools/ikdasm/Makefile b/mcs/tools/ikdasm/Makefile
+index 1d0a78c83e0..d20371cf8b6 100644
+--- a/mcs/tools/ikdasm/Makefile
++++ b/mcs/tools/ikdasm/Makefile
+@@ -5,7 +5,8 @@ include ../../build/rules.make
+ PROGRAM = ikdasm.exe
+ LIB_REFS = System System.Core System.Security
+ LOCAL_MCS_FLAGS = \
+-	-d:NO_SYMBOL_WRITER
++	-d:NO_SYMBOL_WRITER \
++	$(BUILD_MAPFILE)
+ 
+ #EXTRA_DISTFILES = LICENSE
+ 
+diff --git a/mcs/tools/installutil/Makefile b/mcs/tools/installutil/Makefile
+index e7f4401169f..e884d12428a 100644
+--- a/mcs/tools/installutil/Makefile
++++ b/mcs/tools/installutil/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/installutil
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Configuration.Install System
+ 
+ PROGRAM = installutil.exe
+diff --git a/mcs/tools/installvst/Makefile b/mcs/tools/installvst/Makefile
+index 3ba67fe0d8f..6e51197515e 100644
+--- a/mcs/tools/installvst/Makefile
++++ b/mcs/tools/installvst/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/installvst
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml
+ PROGRAM = installvst.exe
+ 
+diff --git a/mcs/tools/lc/Makefile b/mcs/tools/lc/Makefile
+index 905a75a488a..512f41201f5 100644
+--- a/mcs/tools/lc/Makefile
++++ b/mcs/tools/lc/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/lc
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System System.Core
+ PROGRAM = lc.exe
+ 
+diff --git a/mcs/tools/linker-analyzer/Makefile b/mcs/tools/linker-analyzer/Makefile
+index ad080b9fbcc..a22fa1dbf10 100644
+--- a/mcs/tools/linker-analyzer/Makefile
++++ b/mcs/tools/linker-analyzer/Makefile
+@@ -5,6 +5,6 @@ include ../../build/rules.make
+ PROGRAM = illinkanalyzer.exe
+ 
+ LIB_REFS = System System.Xml System.Core Mono.Cecil
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ include ../../build/executable.make
+diff --git a/mcs/tools/linker/Makefile b/mcs/tools/linker/Makefile
+index 70539f621c1..c926bd5638f 100644
+--- a/mcs/tools/linker/Makefile
++++ b/mcs/tools/linker/Makefile
+@@ -5,7 +5,7 @@ include ../../build/rules.make
+ PROGRAM = monolinker.exe
+ 
+ LIB_REFS = System System.Core System.Xml Mono.Cecil
+-LOCAL_MCS_FLAGS = -unsafe
++LOCAL_MCS_FLAGS = -unsafe $(BUILD_MAPFILE)
+ 
+ TEST_CASES := \
+ 	mscorlib/test-array.cs \
+diff --git a/mcs/tools/macpack/Makefile b/mcs/tools/macpack/Makefile
+index f78b92be9d3..4000d9c0a12 100644
+--- a/mcs/tools/macpack/Makefile
++++ b/mcs/tools/macpack/Makefile
+@@ -7,7 +7,7 @@ RESOURCE_FILES = \
+ include ../../build/rules.make
+ 
+ LOCAL_MCS_FLAGS = \
+-	$(RESOURCE_FILES:%=/resource:%)
++	$(RESOURCE_FILES:%=/resource:%) $(BUILD_MAPFILE)
+ 
+ PROGRAM = macpack.exe
+ 
+diff --git a/mcs/tools/mconfig/Makefile b/mcs/tools/mconfig/Makefile
+index 48b315986db..7dd93cbe04a 100644
+--- a/mcs/tools/mconfig/Makefile
++++ b/mcs/tools/mconfig/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mconfig
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System
+ PROGRAM = mconfig.exe
+ 
+diff --git a/mcs/tools/mdbrebase/Makefile b/mcs/tools/mdbrebase/Makefile
+index cbe723d2717..776f322d861 100644
+--- a/mcs/tools/mdbrebase/Makefile
++++ b/mcs/tools/mdbrebase/Makefile
+@@ -5,6 +5,6 @@ include ../../build/rules.make
+ PROGRAM = mdbrebase.exe
+ 
+ LIB_REFS = System Mono.CompilerServices.SymbolWriter
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ include ../../build/executable.make
+diff --git a/mcs/tools/mdoc/Makefile b/mcs/tools/mdoc/Makefile
+index e3c5a321d1a..9b91d69d490 100644
+--- a/mcs/tools/mdoc/Makefile
++++ b/mcs/tools/mdoc/Makefile
+@@ -21,7 +21,7 @@ MONODOC_RESOURCES_COMMAND = $(foreach file,$(MONODOC_RESOURCES),/resource:../../
+ 
+ LIB_REFS = monodoc System System.Xml System.Core Mono.Cecil ICSharpCode.SharpZipLib System.Xml.Linq System.Web
+ 	
+-LOCAL_MCS_FLAGS = $(MDOC_RESOURCES_COMMAND) $(MONODOC_RESOURCES_COMMAND) -define:NEW_CECIL
++LOCAL_MCS_FLAGS = $(MDOC_RESOURCES_COMMAND) $(MONODOC_RESOURCES_COMMAND) -define:NEW_CECIL $(BUILD_MAPFILE)
+ PROGRAM = $(topdir)/class/lib/$(PROFILE)/mdoc.exe
+ PROGRAM_DEPS = $(topdir)/class/lib/$(PROFILE)/monodoc.dll
+ MSCORLIB = -r:$(topdir)/class/lib/$(PROFILE)/mscorlib.dll
+diff --git a/mcs/tools/mkbundle/Makefile b/mcs/tools/mkbundle/Makefile
+index 435b8e93895..e38874fa614 100644
+--- a/mcs/tools/mkbundle/Makefile
++++ b/mcs/tools/mkbundle/Makefile
+@@ -10,7 +10,7 @@ RESOURCE_FILES = $(OTHER_RES)
+ 
+ LOCAL_MCS_FLAGS= $(OTHER_RES:%=-resource:%)
+ 
+-LOCAL_MCS_FLAGS += -d:STATIC,NO_SYMBOL_WRITER,NO_AUTHENTICODE
++LOCAL_MCS_FLAGS += -d:STATIC,NO_SYMBOL_WRITER,NO_AUTHENTICODE $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System System.Core System.IO.Compression.FileSystem
+ 
+ EXTRA_DISTFILES = $(RESOURCE_FILES)
+diff --git a/mcs/tools/mod/Makefile b/mcs/tools/mod/Makefile
+index 35133d61dbe..c7477c5d4e1 100644
+--- a/mcs/tools/mod/Makefile
++++ b/mcs/tools/mod/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIB_REFS = monodoc
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ PROGRAM = mod.exe
+ 
+diff --git a/mcs/tools/mono-api-diff/Makefile b/mcs/tools/mono-api-diff/Makefile
+index f94f6349625..4c3334a2267 100644
+--- a/mcs/tools/mono-api-diff/Makefile
++++ b/mcs/tools/mono-api-diff/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIB_REFS = System.Xml System.Core System
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ PROGRAM = mono-api-diff.exe
+ 
+diff --git a/mcs/tools/mono-api-html/Makefile b/mcs/tools/mono-api-html/Makefile
+index 18aa8cf854f..1561f9ea0cc 100644
+--- a/mcs/tools/mono-api-html/Makefile
++++ b/mcs/tools/mono-api-html/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ LIB_REFS = System.Xml System.Core System System.Xml.Linq
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ 
+ PROGRAM = mono-api-html.exe
+ 
+diff --git a/mcs/tools/mono-configuration-crypto/cli/Makefile b/mcs/tools/mono-configuration-crypto/cli/Makefile
+index fe3b52f8d21..63fcc0e3f85 100644
+--- a/mcs/tools/mono-configuration-crypto/cli/Makefile
++++ b/mcs/tools/mono-configuration-crypto/cli/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mono-configuration-crypto/cli
+ SUBDIRS = 
+ include ../../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.Security System.Security System.Configuration System Mono.Configuration.Crypto
+ 
+ PROGRAM = mono-configuration-crypto.exe
+diff --git a/mcs/tools/mono-configuration-crypto/lib/Makefile b/mcs/tools/mono-configuration-crypto/lib/Makefile
+index e67462548cc..d4877187410 100644
+--- a/mcs/tools/mono-configuration-crypto/lib/Makefile
++++ b/mcs/tools/mono-configuration-crypto/lib/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mono-configuration-crypto/lib
+ SUBDIRS =
+ include ../../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System Mono.Security System.Security System.Configuration System.Xml
+ LIBRARY = Mono.Configuration.Crypto.dll
+ LIBRARY_INSTALL_DIR = $(mono_libdir)/mono/mono-configuration-crypto/$(FRAMEWORK_VERSION)
+diff --git a/mcs/tools/mono-service/Makefile b/mcs/tools/mono-service/Makefile
+index b1c6d2f32e8..ff1b503846d 100644
+--- a/mcs/tools/mono-service/Makefile
++++ b/mcs/tools/mono-service/Makefile
+@@ -6,7 +6,7 @@ PROGRAM = mono-service.exe
+ 
+ PROGRAM_SNK = ../../class/mono.snk
+ 
+-LOCAL_MCS_FLAGS = -unsafe -publicsign -keyfile:../../class/mono.snk
++LOCAL_MCS_FLAGS = -unsafe -publicsign -keyfile:../../class/mono.snk $(BUILD_MAPFILE)
+ LIB_REFS = System.ServiceProcess Mono.Posix System
+ 
+ include ../../build/executable.make
+diff --git a/mcs/tools/mono-shlib-cop/Makefile b/mcs/tools/mono-shlib-cop/Makefile
+index 4626f936ff3..24e212d5149 100644
+--- a/mcs/tools/mono-shlib-cop/Makefile
++++ b/mcs/tools/mono-shlib-cop/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mono-shlib-cop
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.Posix System System.Xml
+ 
+ PROGRAM = mono-shlib-cop.exe
+diff --git a/mcs/tools/mono-symbolicate/Makefile b/mcs/tools/mono-symbolicate/Makefile
+index d4164712e5a..9c261148071 100644
+--- a/mcs/tools/mono-symbolicate/Makefile
++++ b/mcs/tools/mono-symbolicate/Makefile
+@@ -4,7 +4,7 @@ include ../../build/rules.make
+ 
+ PROGRAM = mono-symbolicate.exe
+ 
+-LOCAL_MCS_FLAGS = /D:NO_AUTHENTICODE /D:CECIL -nowarn:649 -unsafe
++LOCAL_MCS_FLAGS = /D:NO_AUTHENTICODE /D:CECIL -nowarn:649 -unsafe $(BUILD_MAPFILE)
+ 
+ LIB_REFS = System.Xml System.Core System
+ 
+diff --git a/mcs/tools/mono-xmltool/Makefile b/mcs/tools/mono-xmltool/Makefile
+index 7439a2eb9dd..e65962d2d42 100644
+--- a/mcs/tools/mono-xmltool/Makefile
++++ b/mcs/tools/mono-xmltool/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mono-xmltool
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml Commons.Xml.Relaxng
+ PROGRAM = mono-xmltool.exe
+ 
+diff --git a/mcs/tools/mono-xsd/Makefile b/mcs/tools/mono-xsd/Makefile
+index d9e77ac8251..168319ab71a 100644
+--- a/mcs/tools/mono-xsd/Makefile
++++ b/mcs/tools/mono-xsd/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/mono-xsd
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System.Data System
+ PROGRAM = xsd.exe
+ 
+diff --git a/mcs/tools/monop/Makefile b/mcs/tools/monop/Makefile
+index 4e84d9916fa..d41f1504aab 100644
+--- a/mcs/tools/monop/Makefile
++++ b/mcs/tools/monop/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ include ../../build/rules.make
+ 
+ PROGRAM = monop.exe
+-LOCAL_MCS_FLAGS += -d:NO_AUTHENTICODE,STATIC,NO_SYMBOL_WRITER
++LOCAL_MCS_FLAGS += -d:NO_AUTHENTICODE,STATIC,NO_SYMBOL_WRITER $(BUILD_MAPFILE)
+ LIB_REFS = System
+ 
+ CLEAN_FILES = monop.exe monop2.exe *.mdb
+diff --git a/mcs/tools/pdb2mdb/Makefile b/mcs/tools/pdb2mdb/Makefile
+index 0d2f377310c..6d7b4386a2b 100644
+--- a/mcs/tools/pdb2mdb/Makefile
++++ b/mcs/tools/pdb2mdb/Makefile
+@@ -4,7 +4,7 @@ include ../../build/rules.make
+ 
+ PROGRAM = pdb2mdb.exe
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.Cecil Mono.CompilerServices.SymbolWriter System.Core
+ 
+ 
+diff --git a/mcs/tools/resgen/Makefile b/mcs/tools/resgen/Makefile
+index 4b7539b6232..52e4f52a6b2 100644
+--- a/mcs/tools/resgen/Makefile
++++ b/mcs/tools/resgen/Makefile
+@@ -7,7 +7,7 @@ PROGRAM = resgen.exe
+ CLEAN_FILES = resgen.exe
+ 
+ LIB_REFS = System System.Xml System.Core System.Drawing
+-LOCAL_MCS_FLAGS = -unsafe
++LOCAL_MCS_FLAGS = -unsafe $(BUILD_MAPFILE)
+ 
+ INSTALL_PROFILE := $(filter $(DEFAULT_PROFILE), $(PROFILE))
+ ifndef INSTALL_PROFILE
+diff --git a/mcs/tools/security/Makefile b/mcs/tools/security/Makefile
+index 83d97ac8193..571b1292bd1 100644
+--- a/mcs/tools/security/Makefile
++++ b/mcs/tools/security/Makefile
+@@ -3,7 +3,7 @@ SUBDIRS =
+ DIST_ONLY_SUBDIRS = certview
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS = 
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = Mono.Security System System.Core
+ 
+ SECURITY_PROGRAMS = secutil.exe cert2spc.exe sn.exe makecert.exe chktrust.exe crlupdate.exe \
+diff --git a/mcs/tools/sgen/Makefile b/mcs/tools/sgen/Makefile
+index e7750a2c11b..8da2030a02d 100644
+--- a/mcs/tools/sgen/Makefile
++++ b/mcs/tools/sgen/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/sgen
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System
+ PROGRAM = sgen.exe
+ 
+diff --git a/mcs/tools/soapsuds/Makefile b/mcs/tools/soapsuds/Makefile
+index 1fc6cb2763e..4e3867b8440 100644
+--- a/mcs/tools/soapsuds/Makefile
++++ b/mcs/tools/soapsuds/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/soapsuds
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Runtime.Remoting System
+ PROGRAM = soapsuds.exe
+ 
+diff --git a/mcs/tools/sqlmetal/Makefile b/mcs/tools/sqlmetal/Makefile
+index abba90dd1e8..41c23388247 100644
+--- a/mcs/tools/sqlmetal/Makefile
++++ b/mcs/tools/sqlmetal/Makefile
+@@ -6,6 +6,7 @@ dbmetal_src = src/DbMetal
+ ns          = DbMetal.Language
+ 
+ LOCAL_MCS_FLAGS = \
++	$(BUILD_MAPFILE) \
+ 	-d:MONO_STRICT                                                      \
+ 	-keyfile:$(dbmetal_src)/../DbLinq.snk                               \
+ 	-resource:$(dbmetal_src)/Language/EnglishWords.txt,$(ns).EnglishWords.txt \
+diff --git a/mcs/tools/sqlsharp/Makefile b/mcs/tools/sqlsharp/Makefile
+index fc18e5815d7..a93481e6447 100644
+--- a/mcs/tools/sqlsharp/Makefile
++++ b/mcs/tools/sqlsharp/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/sqlsharp
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System System.Xml System.Data
+ PROGRAM = sqlsharp.exe
+ 
+diff --git a/mcs/tools/svcutil/Makefile b/mcs/tools/svcutil/Makefile
+index b194a5b144d..587f229491d 100644
+--- a/mcs/tools/svcutil/Makefile
++++ b/mcs/tools/svcutil/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/svcutil
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Core System.Runtime.Serialization System.ServiceModel System.Web.Services System.Configuration System System.Xml
+ 	
+ PROGRAM = svcutil.exe
+diff --git a/mcs/tools/wsdl/Makefile b/mcs/tools/wsdl/Makefile
+index 293cf9d2811..4f1148d28a9 100644
+--- a/mcs/tools/wsdl/Makefile
++++ b/mcs/tools/wsdl/Makefile
+@@ -2,7 +2,7 @@ thisdir = tools/wsdl
+ SUBDIRS = 
+ include ../../build/rules.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = System.Xml System.Web.Services System
+ 
+ PROGRAM = wsdl.exe
+diff --git a/mcs/tools/xbuild/Makefile b/mcs/tools/xbuild/Makefile
+index 5b3c6a977d0..8ac22c4e4a2 100644
+--- a/mcs/tools/xbuild/Makefile
++++ b/mcs/tools/xbuild/Makefile
+@@ -5,7 +5,7 @@ NO_TESTS = yes
+ 
+ include xbuild.make
+ 
+-LOCAL_MCS_FLAGS =
++LOCAL_MCS_FLAGS = $(BUILD_MAPFILE)
+ LIB_REFS = $(XBUILD_FRAMEWORK) $(XBUILD_UTILITIES) $(XBUILD_ENGINE) $(XBUILD_MSTASKS) $(PARENT_PROFILE)System $(PARENT_PROFILE)System.Core
+ PROGRAM = xbuild.exe
+ 
+-- 
+2.46.2
+
