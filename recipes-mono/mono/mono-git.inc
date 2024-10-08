@@ -23,7 +23,7 @@ SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH}\
 #	   file://0001-reintroduce-gmcs.patch \
 #
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"

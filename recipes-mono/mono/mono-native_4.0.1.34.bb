@@ -10,7 +10,7 @@ SRC_URI += "file://fix-basic-mscorlib-dep.patch \
 	    file://0001-add-missing-visualbasic-targets.patch \
 "
 
-S = "${WORKDIR}/mono-4.0.1"
+S = "${UNPACKDIR}/mono-4.0.1"
 
 inherit native
 

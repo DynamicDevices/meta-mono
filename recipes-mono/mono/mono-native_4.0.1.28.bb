@@ -8,7 +8,7 @@ PACKAGECONFIG ??= "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11', '', d)}
 
 SRC_URI += "file://fix-basic-mscorlib-dep.patch"
 
-S = "${WORKDIR}/mono-4.0.1"
+S = "${UNPACKDIR}/mono-4.0.1"
 
 inherit native
 

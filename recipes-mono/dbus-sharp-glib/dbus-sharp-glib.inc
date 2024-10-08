@@ -17,7 +17,7 @@ SDIRVER = "${@dbus_sharp_glib_download_version(d)}"
 
 SRC_URI = "https://github.com/mono/dbus-sharp-glib/archive/v${SDIRVER}.tar.gz"
 
-S = "${WORKDIR}/${PN}-${SDIRVER}"
+S = "${UNPACKDIR}/${PN}-${SDIRVER}"
 
 FILESPATH =. "${FILE_DIRNAME}/${PN}-${PV}:"
 

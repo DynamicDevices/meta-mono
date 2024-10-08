@@ -26,7 +26,7 @@ SRC_URI += " \
 
 DEPENDS = "mono-xsp gtk-sharp"
 
-S = "${WORKDIR}/${PN}"
+S = "${UNPACKDIR}/${PN}"
 
 inherit autotools-brokensep gettext pkgconfig
 

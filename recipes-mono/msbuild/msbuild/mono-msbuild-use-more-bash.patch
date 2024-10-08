@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 diff --git a/mono/build/extract_and_copy_hostfxr.sh b/mono/build/extract_and_copy_hostfxr.sh
 index 68a8586..8fae00b 100755
 --- a/mono/build/extract_and_copy_hostfxr.sh

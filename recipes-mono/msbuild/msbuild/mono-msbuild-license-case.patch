@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 Index: xamarin-pkg-msbuild/LICENSE
 ===================================================================
 --- xamarin-pkg-msbuild.orig/LICENSE

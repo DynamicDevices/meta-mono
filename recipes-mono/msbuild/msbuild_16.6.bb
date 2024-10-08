@@ -24,7 +24,7 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main;protoco
            file://0002-Remove-myget-feeds-and-replace-with-AzDO-feeds.patch \
            "
 
-S = "${WORKDIR}/git"
+S = "${UNPACKDIR}/git"
 
 do_configure () {
     sed "s|%libhostfxr%|${STAGING_DIR_TARGET}${libdir}/libhostfxr.so|g" -i ${S}/eng/cibuild_bootstrapped_msbuild.sh

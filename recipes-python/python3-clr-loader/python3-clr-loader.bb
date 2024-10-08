@@ -17,20 +17,20 @@ DOTNET_MIN_REQ_VERSION ?= "6.0.0"
 
 DEPENDS += " \
     dotnet-native (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-setuptools-scm-native \
-    ${PYTHON_PN}-toml-native \
+    python3-setuptools-scm-native \
+    python3-toml-native \
 "
 
 RDEPENDS:${PN} += " \
     dotnet (>= ${DOTNET_MIN_REQ_VERSION}) \
-    ${PYTHON_PN}-cffi \
+    python3-cffi \
 "
 
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
-# Use a separated folder for nuget downloads and cache in WORKDIR.
-export NUGET_PACKAGES="${WORKDIR}/nuget-packages"
-export NUGET_HTTP_CACHE_PATH="${WORKDIR}/nuget-http-cache"
+# Use a separated folder for nuget downloads and cache in UNPACKDIR.
+export NUGET_PACKAGES="${UNPACKDIR}/nuget-packages"
+export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/nuget-http-cache"
 
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.

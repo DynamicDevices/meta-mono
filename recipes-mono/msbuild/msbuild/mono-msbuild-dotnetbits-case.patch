@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 Index: xamarin-pkg-msbuild/mono/build/sdks_and_nugets/update_sdks_and_nugets.proj
 ===================================================================
 --- xamarin-pkg-msbuild.orig/mono/build/sdks_and_nugets/update_sdks_and_nugets.proj

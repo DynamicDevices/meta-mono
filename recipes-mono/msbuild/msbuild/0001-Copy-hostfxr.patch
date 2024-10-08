@@ -3,6 +3,7 @@ From: Nicolas Jeker <n.jeker@gmx.net>
 Date: Fri, 22 Jan 2021 10:41:27 +0100
 Subject: [PATCH] Copy hostfxr
 
+Upstream-Status: Inappropriate [Yocto specific]
 ---
  eng/cibuild_bootstrapped_msbuild.sh | 1 +
  1 file changed, 1 insertion(+)
