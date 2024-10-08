@@ -29,6 +29,11 @@ MONOLIBS = "\
     xbuild-frameworks \
     "
 
+do_compile() {
+    oe_runmake \
+        BUILD_MAPFILE="/pathmap:${S}/mcs/class/lib/net_4_x-linux=.,${S}/mcs/class/lib/net_4_x-linux/Facades=.,${S}/mcs/class/lib/xbuild_12=.,${S}/mcs/class/lib/xbuild_14=.,${S}/mcs/tools/security=."
+}
+
 do_install:append() {
         install -d ${D}${libdir}/${PN}
         for lib in ${MONOLIBS}; do
@@ -39,4 +44,7 @@ do_install:append() {
         done
         # AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
         find ${D}${libdir}/${PN} -name *.dll.so -o -name *.exe.so | xargs -i rm {}
+
+        sed -i 's|${STAGING_LIBDIR_NATIVE}|${libdir}|g' ${D}${libdir}/mono/gac/monodoc/*/monodoc.dll.config
+        rm -f ${D}${libdir}/mono/xbuild/Microsoft/NuGet/Microsoft.NuGet.Build.Tasks.pdb
 }

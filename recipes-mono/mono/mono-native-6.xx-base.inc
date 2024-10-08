@@ -7,7 +7,10 @@ RPROVIDES:${PN} += "nativesdk-mono"
 PROVIDES += "nativesdk-mono"
 
 do_compile() {
-    oe_runmake EXTERNAL_MCS="${S}/mcs/class/lib/monolite/basic.exe" EXTERNAL_RUNTIME="${S}/foo/bar/mono"
+    oe_runmake \
+        EXTERNAL_MCS="${S}/mcs/class/lib/monolite/basic.exe" \
+        EXTERNAL_RUNTIME="${S}/foo/bar/mono" \
+        BUILD_MAPFILE="/pathmap:${S}/mcs/class/lib/net_4_x-linux=.,${S}/mcs/class/lib/net_4_x-linux/Facades=.,${S}/mcs/class/lib/xbuild_12=.,${S}/mcs/class/lib/xbuild_14=.,${S}/mcs/tools/security=."
 }
 
 EDEPENDS_X11 =+ "libgdiplus-native"
