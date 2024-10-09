@@ -7,6 +7,7 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://0001-patch-XplatUIX11-cursor.diff \
            file://shm_open-test-crosscompile.diff \
            file://disable-mmap-MAP_32BIT-support.patch \
+           file://0001-Allow-passing-external-mapfile-C-build-options.patch \
 "
 
 addtask fixup_config after do_patch before do_configure
