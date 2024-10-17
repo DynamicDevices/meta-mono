@@ -89,7 +89,7 @@ FILES_${PN}-doc				+= " ${datadir}/libgc-mono/*"
 FILES_${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
 FILES_${PN}-staticdev			+= " ${libdir}/*.a"
 
-RDEPENDS_${PN} =+ "bash" 
+RDEPENDS:${PN}-dev =+ "bash"
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
