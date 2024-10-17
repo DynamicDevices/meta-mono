@@ -32,9 +32,9 @@ MONOLIBS = "\
 do_install:append() {
         install -d ${D}${libdir}/${PN}
         for lib in ${MONOLIBS}; do
-            if [ -d "${STAGING_DIR_NATIVE}${libdir}/${PN}/$lib" ]; then
+            if [ -d "${STAGING_LIBDIR_NATIVE}/${PN}/$lib" ]; then
                 cp -af --no-preserve=ownership \
-                    ${STAGING_DIR_NATIVE}${libdir}/${PN}/$lib ${D}${libdir}/${PN}
+                    ${STAGING_LIBDIR_NATIVE}/${PN}/$lib ${D}${libdir}/${PN}
             fi
         done
         # AJL - Remove mscorlib.dll.so and mcs.exe.so files copied from mono-native to the mono destination
