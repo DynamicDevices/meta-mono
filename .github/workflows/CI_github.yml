@@ -68,6 +68,7 @@ jobs:
 
         echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
         echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
+        echo "SSTATE_DIR=\"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
 
         echo "PREFERRED_VERSION_mono=\"${MONO_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_mono-native=\"${MONO_VERSION}\"" >> conf/local.conf
