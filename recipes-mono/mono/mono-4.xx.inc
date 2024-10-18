@@ -9,6 +9,7 @@ DEPENDS = "zlib cmake-native"
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
            file://dllmap-config.in.diff \
 	   file://0002-prevent-threadpool-exception5-test-hanging.patch \
+	   file://0003-include-sys-sysmacros.h-for-makedev.patch \
 "
 
 # Add this patch into SRC_URI when testing projects
@@ -90,7 +91,7 @@ FILES:${PN}-doc				+= " ${datadir}/libgc-mono/*"
 FILES:${PN}-dbg				+= " ${datadir}/mono-2.0/mono/cil/cil-opcodes.xml ${libdir}/mono/*/*.mdb ${libdir}/mono/gac/*/*/*.mdb"
 FILES:${PN}-staticdev			+= " ${libdir}/*.a"
 
-RDEPENDS:${PN} =+ "bash" 
+RDEPENDS:${PN}-dev =+ "bash"
 
 # Workaround for observed race in `make install`
 PARALLEL_MAKEINST=""
