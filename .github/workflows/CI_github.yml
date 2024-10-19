@@ -11,7 +11,7 @@ jobs:
   build-and-test:
     runs-on: [self-hosted, linux]
     container:
-      image: dynamicdevices/yocto-ci-build:sumo
+      image: dynamicdevices/yocto-ci-build:dunfell
       options: --privileged -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
