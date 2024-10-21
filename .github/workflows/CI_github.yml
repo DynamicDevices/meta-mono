@@ -20,7 +20,7 @@ jobs:
       matrix:
         dotnet_version: [8.0.303, 6.0.424]
         mono_version: [6.12.0.206]
-        branch: [walnascar]
+        branch: [master]
         arch: [x86-64, arm64]
     env:
       name: build-and-test
@@ -51,7 +51,7 @@ jobs:
           cd ${BRANCH}/meta-openembedded
           git pull origin ${BRANCH}
           cd ../..
-        fi 
+        fi
     - name: Configuring
       run: |
         rm -f ${BRANCH}/build/conf/local.conf
@@ -77,19 +77,25 @@ jobs:
         echo "PREFERRED_VERSION_dotnet=\"${DOTNET_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_dotnet-native=\"${DOTNET_VERSION}\"" >> conf/local.conf
 
-        echo "INHERIT += \" rm_work \"" >> conf/local.conf
+        echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
+        echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
 
         echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
         echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-    - name: Cleaning
+#    - name: Cleaning
+#      run: |
+#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+#        bitbake -c cleanall test-image-mono dotnet dotnet-native
+    - name: Building Mono Test Image
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -c cleanall test-image-mono dotnet dotnet-native
-    - name: Building
+        bitbake test-image-mono
+    - name: CVE Check Mono / dotNet
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -k test-image-mono
+        export TERM=linux
+        bitbake mono dotnet -c cve-check
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
@@ -100,3 +106,8 @@ jobs:
       with:
         name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
+    - name: Store SPDX
+      uses: actions/upload-artifact@v4
+      with:
+        name: spdx-test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/*.json
