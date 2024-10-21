@@ -18,7 +18,7 @@ jobs:
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
-        dotnet_version: [8.0.303, 6.0.424]
+        dotnet_version: [8.0.403, 6.0.427]
         mono_version: [6.12.0.206]
         branch: [master]
         arch: [x86-64, arm64]
