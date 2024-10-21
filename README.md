@@ -15,6 +15,10 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 *support status as of 21/10/24, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
+## Removal of support for ARM32
+
+Currently (21/10/2024) `styhead` is failing to build GCC for ARM32. As such we've removed the CI tests for the interim. For discussion see [here](https://github.com/DynamicDevices/meta-mono/discussions/234). At such time as GCC is building again for ARM32 the intention is to add the CI build back in at which time we intend to continue to support ARM32. #HelpWanted
+
 ## Layer Dependencies
 
 This layer depends on:
