@@ -8,6 +8,7 @@ RDEPENDS:${PN}-dev =+ " zlib "
 SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.xz \
            file://shm_open-test-crosscompile.diff \
            file://disable-mmap-MAP_32BIT-support.patch \
+           file://0001-Add-libusb-1.0-mapping.patch \
 "
 
 
