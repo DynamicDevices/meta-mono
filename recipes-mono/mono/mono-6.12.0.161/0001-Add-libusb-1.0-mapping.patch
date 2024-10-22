@@ -1,0 +1,32 @@
+From 0c992882f427b67cffd1b7577c3de86aed1a4d11 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Zolt=C3=A1n=20B=C3=B6sz=C3=B6rm=C3=A9nyi?=
+ <zboszor@gmail.com>
+Date: Tue, 22 Oct 2024 07:36:06 +0200
+Subject: [PATCH] Add libusb-1.0 mapping
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This fixes using USB devices with LibUsbDotNet and MonoLibUsb.
+
+Signed-off-by: Zoltán Böszörményi <zboszor@gmail.com>
+Upstream-Status: Submitted [https://github.com/mono/mono/pull/21807]
+---
+ data/config.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/config.in b/data/config.in
+index 5758a172e19..cef832756be 100644
+--- a/data/config.in
++++ b/data/config.in
+@@ -33,6 +33,7 @@
+ 	<dllmap dll="libcairo-2.dll" target="libcairo.2.dylib" os="osx"/>
+ 	<dllmap dll="libcups" target="libcups.so.2" os="!windows"/>
+ 	<dllmap dll="libcups" target="libcups.dylib" os="osx"/>
++	<dllmap dll="libusb-1.0" target="libusb-1.0.so.0" os="!windows"/>
+ 	<dllmap dll="i:kernel32.dll">
+ 		<dllentry dll="__Internal" name="CopyMemory" target="mono_win32_compat_CopyMemory"/>
+ 		<dllentry dll="__Internal" name="FillMemory" target="mono_win32_compat_FillMemory"/>
+-- 
+2.47.0
+
