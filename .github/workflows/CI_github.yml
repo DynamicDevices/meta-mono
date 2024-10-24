@@ -95,7 +95,8 @@ jobs:
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         export TERM=linux
-        bitbake mono dotnet -c cve-check
+        bitbake mono -c cve-check
+        bitbake dotnet -c cve-check
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
