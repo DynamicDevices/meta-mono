@@ -94,7 +94,9 @@ jobs:
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         export TERM=linux
         bitbake mono -c cve_check
+        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
         bitbake dotnet -c cve_check
+        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
@@ -108,5 +110,5 @@ jobs:
     - name: Store SPDX
       uses: actions/upload-artifact@v4
       with:
-        name: spdx-test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/*.json
+        name: cve-summary-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ matrix.branch }}/build/tmp/log/cve/*.json
