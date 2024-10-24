@@ -6,7 +6,7 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 | Branch | Version | Support Status* | Status of Build & Tests |
 | ------ | ------- | --------------- | ----------------------- |
-| walnascar | 5.2	| Active Development | [![walnascar](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=walnascar&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| walnascar | 5.2	| Active Development | Waiting on Poky branch |
 | styhead | 5.1	| Future | [![styhead](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=styhead&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | scarthgap | 5.0	| Long Term Support (until Apr. 2028) | [![scarthgap](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=scarthgap&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | nanbield | 4.3	| May 2024  | [![nanbield](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=nanbield&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
