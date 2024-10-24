@@ -107,7 +107,7 @@ jobs:
       with:
         name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
-    - name: Store SPDX
+    - name: Store CVEs
       uses: actions/upload-artifact@v4
       with:
         name: cve-summary-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
