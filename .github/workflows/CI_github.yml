@@ -65,6 +65,7 @@ jobs:
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
 
+        echo "BB_DEFAULT_EVENTLOG = \"\"" >> conf/local.conf
         echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
         echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
         echo "SSTATE_DIR=\"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
