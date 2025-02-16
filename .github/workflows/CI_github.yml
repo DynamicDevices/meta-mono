@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux, X64]
-    timeout-minutes: 600
+    timeout-minutes: 960
     container:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
@@ -66,15 +66,15 @@ jobs:
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
 
         echo "BB_DEFAULT_EVENTLOG = \"\"" >> conf/local.conf
-        echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
-        echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
-        echo "SSTATE_DIR=\"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
+        echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
+        echo "DL_DIR = \"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
+        echo "SSTATE_DIR = \"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
 
-        echo "PREFERRED_VERSION_mono=\"${MONO_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_mono-native=\"${MONO_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_mono = \"${MONO_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_mono-native = \"${MONO_VERSION}\"" >> conf/local.conf
 
-        echo "PREFERRED_VERSION_dotnet=\"${DOTNET_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_dotnet-native=\"${DOTNET_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_dotnet = \"${DOTNET_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_dotnet-native = \"${DOTNET_VERSION}\"" >> conf/local.conf
 
         echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
