@@ -16,10 +16,10 @@ jobs:
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       matrix:
-        dotnet_version: [8.0.403, 6.0.427]
+        dotnet_version: [8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
         branch: [styhead]
-        arch: [x86-64, arm64]
+        arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
