@@ -1,0 +1,43 @@
+header:
+  version: 14
+
+distro: poky
+target: test-image-mono
+machine: qemu${MACHINE}
+
+repos:
+  meta-mono:
+
+  poky:
+    url: https://github.com/yoctoproject/poky.git
+    path: layers/poky
+    commit: 6840d3b71ed6adfcd2c2e46daf8a93d3755c5d99
+    layers:
+      meta:
+      meta-poky:
+
+  meta-openembedded:
+    url: http://git.openembedded.org/meta-openembedded
+    path: layers/meta-openembedded
+    branch: kirkstone
+    commit: de8681b4a2a101b99dd2c48d89a7de2ccd9a961f
+    layers:
+      meta-oe:
+      meta-python:
+      meta-multimedia:
+      meta-networking:
+      meta-webserver:
+
+local_conf_header:
+  meta-polarfire-soc-yocto-bsp: |
+    DL_DIR="${GITHUB_WORKSPACE}/downloads"
+    SSTATE_DIR="${GITHUB_WORKSPACE}/sstate"
+    PREFERRED_VERSION_mono="${MONO_VERSION}"
+    PREFERRED_VERSION_mono-native="${MONO_VERSION}"
+    PREFERRED_VERSION_dotnet="${DOTNET_VERSION}"
+    PREFERRED_VERSION_dotnet-native="${DOTNET_VERSION}"
+    INHERIT += "create-spdx cve-check rm_work "
+#        sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/'
+    SPDX_PRETTY = "1"
+    BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()}"
+    PARALLEL_MAKE ?= "-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}"

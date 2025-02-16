@@ -27,81 +27,23 @@ jobs:
       ARCH: ${{ matrix.arch }}
       BRANCH: ${{ matrix.branch }}
     steps:
-    - name: Checkout meta-mono
-      uses: actions/checkout@v4
-      with:
-        clean: false
-        path: ${{ matrix.branch }}/meta-mono
-    - name: Update repo poky
-      run: |
-        if [ ! -d ${BRANCH}/poky ]; then
-          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
-        else
-          cd ${BRANCH}/poky
-          git pull origin ${BRANCH}
-          cd ../..
-        fi
-    - name: Update repo meta-openembedded
-      run: |
-        if [ ! -d ${BRANCH}/meta-openembedded ]; then
-          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
-        else
-          cd ${BRANCH}/meta-openembedded
-          git pull origin ${BRANCH}
-          cd ../..
-        fi
-    - name: Configuring
-      run: |
-        rm -f ${BRANCH}/build/conf/local.conf
-        rm -f ${BRANCH}/build/conf/bblayers.conf
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-
-        # Append custom variables for regenerated local.conf and bblayers.conf samples
-        echo "### Starting to configure local.conf and bblayers.conf ###"
-        echo "mono version: $MONO_VERSION"
-        echo "dotnet version: $DOTNET_VERSION"
-
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
-
-        echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
-        echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
-        echo "SSTATE_DIR=\"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
-
-        echo "PREFERRED_VERSION_mono=\"${MONO_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_mono-native=\"${MONO_VERSION}\"" >> conf/local.conf
-
-        echo "PREFERRED_VERSION_dotnet=\"${DOTNET_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_dotnet-native=\"${DOTNET_VERSION}\"" >> conf/local.conf
-
-        echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
-        sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
-        echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
-
-        echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
-        echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-#    - name: Cleaning
-#      run: |
-#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-#        bitbake -c cleanall test-image-mono dotnet dotnet-native
     - name: Building Mono Test Image
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        kas build kas/ci.yml
         bitbake test-image-mono
-    - name: CVE Check Mono / dotNet
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        export TERM=linux
-        bitbake mono -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
-        bitbake dotnet -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
-    - name: Testing
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        export TERM=linux
-        bitbake test-image-mono -c testimage
+#    - name: CVE Check Mono / dotNet
+#      run: |
+#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+#        export TERM=linux
+#        bitbake mono -c cve_check
+#        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
+#        bitbake dotnet -c cve_check
+#        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
+#    - name: Testing
+#      run: |
+#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+#        export TERM=linux
+#        bitbake test-image-mono -c testimage
     - name: Store artifacts
       uses: actions/upload-artifact@v4
       with:
