@@ -76,7 +76,7 @@ jobs:
         echo "PREFERRED_VERSION_dotnet = \"${DOTNET_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_dotnet-native = \"${DOTNET_VERSION}\"" >> conf/local.conf
 
-        echo "INHERIT += \" rm_work \"" >> conf/local.conf
+        echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
 
