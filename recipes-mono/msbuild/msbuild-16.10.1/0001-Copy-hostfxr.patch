@@ -19,4 +19,4 @@ index 759c75f..cfa3c28 100755
 +    cp %libhostfxr% $artifacts_dir/mono-msbuild/SdkResolvers/Microsoft.DotNet.MSBuildSdkResolver/
      sed -i 's#/sh$#/bash#' $artifacts_dir/mono-msbuild/msbuild
      chmod +x $artifacts_dir/mono-msbuild/MSBuild.dll
-     rm "$msbuild_zip"
+ 
