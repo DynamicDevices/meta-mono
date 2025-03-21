@@ -6,12 +6,12 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 | Branch | Version | Support Status* | Status of Build & Tests |
 | ------ | ------- | --------------- | ----------------------- |
-| walnascar | 5.2	| Active Development | Waiting on Poky branch |
-| styhead | 5.1	| Future | [![styhead](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=styhead&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| walnascar | 5.2	| Future (April 2025) | [![walnascar](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=walnascar&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| styhead   | 5.1	| Support for 7 months (May 2025) | [![styhead](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=styhead&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | scarthgap | 5.0	| Long Term Support (until Apr. 2028) | [![scarthgap](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=scarthgap&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
-| kirkstone | 4.0	| Long Term Support (minimum Apr. 2024)	 | [![master](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
+| kirkstone | 4.0	| Long Term Support (minimum Apr. 2024)	 | [![kirkstone](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
-*support status as of 07/11/24, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
+*support status as of 21/03/25, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
 ## Removal of support for ARM32
 
