@@ -2,7 +2,7 @@ require gtk-sharp.inc
 
 inherit pkgconfig
 
-DEPENDS += " gtk+3 atk pango cairo glib-2.0 libglade mono"
+DEPENDS += " gtk+3 atk pango cairo glib-2.0 glade mono"
 RDEPENDS:${PN} += " perl gtk+3"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=8754deb904d22254188cb67189b87f19"

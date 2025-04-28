@@ -2,7 +2,7 @@ require gtk-sharp.inc
 
 inherit pkgconfig native
 
-DEPENDS += " gtk+-native atk-native pango-native cairo-native glib-2.0-native libglade-native "
+DEPENDS += " gtk+-native atk-native pango-native cairo-native glib-2.0-native glade-native "
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
