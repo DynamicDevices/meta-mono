@@ -1,10 +1,13 @@
-From b23dc637abcb049fca335d3afd31a02cf87a309b Mon Sep 17 00:00:00 2001
+From d556f8c03500b34afd18e40c5d7cbad5ad7f7abb Mon Sep 17 00:00:00 2001
 From: Kraag Gorim <kraaggorim@gmail.com>
 Date: Thu, 6 Feb 2020 16:21:46 +0100
 Subject: [PATCH] mono: use python3 instead of python
 
 Replace all calls for python with a variable and switch from python
 version 2 to version 3.
+
+Upstream-Status: Inappropriate [Yocto specific]
+
 ---
  acceptance-tests/Makefile.in    | 9 +++++----
  mono/mini/Makefile.am           | 4 +++-
@@ -16,10 +19,10 @@ version 2 to version 3.
  7 files changed, 21 insertions(+), 13 deletions(-)
 
 diff --git a/acceptance-tests/Makefile.in b/acceptance-tests/Makefile.in
-index 9b9b777..7b2313d 100644
+index a77eac668..317b0390b 100644
 --- a/acceptance-tests/Makefile.in
 +++ b/acceptance-tests/Makefile.in
-@@ -265,6 +265,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
+@@ -292,6 +292,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
  PIDTYPE = @PIDTYPE@
  PKG_CONFIG = @PKG_CONFIG@
  PLATFORM_AOT_SUFFIX = @PLATFORM_AOT_SUFFIX@
@@ -27,7 +30,7 @@ index 9b9b777..7b2313d 100644
  RANLIB = @RANLIB@
  SEARCHSEP = @SEARCHSEP@
  SED = @SED@
-@@ -5770,19 +5771,19 @@ reset:
+@@ -5798,19 +5799,19 @@ reset:
  
  __bump-version-%:
  	@if [ "$(REV)" = "" ]; then echo "Usage: make bump-version-$* REV=<ref>"; exit 1; fi
@@ -52,10 +55,10 @@ index 9b9b777..7b2313d 100644
  
  $(eval $(call ValidateVersionTemplate,benchmarker,BENCHMARKER))
 diff --git a/mono/mini/Makefile.am b/mono/mini/Makefile.am
-index f6f85d0..f88e667 100644
+index 6c840f88b..98f6e3840 100644
 --- a/mono/mini/Makefile.am
 +++ b/mono/mini/Makefile.am
-@@ -683,9 +683,11 @@ generics-variant-types.dll: generics-variant-types.il
+@@ -740,9 +740,11 @@ generics-variant-types.dll: generics-variant-types.il
  MemoryIntrinsics.dll: MemoryIntrinsics.il
  	$(ILASM) -dll -output=$@ $<
  
@@ -69,10 +72,10 @@ index f6f85d0..f88e667 100644
  cpu-wasm.h: mini-ops.h cpu-wasm.md
  	$(GENMDESC_PRG) cpu-wasm.h wasm_desc $(srcdir)/cpu-wasm.md
 diff --git a/mono/mini/Makefile.am.in b/mono/mini/Makefile.am.in
-index f6f85d0..f88e667 100755
+index 6c840f88b..98f6e3840 100755
 --- a/mono/mini/Makefile.am.in
 +++ b/mono/mini/Makefile.am.in
-@@ -683,9 +683,11 @@ generics-variant-types.dll: generics-variant-types.il
+@@ -740,9 +740,11 @@ generics-variant-types.dll: generics-variant-types.il
  MemoryIntrinsics.dll: MemoryIntrinsics.il
  	$(ILASM) -dll -output=$@ $<
  
@@ -86,11 +89,11 @@ index f6f85d0..f88e667 100755
  cpu-wasm.h: mini-ops.h cpu-wasm.md
  	$(GENMDESC_PRG) cpu-wasm.h wasm_desc $(srcdir)/cpu-wasm.md
 diff --git a/mono/mini/Makefile.in b/mono/mini/Makefile.in
-index 52f3fcf..0fe413a 100644
+index 6a46078a2..79003c8f2 100644
 --- a/mono/mini/Makefile.in
 +++ b/mono/mini/Makefile.in
-@@ -1146,8 +1146,9 @@ libmonosgen_2_0_la_LDFLAGS = $(libmonoldflags) $(monobin_platform_ldflags)
- libmonoincludedir = $(includedir)/mono-$(API_VER)/mono/jit
+@@ -1224,8 +1224,9 @@ libmonoincludedir = $(includedir)/mono-$(API_VER)/mono/jit
+ # They should be wrapped in MONO_BEGIN_DECLS / MONO_END_DECLS.
  libmonoinclude_HEADERS = jit.h
  CSFLAGS = -unsafe -nowarn:0219,0169,0414,0649,0618
 +PYTHON = python3
@@ -101,7 +104,7 @@ index 52f3fcf..0fe413a 100644
  GSHAREDVT_RUNTIME_OPTS = $(if $(GSHAREDVT),-O=gsharedvt,)
  fullaot_regtests = $(regtests)
 diff --git a/mono/mini/genmdesc.py b/mono/mini/genmdesc.py
-index 987332b..3691c9d 100755
+index 987332bdf..3691c9d4f 100755
 --- a/mono/mini/genmdesc.py
 +++ b/mono/mini/genmdesc.py
 @@ -1,4 +1,4 @@
@@ -111,10 +114,10 @@ index 987332b..3691c9d 100755
  #
  # This tool is used to generate the cpu-<ARCH>.h files used by the JIT. The input is the
 diff --git a/mono/tests/Makefile.am b/mono/tests/Makefile.am
-index 2600999..a9512c2 100755
+index 2c3185717..f69867414 100755
 --- a/mono/tests/Makefile.am
 +++ b/mono/tests/Makefile.am
-@@ -2397,8 +2397,9 @@ coreclr-gcstress:
+@@ -2978,8 +2978,9 @@ coreclr-gcstress:
  
  # Tests for the Mono lldb plugin
  EXTRA_DIST += test_lldb.py test-lldb.cs
@@ -126,10 +129,10 @@ index 2600999..a9512c2 100755
  noinst_LTLIBRARIES = libtest.la
  
 diff --git a/mono/utils/jemalloc/Makefile.in b/mono/utils/jemalloc/Makefile.in
-index 997cb07..cd53917 100644
+index 54761e5e6..4e3be35d5 100644
 --- a/mono/utils/jemalloc/Makefile.in
 +++ b/mono/utils/jemalloc/Makefile.in
-@@ -269,6 +269,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
+@@ -290,6 +290,7 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
  PIDTYPE = @PIDTYPE@
  PKG_CONFIG = @PKG_CONFIG@
  PLATFORM_AOT_SUFFIX = @PLATFORM_AOT_SUFFIX@
@@ -137,7 +140,7 @@ index 997cb07..cd53917 100644
  RANLIB = @RANLIB@
  SEARCHSEP = @SEARCHSEP@
  SED = @SED@
-@@ -667,19 +668,19 @@ reset:
+@@ -698,19 +699,19 @@ reset:
  
  __bump-version-%:
  	@if [ "$(REV)" = "" ]; then echo "Usage: make bump-version-$* REV=<ref>"; exit 1; fi
@@ -161,6 +164,3 @@ index 997cb07..cd53917 100644
  	if [ "$(COMMIT)" = "1" ]; then echo "[submodules] Bump $* to pick up $$REV:" | git commit -F - $(SUBMODULES_CONFIG_FILE); fi
  
  $(eval $(call ValidateVersionTemplate,jemalloc,JEMALLOC))
--- 
-2.24.0
-
