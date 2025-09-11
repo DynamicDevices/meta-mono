@@ -1,0 +1,36 @@
+From 637c318471f7fef325ac2f1858edcf66df3b81e0 Mon Sep 17 00:00:00 2001
+From: Esme Povirk <esme@codeweavers.com>
+Date: Sat, 12 Apr 2025 20:31:05 +0000
+Subject: [PATCH 2/3] arm64: Fix an invalid stack read.
+
+Upstream-Status: Backport
+---
+ mono/mini/mini-arm64.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/mono/mini/mini-arm64.c b/mono/mini/mini-arm64.c
+index 9b32f424199..aba6ca3a41e 100644
+--- a/mono/mini/mini-arm64.c
++++ b/mono/mini/mini-arm64.c
+@@ -1737,9 +1737,15 @@ mono_arch_dyn_call_get_buf_size (MonoDynCallInfo *info)
+ static double
+ bitcast_r4_to_r8 (float f)
+ {
+-	float *p = &f;
+-
+-	return *(double*)p;
++	union {
++		float f;
++		double d;
++		guint64 i;
++	} u;
++	u.i = 0;
++	u.f = f;
++
++	return u.d;
+ }
+ 
+ static float
+-- 
+2.51.0
+

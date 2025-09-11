@@ -9,6 +9,9 @@ SRC_URI = "https://dl.winehq.org/mono/sources/mono/mono-6.14.1.tar.xz \
            file://shm_open-test-crosscompile.diff \
            file://0001-Allow-passing-external-mapfile-C-build-options.patch \
            file://0001-Add-libusb-1.0-mapping.patch \
+           file://0001-arm64-Remove-an-unused-function.patch \
+           file://0002-arm64-Fix-an-invalid-stack-read.patch \
+           file://0003-arm64-Fix-a-pointer-to-int-cast-size-mismatch.patch \
 "
 
 
