@@ -17,8 +17,8 @@ jobs:
     strategy:
       matrix:
         dotnet_version: [8.0.406, 6.0.428]
-        mono_version: [6.12.0.206]
-        branch: [styhead]
+        mono_version: [6.14.1]
+        branch: [styhead, walnascar, master]
         arch: [x86-64, arm, arm64]
     env:
       name: build-and-test
