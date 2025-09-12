@@ -21,7 +21,7 @@ SRC_URI = "git://github.com/mono/linux-packaging-msbuild.git;branch=main;protoco
            file://0001-Copy-hostfxr.patch \
            "
 
-S = "${UNPACKDIR}/git"
+S = "${MONO_GIT_S}"
 
 do_configure () {
     sed "s|%libhostfxr%|${STAGING_DIR_TARGET}${libdir}/libhostfxr.so|g" -i ${S}/eng/cibuild_bootstrapped_msbuild.sh
@@ -35,8 +35,8 @@ do_configure () {
     sed "s|\$1/lib|${libdir}|g" -i ${S}/mono/build/gen_msbuild_wrapper.sh
 }
 
-export DOTNET_MSBUILD_SDK_RESOLVER_CLI_DIR="${STAGING_DATADIR_NATIVE}/dotnet"
-export CURL_CA_BUNDLE="${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt"
+export DOTNET_MSBUILD_SDK_RESOLVER_CLI_DIR = "${STAGING_DATADIR_NATIVE}/dotnet"
+export CURL_CA_BUNDLE = "${STAGING_DIR_NATIVE}/etc/ssl/certs/ca-certificates.crt"
 
 do_compile[network] = "1"
 

@@ -29,16 +29,16 @@ RDEPENDS:${PN} += " \
 # NuGet uses $HOME/.nuget/packages to store packages by default
 # but we should not use anything outside the build root of packages.
 # Use a separated folder for nuget downloads and cache in UNPACKDIR.
-export NUGET_PACKAGES="${UNPACKDIR}/nuget-packages"
-export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/nuget-http-cache"
+export NUGET_PACKAGES = "${UNPACKDIR}/nuget-packages"
+export NUGET_HTTP_CACHE_PATH = "${UNPACKDIR}/nuget-http-cache"
 
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.
 # Override DOTNET_HTTP_PROXY and DOTNET_HTTPS_PROXY in layer.conf or local.conf if needed
 DOTNET_HTTP_PROXY ?= ""
 DOTNET_HTTPS_PROXY ?= ""
-export http_proxy="${DOTNET_HTTP_PROXY}"
-export https_proxy="${DOTNET_HTTPS_PROXY}"
+export http_proxy = "${DOTNET_HTTP_PROXY}"
+export https_proxy = "${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
     if ! grep -Fq __version__ ${S}/clr_loader/__init__.py

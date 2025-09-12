@@ -1,0 +1,29 @@
+require mono-6.xx.inc
+require mono-mit-bsd-6xx.inc
+require ${PN}-base.inc
+require mono-${PV}.inc
+
+RDEPENDS:${PN}-dev =+ " zlib "
+
+SRC_URI = "https://dl.winehq.org/mono/sources/mono/mono-6.14.1.tar.xz \
+           file://shm_open-test-crosscompile.diff \
+           file://0001-Allow-passing-external-mapfile-C-build-options.patch \
+           file://0001-Add-libusb-1.0-mapping.patch \
+           file://0001-arm64-Remove-an-unused-function.patch \
+           file://0002-arm64-Fix-an-invalid-stack-read.patch \
+           file://0003-arm64-Fix-a-pointer-to-int-cast-size-mismatch.patch \
+"
+
+
+addtask fixup_config after do_patch before do_configure
+
+do_fixup_config() {
+        sed 's|$mono_libdir/libMonoPosixHelper@libsuffix@|libMonoPosixHelper.so|g' -i ${S}/data/config.in
+        sed 's|@X11@|libX11.so.6|g' -i ${S}/data/config.in
+        sed 's|@libgdiplus_install_loc@|libgdiplus.so.0|g' -i ${S}/data/config.in
+}
+
+PACKAGES += "${PN}-profiler "
+FILES:${PN}-profiler += " ${datadir}/mono-2.0/mono/profiler/*"
+
+INSANE_SKIP:${PN}-libs += "dev-so"

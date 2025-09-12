@@ -23,7 +23,7 @@ SRC_URI = "git://github.com/mono/mono.git;branch=${SRCBRANCH}\
 #	   file://0001-reintroduce-gmcs.patch \
 #
 
-S = "${UNPACKDIR}/git"
+S = "${MONO_GIT_S}"
 
 FILESPATH =. "${FILE_DIRNAME}/mono-4.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
@@ -83,4 +83,4 @@ FILES:${PN}-profiler			+= " ${datadir}/mono-2.0/mono/profiler/*"
 RDEPENDS:${PN} =+ "bash" 
 
 # Workaround for observed race in `make install`
-PARALLEL_MAKEINST=""
+PARALLEL_MAKEINST = ""

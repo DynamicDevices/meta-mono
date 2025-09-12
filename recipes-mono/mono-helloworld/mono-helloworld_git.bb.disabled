@@ -2,4 +2,4 @@ require mono-helloworld.inc
 
 SRCREV = "${AUTOREV}"
 SRC_URI =  "git://github.com/DynamicDevices/mono-helloworld.git" 
-S = "${UNPACKDIR}/git"
+S = "${MONO_GIT_S}"

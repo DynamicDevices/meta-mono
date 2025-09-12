@@ -10,7 +10,7 @@ DEPENDS = "mono"
 
 SRC_URI = "git://github.com/mono/taglib-sharp.git;protocol=https;branch=${SRCBRANCH}"
 
-S = "${UNPACKDIR}/git"
+S = "${MONO_GIT_S}"
 
 inherit autotools-brokensep pkgconfig
 
