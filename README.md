@@ -15,6 +15,12 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 NOTE: 24/01/22 - This [patch](https://patchwork.openembedded.org/patch/171349/) is needed to Poky for branch morty, sumo (and perhaps others) to fix a gcc version build error.
 
+## Limitations
+
+### pythonnet
+
+The `python3-pythonnet` package currently does not support .NET 10.
+
 ## Layer Dependencies
 
 This layer depends on:
