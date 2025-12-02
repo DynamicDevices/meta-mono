@@ -13,9 +13,15 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 *support status as of 21/03/25, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
-## Removal of support for ARM32
+## Limitations
+
+### Removal of support for ARM32
 
 Currently (21/10/2024) `styhead` is failing to build GCC for ARM32. As such we've removed the CI tests for the interim. For discussion see [here](https://github.com/DynamicDevices/meta-mono/discussions/234). At such time as GCC is building again for ARM32 the intention is to add the CI build back in at which time we intend to continue to support ARM32. #HelpWanted
+
+### pythonnet
+
+The `python3-pythonnet` package currently does not support .NET 10.
 
 ## Layer Dependencies
 
@@ -69,7 +75,7 @@ On the target:
 
 So far, Windows Forms applications have been tested under Sato.
 Mono does not require Sato, it does require X if you want to run
-Windows Forms applications. 
+Windows Forms applications.
 
 ## Testing Mono builds
 

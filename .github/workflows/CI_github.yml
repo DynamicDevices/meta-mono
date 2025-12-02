@@ -15,8 +15,9 @@ jobs:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
+      max-parallel: 1
       matrix:
-        dotnet_version: [8.0.406, 6.0.428]
+        dotnet_version: [10.0.100, 8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
         branch: [styhead]
         arch: [x86-64, arm, arm64]
@@ -82,12 +83,23 @@ jobs:
 
         echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
         echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-#    - name: Cleaning
-#      run: |
-#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-#        bitbake -c cleanall test-image-mono dotnet dotnet-native
+    - name: Cleaning
+      run: |
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        bitbake -c cleanall test-image-mono dotnet dotnet-helloworld dotnet-native
     - name: Building Mono Test Image
       run: |
+        id
+        ls -lhA / || true
+        ls -lhA /__w || true
+        ls -lhA /github || true
+        ls -lhA /github/home || true
+        ls -lhA /github/home/.local || true
+        ls -lhA /github/home/.local/share || true
+        ls -lhA /github/home/.local/share/NuGet || true
+        ls -lhA /github/home/.local/share/NuGet/Migrations || true
+        mkdir -p /github/home/.local/share/NuGet/Migrations || true
+
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
         bitbake test-image-mono
     - name: CVE Check Mono / dotNet
