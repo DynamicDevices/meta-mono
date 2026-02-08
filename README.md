@@ -19,17 +19,17 @@ Currently (21/10/2024) `styhead` is failing to build GCC for ARM32. As such we'v
 
 ## Layer Dependencies
 
-This layer depends on:
+The **only mandated dependency** for this layer is OpenEmbedded-Core (meta). Use the same OE-Core branch as this layer (see [Build status](#build-status) for supported branches, e.g. styhead, scarthgap, kirkstone).
 
 URI: git://git.openembedded.org/openembedded-core
 layers: meta
-branch: master
+branch: match this layer's branch (e.g. styhead, scarthgap, kirkstone)
 
 ## Detail
 
 For Mono release notes please see [here](https://www.mono-project.com/docs/about-mono/releases)
 
-## Layer Dependencies
+## Optional layer dependency (meta-oe)
 
 The libgdiplus recipe has a soft dependency on the giflib recipe which is provided by the meta-oe layer.
 These dependencies can be controlled using the PACKAGECONFIG feature of yocto.  libgdiplus
@@ -160,6 +160,7 @@ Follow Yocto change submission policy, detailed here, for formatting:
 
 * Create an issue on github.com/dynamicdevices/meta-mono
 * Fork master on github.com/dynamicdevices/meta-mono
+* (Optional) Install [pre-commit](https://pre-commit.com/) and run `pre-commit install` so markdown/YAML linting runs automatically before each commit (not in CI).
 * Commit your changes to your fork referencing the issue number prefixed with #
 * Create a pull request (PR) to the main repository
 * Your PR will trigger a number of CI builds which will run tests to ensure nothing is broken. The CI builds must pass for your PR to be merged by a maintainer. If your PR does not build correctly please address and update the PR with a fix.

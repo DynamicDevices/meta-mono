@@ -1,0 +1,5 @@
+# Markdownlint config (used by pre-commit and CI)
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+default: true
+MD013: false   # line length (allow long lines in tables/docs)
+MD041: false   # first line in file should be top-level heading (FAQ, etc.)
