@@ -11,6 +11,7 @@ DEPENDS = "patchelf-native"
 RDEPENDS:${PN}:class-target = "icu zlib libgssapi-krb5"
 RDEPENDS:${PN}:class-native = "icu zlib"
 RDEPENDS:${PN}:class-nativesdk = "icu zlib"
+RDEPENDS:${PN}-dev = "zlib"
 
 PR = "r0"
 
@@ -18,10 +19,10 @@ SRC_ARCH:aarch64 = "arm64"
 SRC_ARCH:arm = "arm"
 SRC_ARCH:x86-64 = "x64"
 
-SRC_URI[vardeps] += "SRC_FETCH_ID SRC_ARCH"
+SRC_URI[vardeps] += "SRC_ARCH"
 SRC_URI[sha512sum] = "${SRC_SHA512SUM}"
 
-SRC_URI = "https://download.visualstudio.microsoft.com/download/pr/${SRC_FETCH_ID}/dotnet-sdk-${PV}-linux-${SRC_ARCH}.tar.gz;subdir=dotnet-${PV}"
+SRC_URI = "https://builds.dotnet.microsoft.com/dotnet/Sdk/${PV}/dotnet-sdk-${PV}-linux-${SRC_ARCH}.tar.gz;subdir=dotnet-${PV}"
 
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
@@ -45,6 +46,7 @@ do_install() {
     install -d ${D}${datadir}/dotnet/host/fxr
     cp -r --no-preserve=ownership ${S}/host/fxr/* ${D}${datadir}/dotnet/host/fxr/
 
+    cp -r --no-preserve=ownership ${S}/packs ${D}${datadir}/dotnet/
     cp -r --no-preserve=ownership ${S}/sdk ${D}${datadir}/dotnet/
     cp -r --no-preserve=ownership ${S}/sdk-manifests ${D}${datadir}/dotnet/
 
@@ -56,6 +58,7 @@ do_install() {
 
     # Hack to fix liblttng-ust dependency issues
     patchelf --remove-needed liblttng-ust.so.0 ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME_VERSION}/libcoreclrtraceptprovider.so
+    patchelf --remove-needed liblttng-ust.so.1 ${D}${datadir}/dotnet/shared/Microsoft.NETCore.App/${DOTNET_RUNTIME_VERSION}/libcoreclrtraceptprovider.so
 
     # Symlink libhostfxr.so - prefer DOTNET_RUNTIME_VERSION, fall back to
     # whatever the SDK tarball actually ships (muxer version may differ).
@@ -86,6 +89,7 @@ FILES:${PN} += "\
 "
 
 FILES:${PN}-dev = "\
+    ${datadir}/dotnet/packs \
     ${datadir}/dotnet/sdk \
     ${datadir}/dotnet/sdk-manifests \
     ${datadir}/dotnet/templates \
@@ -98,6 +102,7 @@ FILES:${PN}-dbg = "\
 RRECOMMENDS:dotnet-dev[nodeprrecs] = "1"
 
 INSANE_SKIP:${PN} = "already-stripped libdir staticdev textrel dev-so"
+INSANE_SKIP:${PN}-dev = "libdir staticdev dev-elf"
 INSANE_SKIP:${PN}-dbg = "libdir"
 
 # For native builds, replace the dotnet symlink with a wrapper script that

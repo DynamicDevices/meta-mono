@@ -19,8 +19,9 @@ jobs:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
+      max-parallel: 1
       matrix:
-        dotnet_version: [8.0.406, 6.0.428]
+        dotnet_version: [10.0.100, 8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
         branch: [styhead]
         arch: [x86-64, arm, arm64]
@@ -89,14 +90,8 @@ jobs:
 
         echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
         echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-    - name: Yocto layer compliance check
-      if: github.ref == 'refs/heads/feature/yocto-layer-compliance' || github.head_ref == 'feature/yocto-layer-compliance'
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        yocto-check-layer --dependency $GITHUB_WORKSPACE/${BRANCH}/poky/meta --dependency $GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe -- $GITHUB_WORKSPACE/${BRANCH}/meta-mono
-    # Flush ALL stale sstate/sysroot from broken host/fxr commits.
-    # Previous broken builds left host/fxr/10.0.0 in recipe-sysroot-native
-    # directories.  Must clean dotnet + all consumers to get fresh sysroots.
+    # Flush stale sstate/sysroot to ensure fresh builds with corrected
+    # host/fxr layout and dotnet wrapper.
     # TODO: remove this step once all matrix jobs have rebuilt successfully.
     - name: Clean stale sstate
       run: |

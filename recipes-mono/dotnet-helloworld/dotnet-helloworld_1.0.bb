@@ -5,7 +5,9 @@ PRIORITY = "optional"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-DEPENDS:append = " dotnet-native"
+inherit linuxloader
+
+DEPENDS:append = " dotnet-native patchelf-native"
 
 RDEPENDS:${PN}:append = " \
     icu \
@@ -42,6 +44,9 @@ do_compile[network] = "1"
 do_compile () {
     dotnet new console --force -o ${S} --name ${PN}
     dotnet build ${S}/${PN}.csproj --output ${B}/${PN} --configuration release --runtime linux-${SRC_ARCH}
+
+    # The interpreter points to a path on the build host by default; fix it to use the correct path for the target
+    patchelf --set-interpreter "${@get_linuxloader(d)}" ${B}/${PN}/${PN}
 
     #FIXME: remove the following line. if the lttng-ust conflict is solved
     #FIXME: dotnet 8 doesn't produce libcoreclrtraceptprovider.so for the helloworld applications
