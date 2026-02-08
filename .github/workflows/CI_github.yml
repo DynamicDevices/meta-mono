@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - master
+      - feature/yocto-layer-compliance
   pull_request:
+    branches:
+      - master
+      - feature/yocto-layer-compliance
     paths-ignore:
       - "**.md"
 jobs:
@@ -20,6 +24,10 @@ jobs:
         mono_version: [6.12.0.206]
         branch: [styhead]
         arch: [x86-64, arm, arm64]
+        exclude:
+          # styhead GCC build broken for ARM32 - see README "Removal of support for ARM32" and discussions/234
+          - branch: styhead
+            arch: arm
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
@@ -69,7 +77,6 @@ jobs:
         echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
         echo "DL_DIR = \"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
         echo "SSTATE_DIR = \"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
-
         echo "PREFERRED_VERSION_mono = \"${MONO_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_mono-native = \"${MONO_VERSION}\"" >> conf/local.conf
 
@@ -82,10 +89,19 @@ jobs:
 
         echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
         echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-#    - name: Cleaning
-#      run: |
-#        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-#        bitbake -c cleanall test-image-mono dotnet dotnet-native
+    - name: Yocto layer compliance check
+      if: github.ref == 'refs/heads/feature/yocto-layer-compliance' || github.head_ref == 'feature/yocto-layer-compliance'
+      run: |
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        yocto-check-layer --dependency $GITHUB_WORKSPACE/${BRANCH}/poky/meta --dependency $GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe -- $GITHUB_WORKSPACE/${BRANCH}/meta-mono
+    # Flush ALL stale sstate/sysroot from broken host/fxr commits.
+    # Previous broken builds left host/fxr/10.0.0 in recipe-sysroot-native
+    # directories.  Must clean dotnet + all consumers to get fresh sysroots.
+    # TODO: remove this step once all matrix jobs have rebuilt successfully.
+    - name: Clean stale sstate
+      run: |
+        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        bitbake -c cleansstate dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
     - name: Building Mono Test Image
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
