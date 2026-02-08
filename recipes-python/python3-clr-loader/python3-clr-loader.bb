@@ -32,6 +32,16 @@ RDEPENDS:${PN} += " \
 export NUGET_PACKAGES="${UNPACKDIR}/nuget-packages"
 export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/nuget-http-cache"
 
+# NuGet MigrationRunner.Run() in .NET 6 runs BEFORE the skip-first-time
+# check, and hardcodes $HOME/.local/share/NuGet/Migrations.  In CI
+# containers $HOME is often read-only.  Override HOME to a writable path
+# so NuGet, dotnet CLI, and any other $HOME consumer all get a writable dir.
+export HOME="${WORKDIR}/dotnet-home"
+export DOTNET_CLI_HOME="${WORKDIR}/dotnet-home"
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE="true"
+export DOTNET_CLI_TELEMETRY_OPTOUT="1"
+export DOTNET_NOLOGO="1"
+
 # Workaround for dotnet restore issue, define custom proxy in a .bbappend
 # and/or in layer.conf or local.conf if dotnet restore was failed.
 # Override DOTNET_HTTP_PROXY and DOTNET_HTTPS_PROXY in layer.conf or local.conf if needed
