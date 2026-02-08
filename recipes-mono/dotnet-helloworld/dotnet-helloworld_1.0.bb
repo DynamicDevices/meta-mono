@@ -17,6 +17,16 @@ RDEPENDS:${PN}:append = " \
 
 COMPATIBLE_HOST ?= "(x86_64|aarch64|arm).*-linux"
 
+# NuGet MigrationRunner in .NET 6 hardcodes $HOME for migrations dir.
+# Override HOME so it's always writable (CI containers often have read-only HOME).
+export HOME="${WORKDIR}/dotnet-home"
+export DOTNET_CLI_HOME="${WORKDIR}/dotnet-home"
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE="true"
+export DOTNET_CLI_TELEMETRY_OPTOUT="1"
+export DOTNET_NOLOGO="1"
+export NUGET_PACKAGES="${UNPACKDIR}/nuget-packages"
+export NUGET_HTTP_CACHE_PATH="${UNPACKDIR}/nuget-http-cache"
+
 SRC_ARCH:aarch64 = "arm64"
 SRC_ARCH:arm = "arm"
 SRC_ARCH:x86-64 = "x64"
