@@ -1,5 +1,18 @@
---- mono-5.20.1.34.orig/data/config.in	2019-07-16 20:16:09.000000000 +0200
-+++ mono-5.20.1.34/data/config.in	2020-01-22 07:35:08.569613059 +0100
+From a1d311a70b694af02d260b66d57223c594385494 Mon Sep 17 00:00:00 2001
+From: Alex J Lennon <ajlennon@dynamicdevices.co.uk>
+Date: Sat, 31 May 2014 11:13:05 +0100
+Subject: [PATCH] mono,mono-native: Add non-default recipes to build Mono from
+
+Upstream-Status: Inappropriate [Yocto specific]
+
+---
+ data/config.in | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/data/config.in b/data/config.in
+index 7cbb9cdb0..a819f5775 100644
+--- a/data/config.in
++++ b/data/config.in
 @@ -5,21 +5,21 @@
  	<dllmap dll="intl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
  	<dllmap dll="libintl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
