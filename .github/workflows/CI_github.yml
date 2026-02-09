@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - master
-      - feature/yocto-layer-compliance
   pull_request:
     branches:
       - master
-      - feature/yocto-layer-compliance
     paths-ignore:
       - "**.md"
 jobs:
@@ -23,11 +21,11 @@ jobs:
       matrix:
         dotnet_version: [10.0.100, 8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
-        branch: [styhead]
+        branch: [whinlatter]
         arch: [x86-64, arm, arm64]
         exclude:
-          # styhead GCC build broken for ARM32 - see README "Removal of support for ARM32" and discussions/234
-          - branch: styhead
+          # GCC build broken for ARM32 - see README and discussions/234
+          - branch: whinlatter
             arch: arm
     env:
       name: build-and-test
