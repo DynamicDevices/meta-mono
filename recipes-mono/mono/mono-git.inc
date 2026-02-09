@@ -83,4 +83,4 @@ FILES:${PN}-profiler			+= " ${datadir}/mono-2.0/mono/profiler/*"
 RDEPENDS:${PN} =+ "bash" 
 
 # Workaround for observed race in `make install`
-PARALLEL_MAKEINST=""
+PARALLEL_MAKEINST = ""
