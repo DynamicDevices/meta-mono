@@ -7,9 +7,8 @@ RDEPENDS:${PN} += " perl gtk+3"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=8754deb904d22254188cb67189b87f19"
 
-SRCREV = "9a72bb67fff7e4845b7bb430a608282668c3e4da"
-SRC_URI = "git://github.com/mono/gtk-sharp.git;protocol=https;branch=master \
-           file://0001-fixup-gmcs-to-mcs.patch"
+SRCREV = "dadc19cf1b90c5743f2776c675faac990e397a56"
+SRC_URI = "git://github.com/mono/gtk-sharp.git;protocol=https;branch=main"
 
 S = "${WORKDIR}/git"
 
