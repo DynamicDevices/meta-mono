@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      - feature/yocto-layer-compliance
+      - whinlatter
   pull_request:
     branches:
       - master
-      - feature/yocto-layer-compliance
+      - whinlatter
     paths-ignore:
       - "**.md"
 jobs:
@@ -23,12 +23,8 @@ jobs:
       matrix:
         dotnet_version: [10.0.100, 8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
-        branch: [styhead]
-        arch: [x86-64, arm, arm64]
-        exclude:
-          # styhead GCC build broken for ARM32 - see README "Removal of support for ARM32" and discussions/234
-          - branch: styhead
-            arch: arm
+        branch: [whinlatter]
+        arch: [x86-64, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
@@ -41,29 +37,41 @@ jobs:
       with:
         clean: false
         path: ${{ matrix.branch }}/meta-mono
-    - name: Update repo poky
+    # Whinlatter (5.3+): poky repo no longer has release branches.
+    # Clone bitbake, openembedded-core and meta-yocto individually.
+    # See: https://docs.yoctoproject.org/dev/migration-guides/migration-5.3.html
+    - name: Clone base layers
       run: |
-        if [ ! -d ${BRANCH}/poky ]; then
-          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
-        else
-          cd ${BRANCH}/poky
-          git pull origin ${BRANCH}
-          cd ../..
-        fi
-    - name: Update repo meta-openembedded
+        clone_or_update() {
+          local url="$1" branch="$2" dest="$3"
+          if [ ! -d "$dest" ]; then
+            git clone "$url" -b "$branch" "$dest"
+          else
+            cd "$dest"
+            git fetch origin "$branch"
+            git checkout "$branch"
+            git pull origin "$branch"
+            cd "$GITHUB_WORKSPACE"
+          fi
+        }
+        clone_or_update https://git.openembedded.org/bitbake 2.16 ${BRANCH}/layers/bitbake
+        clone_or_update https://git.openembedded.org/openembedded-core whinlatter ${BRANCH}/layers/openembedded-core
+        clone_or_update https://git.yoctoproject.org/meta-yocto whinlatter ${BRANCH}/layers/meta-yocto
+    - name: Clone meta-openembedded
       run: |
-        if [ ! -d ${BRANCH}/meta-openembedded ]; then
-          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
+        if [ ! -d ${BRANCH}/layers/meta-openembedded ]; then
+          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/layers/meta-openembedded
         else
-          cd ${BRANCH}/meta-openembedded
+          cd ${BRANCH}/layers/meta-openembedded
           git pull origin ${BRANCH}
-          cd ../..
+          cd "$GITHUB_WORKSPACE"
         fi
     - name: Configuring
       run: |
         rm -f ${BRANCH}/build/conf/local.conf
         rm -f ${BRANCH}/build/conf/bblayers.conf
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        TEMPLATECONF=$GITHUB_WORKSPACE/${BRANCH}/layers/meta-yocto/meta-poky/conf/templates/default \
+          . ./${BRANCH}/layers/openembedded-core/oe-init-build-env ${BRANCH}/build
 
         # Append custom variables for regenerated local.conf and bblayers.conf samples
         echo "### Starting to configure local.conf and bblayers.conf ###"
@@ -71,8 +79,8 @@ jobs:
         echo "dotnet version: $DOTNET_VERSION"
 
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/layers/meta-openembedded/meta-oe'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/layers/meta-openembedded/meta-python'" >> conf/bblayers.conf
 
         echo "BB_DEFAULT_EVENTLOG = \"\"" >> conf/local.conf
         echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
@@ -95,15 +103,15 @@ jobs:
     # TODO: remove this step once all matrix jobs have rebuilt successfully.
     - name: Clean stale sstate
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        . ./${BRANCH}/layers/openembedded-core/oe-init-build-env ${BRANCH}/build
         bitbake -c cleansstate dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
     - name: Building Mono Test Image
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        . ./${BRANCH}/layers/openembedded-core/oe-init-build-env ${BRANCH}/build
         bitbake test-image-mono
     - name: CVE Check Mono / dotNet
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        . ./${BRANCH}/layers/openembedded-core/oe-init-build-env ${BRANCH}/build
         export TERM=linux
         bitbake mono -c cve_check
         mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
@@ -111,7 +119,7 @@ jobs:
         mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
     - name: Testing
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        . ./${BRANCH}/layers/openembedded-core/oe-init-build-env ${BRANCH}/build
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
