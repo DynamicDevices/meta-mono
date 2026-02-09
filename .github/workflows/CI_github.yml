@@ -16,8 +16,9 @@ jobs:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
+      max-parallel: 1
       matrix:
-        dotnet_version: [8.0.303, 6.0.424]
+        dotnet_version: [10.0.100, 8.0.303, 6.0.424]
         mono_version: [6.12.0.206]
         branch: [scarthgap]
         arch: [x86-64, arm, arm64]
@@ -83,7 +84,7 @@ jobs:
     - name: Cleaning
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -c cleanall test-image-mono dotnet dotnet-native
+        bitbake -c cleanall test-image-mono dotnet dotnet-helloworld dotnet-native
     - name: Building
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
