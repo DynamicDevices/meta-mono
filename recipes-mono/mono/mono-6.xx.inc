@@ -127,7 +127,7 @@ INSANE_SKIP:${PN}-xbuild		= "file-rdeps"
 INSANE_SKIP:${PN}-configuration-crypto	= "file-rdeps"
 
 # Workaround for observed race in `make install`
-PARALLEL_MAKEINST=""
+PARALLEL_MAKEINST = ""
 
 # Otherwise the full path to bash is written to the first line of doltlibtool script
 # which causes build failures with deeply nested build directories
