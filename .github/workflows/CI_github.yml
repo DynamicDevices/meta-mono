@@ -42,6 +42,7 @@ jobs:
     # See: https://docs.yoctoproject.org/dev/migration-guides/migration-5.3.html
     - name: Clone base layers
       run: |
+        mkdir -p "${BRANCH}/layers"
         clone_or_update() {
           local url="$1" branch="$2" dest="$3"
           if [ ! -d "$dest" ]; then
