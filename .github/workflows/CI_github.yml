@@ -37,7 +37,7 @@ jobs:
       BRANCH: ${{ matrix.branch }}
     steps:
     - name: Checkout meta-mono
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         clean: false
         path: ${{ matrix.branch }}/meta-mono
@@ -115,12 +115,12 @@ jobs:
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
     - name: Store CVEs
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: cve-summary-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ matrix.branch }}/build/tmp/log/cve/*.json
