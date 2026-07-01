@@ -5,10 +5,12 @@ on:
     branches:
       - master
       - feature/yocto-layer-compliance
+      - whinlatter
   pull_request:
     branches:
       - master
       - feature/yocto-layer-compliance
+      - whinlatter
     paths-ignore:
       - "**.md"
 jobs:
@@ -23,56 +25,90 @@ jobs:
       matrix:
         dotnet_version: [10.0.100, 8.0.406, 6.0.428]
         mono_version: [6.12.0.206]
-        branch: [styhead]
-        arch: [x86-64, arm, arm64]
-        exclude:
-          # styhead GCC build broken for ARM32 - see README "Removal of support for ARM32" and discussions/234
-          - branch: styhead
-            arch: arm
+        arch: [x86-64, arm64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
       DOTNET_VERSION: ${{ matrix.dotnet_version }}
       ARCH: ${{ matrix.arch }}
-      BRANCH: ${{ matrix.branch }}
+      WORK_ROOT: work
     steps:
     - name: Checkout meta-mono
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         clean: false
-        path: ${{ matrix.branch }}/meta-mono
-    - name: Update repo poky
+        path: work/meta-mono
+    - name: Detect Yocto release
       run: |
-        if [ ! -d ${BRANCH}/poky ]; then
-          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
-        else
-          cd ${BRANCH}/poky
-          git pull origin ${BRANCH}
-          cd ../..
+        compat=$(grep '^LAYERSERIES_COMPAT_mono' "${WORK_ROOT}/meta-mono/conf/layer.conf" | sed 's/.*"\([^"]*\)".*/\1/')
+        if [ -z "$compat" ]; then
+          echo "Could not read LAYERSERIES_COMPAT_mono from conf/layer.conf" >&2
+          exit 1
         fi
-    - name: Update repo meta-openembedded
+        echo "YOCTO_RELEASE=${compat}" >> "$GITHUB_ENV"
+        echo "Detected Yocto release: ${compat}"
+    - name: Setup base layers
       run: |
-        if [ ! -d ${BRANCH}/meta-openembedded ]; then
-          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
-        else
-          cd ${BRANCH}/meta-openembedded
-          git pull origin ${BRANCH}
-          cd ../..
-        fi
+        clone_or_update() {
+          local url="$1" branch="$2" dest="$3"
+          if [ ! -d "$dest" ]; then
+            git clone "$url" -b "$branch" "$dest"
+          else
+            cd "$dest"
+            git fetch origin "$branch"
+            git checkout "$branch"
+            git pull origin "$branch"
+            cd "$GITHUB_WORKSPACE"
+          fi
+        }
+
+        case "$YOCTO_RELEASE" in
+          whinlatter)
+            mkdir -p "${WORK_ROOT}/layers"
+            clone_or_update https://git.openembedded.org/bitbake 2.16 "${WORK_ROOT}/layers/bitbake"
+            clone_or_update https://git.openembedded.org/openembedded-core whinlatter "${WORK_ROOT}/layers/openembedded-core"
+            clone_or_update https://git.yoctoproject.org/meta-yocto whinlatter "${WORK_ROOT}/layers/meta-yocto"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git whinlatter "${WORK_ROOT}/layers/meta-openembedded"
+            ;;
+          wrynose)
+            mkdir -p "${WORK_ROOT}/layers"
+            clone_or_update https://git.openembedded.org/bitbake 2.18 "${WORK_ROOT}/layers/bitbake"
+            clone_or_update https://git.openembedded.org/openembedded-core wrynose "${WORK_ROOT}/layers/openembedded-core"
+            clone_or_update https://git.yoctoproject.org/meta-yocto wrynose "${WORK_ROOT}/layers/meta-yocto"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git wrynose "${WORK_ROOT}/layers/meta-openembedded"
+            ;;
+          *)
+            # Legacy releases still use the poky monorepo. Use HTTPS; git://
+            # is blocked on many CI networks and causes connection timeouts.
+            clone_or_update https://git.yoctoproject.org/poky "$YOCTO_RELEASE" "${WORK_ROOT}/poky"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git "$YOCTO_RELEASE" "${WORK_ROOT}/meta-openembedded"
+            ;;
+        esac
     - name: Configuring
       run: |
-        rm -f ${BRANCH}/build/conf/local.conf
-        rm -f ${BRANCH}/build/conf/bblayers.conf
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        rm -f ${WORK_ROOT}/build/conf/local.conf
+        rm -f ${WORK_ROOT}/build/conf/bblayers.conf
 
-        # Append custom variables for regenerated local.conf and bblayers.conf samples
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            TEMPLATECONF=$GITHUB_WORKSPACE/${WORK_ROOT}/layers/meta-yocto/meta-poky/conf/templates/default \
+              . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/layers/meta-openembedded"
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/meta-openembedded"
+            ;;
+        esac
+
         echo "### Starting to configure local.conf and bblayers.conf ###"
+        echo "yocto release: $YOCTO_RELEASE"
         echo "mono version: $MONO_VERSION"
         echo "dotnet version: $DOTNET_VERSION"
 
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${WORK_ROOT}/meta-mono'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_oe}/meta-oe'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_oe}/meta-python'" >> conf/bblayers.conf
 
         echo "BB_DEFAULT_EVENTLOG = \"\"" >> conf/local.conf
         echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
@@ -95,32 +131,60 @@ jobs:
     # TODO: remove this step once all matrix jobs have rebuilt successfully.
     - name: Clean stale sstate
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         bitbake -c cleansstate dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
     - name: Building Mono Test Image
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         bitbake test-image-mono
     - name: CVE Check Mono / dotNet
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         export TERM=linux
         bitbake mono -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
+        mv $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary-mono.json
         bitbake dotnet -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
+        mv $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary-dotnet.json
     - name: Testing
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
-        name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
+        name: test-image-mono-${{ env.YOCTO_RELEASE }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ env.WORK_ROOT }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
     - name: Store CVEs
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
-        name: cve-summary-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/log/cve/*.json
+        name: cve-summary-${{ env.YOCTO_RELEASE }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ env.WORK_ROOT }}/build/tmp/log/cve/*.json
