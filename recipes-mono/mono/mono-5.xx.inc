@@ -19,19 +19,6 @@ SRC_URI = "http://download.mono-project.com/sources/mono/mono-${PV}.tar.bz2 \
 #	   file://0001-reintroduce-gmcs.patch \
 #
 
-def mono_workspace_version (d):
-    pvsplit = d.getVar('PV',d,1).split('.')
-    if len(pvsplit) == 3:
-        return pvsplit[0] + '.' + pvsplit[1] + '.' + pvsplit[2]
-    elif len(pvsplit) == 2:
-        return pvsplit[0] + '.' + pvsplit[1]
-    elif len(pvsplit) == 1:
-        return pvsplit[0]
-    else:
-        return 0
-
-S = "${UNPACKDIR}/mono-${@mono_workspace_version(d)}"
-
 FILESPATH =. "${FILE_DIRNAME}/mono-5.xx:"
 FILESPATH =. "${FILE_DIRNAME}/mono-${PV}:"
 
@@ -106,7 +93,7 @@ RDEPENDS:${PN}-dev =+ "bash"
 RDEPENDS:${PN}-libs =+ "zlib"
 
 # Workaround for observed race in `make install`
-PARALLEL_MAKEINST=""
+PARALLEL_MAKEINST = ""
 
 # Otherwise the full path to bash is written to the first line of doltlibtool script
 # which causes build failures with deeply nested build directories
