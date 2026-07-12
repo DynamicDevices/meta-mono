@@ -2,4 +2,4 @@ require fsharp.inc
 
 inherit pkgconfig
 
-SRC_URI[sha256sum] = "cf3b5ea00fd13b9d35f5a4ffec6fbd8cecc2c4039d09a79fb0e3f7fa48da9429"
+SRC_URI[sha256sum] = "d846a4e0c8fb0186cc89445a4c1108f4ae683bd14da834a05634e316b233d61b"

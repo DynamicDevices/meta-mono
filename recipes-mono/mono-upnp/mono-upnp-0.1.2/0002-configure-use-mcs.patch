@@ -2,7 +2,7 @@ mono-upnp: use mcs instead of gmcs
 
 as gmcs not present in recent mono releases
 
-Upstream-status: Submitted [https://github.com/mono/mono-upnp/pull/7]
+Upstream-Status: Submitted [https://github.com/mono/mono-upnp/pull/7]
 
 diff -ur git.org/configure.ac git/configure.ac
 --- git.org/configure.ac	2015-07-20 16:03:01.899839044 +0100
