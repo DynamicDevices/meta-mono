@@ -13,7 +13,7 @@ SRCBRANCH = "master"
 
 SRC_URI = "git://github.com/mono/mono-addins.git;protocol=https;branch=${SRCBRANCH}"
 
-S = "${UNPACKDIR}/git"
+S = "${UNPACKDIR}/${BP}"
 
 do_configure() {
 }

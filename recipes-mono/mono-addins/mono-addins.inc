@@ -14,7 +14,7 @@ SRCBRANCH = "master"
 SRC_URI = "git://github.com/mono/mono-addins.git;protocol=https;branch=${SRCBRANCH} \
 	   file://0001-configure-mcs.patch"
 
-S = "${UNPACKDIR}/git"
+S = "${UNPACKDIR}/${BP}"
 
 inherit autotools-brokensep pkgconfig
 inherit mono
