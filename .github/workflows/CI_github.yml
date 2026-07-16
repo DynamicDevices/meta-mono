@@ -154,10 +154,12 @@ jobs:
         case "$YOCTO_RELEASE" in
           wrynose)
             # cve-check was removed in wrynose; use sbom-cve-check fragment.
-            # sstate-mirror-cdn avoids rebuilding clang/llvm/rust from source
-            # (those natives filled the self-hosted runner disk).
-            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/sstate-mirror-cdn\"" >> conf/local.conf
+            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check\"" >> conf/local.conf
             echo "INHERIT += \"rm_work\"" >> conf/local.conf
+            # Use the project sstate mirror without BB_HASHSERVE_UPSTREAM:
+            # the CDN fragment's wss hashserv needs Python websockets, which
+            # this container does not provide in bitbake's runtime.
+            echo "SSTATE_MIRRORS ?= \"file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH\"" >> conf/local.conf
             ;;
           *)
             echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
