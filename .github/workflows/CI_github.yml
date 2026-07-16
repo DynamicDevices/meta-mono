@@ -53,7 +53,11 @@ jobs:
     - name: Install host Python deps
       run: |
         # Required by BB_HASHSERVE_UPSTREAM (wss://) from sstate-mirror-cdn.
-        python3 -m pip install --user 'websockets>=10'
+        # Install into the workspace: $HOME/.local is not writable in this container.
+        pip_target="${GITHUB_WORKSPACE}/.pip-packages"
+        python3 -m pip install --target "$pip_target" 'websockets>=10'
+        echo "PYTHONPATH=${pip_target}${PYTHONPATH:+:$PYTHONPATH}" >> "$GITHUB_ENV"
+        PYTHONPATH="${pip_target}${PYTHONPATH:+:$PYTHONPATH}" python3 -c 'import websockets; print(websockets.__version__)'
     - name: Checkout meta-mono
       uses: actions/checkout@v5
       with:
