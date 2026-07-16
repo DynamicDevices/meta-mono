@@ -33,6 +33,25 @@ jobs:
       ARCH: ${{ matrix.arch }}
       WORK_ROOT: work
     steps:
+    - name: Free disk space
+      run: |
+        set -x
+        df -h
+        # Prior CI layouts left per-release trees (styhead/, whinlatter/, …)
+        # on the persistent self-hosted workspace. A fresh wrynose build of
+        # clang/llvm/rust needs that space back.
+        for d in styhead whinlatter scarthgap kirkstone nanbield styhead-test \
+                 feature work/build/tmp work/build/cache work/build/tmp-glibc; do
+          if [ -e "$d" ]; then
+            echo "Removing $d"
+            rm -rf "$d"
+          fi
+        done
+        # Drop stale build tmp only; keep layers, downloads, and sstate.
+        if [ -d "${WORK_ROOT}/build/tmp" ]; then
+          rm -rf "${WORK_ROOT}/build/tmp"
+        fi
+        df -h
     - name: Checkout meta-mono
       uses: actions/checkout@v5
       with:
@@ -137,7 +156,9 @@ jobs:
         case "$YOCTO_RELEASE" in
           wrynose)
             # cve-check was removed in wrynose; use sbom-cve-check fragment.
-            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check\"" >> conf/local.conf
+            # sstate-mirror-cdn avoids rebuilding clang/llvm/rust from source
+            # (those natives filled the self-hosted runner disk).
+            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/sstate-mirror-cdn\"" >> conf/local.conf
             echo "INHERIT += \"rm_work\"" >> conf/local.conf
             ;;
           *)
