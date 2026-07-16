@@ -134,7 +134,16 @@ jobs:
         echo "PREFERRED_VERSION_dotnet = \"${DOTNET_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_dotnet-native = \"${DOTNET_VERSION}\"" >> conf/local.conf
 
-        echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
+        case "$YOCTO_RELEASE" in
+          wrynose)
+            # cve-check was removed in wrynose; use sbom-cve-check fragment.
+            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check\"" >> conf/local.conf
+            echo "INHERIT += \"rm_work\"" >> conf/local.conf
+            ;;
+          *)
+            echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
+            ;;
+        esac
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
 
@@ -176,10 +185,27 @@ jobs:
             ;;
         esac
         export TERM=linux
-        bitbake mono -c cve_check
-        mv $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary-mono.json
-        bitbake dotnet -c cve_check
-        mv $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve/cve-summary-dotnet.json
+        cve_dir="$GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve"
+        mkdir -p "$cve_dir"
+        case "$YOCTO_RELEASE" in
+          wrynose)
+            # Image-level sbom-cve-check runs during bitbake test-image-mono.
+            deploy="$GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/deploy/images/qemu${ARCH}"
+            found=$(ls "$deploy"/*.sbom-cve-check*.json 2>/dev/null | wc -l)
+            if [ "$found" -eq 0 ]; then
+              echo "No sbom-cve-check reports in $deploy" >&2
+              exit 1
+            fi
+            cp "$deploy"/*.sbom-cve-check*.json "$cve_dir/"
+            ls -la "$cve_dir"
+            ;;
+          *)
+            bitbake mono -c cve_check
+            mv "$cve_dir/cve-summary.json" "$cve_dir/cve-summary-mono.json"
+            bitbake dotnet -c cve_check
+            mv "$cve_dir/cve-summary.json" "$cve_dir/cve-summary-dotnet.json"
+            ;;
+        esac
     - name: Testing
       run: |
         case "$YOCTO_RELEASE" in
