@@ -91,10 +91,23 @@ jobs:
         rm -f ${WORK_ROOT}/build/conf/bblayers.conf
 
         case "$YOCTO_RELEASE" in
-          whinlatter|wrynose)
+          whinlatter)
+            # meta-poky still ships conf/templates/default on whinlatter
             TEMPLATECONF=$GITHUB_WORKSPACE/${WORK_ROOT}/layers/meta-yocto/meta-poky/conf/templates/default \
               . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
             meta_oe="${WORK_ROOT}/layers/meta-openembedded"
+            meta_yocto="${WORK_ROOT}/layers/meta-yocto"
+            ;;
+          wrynose)
+            # wrynose meta-poky dropped conf/templates; use oe-core defaults
+            # and add poky layers + DISTRO explicitly.
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/layers/meta-openembedded"
+            meta_yocto="${WORK_ROOT}/layers/meta-yocto"
+            echo "POKY_BBLAYERS_CONF_VERSION = \"2\"" >> conf/bblayers.conf
+            echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_yocto}/meta-poky'" >> conf/bblayers.conf
+            echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_yocto}/meta-yocto-bsp'" >> conf/bblayers.conf
+            echo "DISTRO = \"poky\"" >> conf/local.conf
             ;;
           *)
             . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
