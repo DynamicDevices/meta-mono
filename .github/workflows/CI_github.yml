@@ -35,23 +35,25 @@ jobs:
     steps:
     - name: Free disk space
       run: |
-        set -x
+        echo "=== disk before cleanup ==="
         df -h
         # Prior CI layouts left per-release trees (styhead/, whinlatter/, …)
         # on the persistent self-hosted workspace. A fresh wrynose build of
         # clang/llvm/rust needs that space back.
         for d in styhead whinlatter scarthgap kirkstone nanbield styhead-test \
-                 feature work/build/tmp work/build/cache work/build/tmp-glibc; do
+                 feature "${WORK_ROOT}/build/tmp" "${WORK_ROOT}/build/cache" \
+                 "${WORK_ROOT}/build/tmp-glibc"; do
           if [ -e "$d" ]; then
             echo "Removing $d"
             rm -rf "$d"
           fi
         done
-        # Drop stale build tmp only; keep layers, downloads, and sstate.
-        if [ -d "${WORK_ROOT}/build/tmp" ]; then
-          rm -rf "${WORK_ROOT}/build/tmp"
-        fi
+        echo "=== disk after cleanup ==="
         df -h
+    - name: Install host Python deps
+      run: |
+        # Required by BB_HASHSERVE_UPSTREAM (wss://) from sstate-mirror-cdn.
+        python3 -m pip install --user 'websockets>=10'
     - name: Checkout meta-mono
       uses: actions/checkout@v5
       with:
@@ -170,20 +172,6 @@ jobs:
 
         echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
         echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-    # Flush stale sstate/sysroot to ensure fresh builds with corrected
-    # host/fxr layout and dotnet wrapper.
-    # TODO: remove this step once all matrix jobs have rebuilt successfully.
-    - name: Clean stale sstate
-      run: |
-        case "$YOCTO_RELEASE" in
-          whinlatter|wrynose)
-            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
-            ;;
-          *)
-            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
-            ;;
-        esac
-        bitbake -c cleansstate dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
     - name: Building Mono Test Image
       run: |
         case "$YOCTO_RELEASE" in
