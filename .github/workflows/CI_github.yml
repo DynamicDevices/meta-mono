@@ -160,6 +160,11 @@ jobs:
             # the CDN fragment's wss hashserv needs Python websockets, which
             # this container does not provide in bitbake's runtime.
             echo "SSTATE_MIRRORS ?= \"file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH\"" >> conf/local.conf
+            # oe-core excludes DATETIME from do_create_image_sbom_spdx's hash, but
+            # the deployed file is ${IMAGE_NAME}.spdx.json (includes DATETIME).
+            # Cross-build setscene can restore a stale name; do_sbom_cve_check then
+            # fails with ENOENT. Keep DATETIME in the hash so the task re-runs.
+            echo "do_create_image_sbom_spdx[vardepsexclude]:remove = \"DATETIME\"" >> conf/local.conf
             ;;
           *)
             echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
