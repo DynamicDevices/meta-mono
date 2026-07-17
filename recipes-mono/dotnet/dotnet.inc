@@ -120,7 +120,7 @@ mkdir -p "$HOME" 2>/dev/null || true
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_NOLOGO=1
-SELF_DIR = "$(cd "$(dirname "$0")" && pwd)"
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 exec "${SELF_DIR}/../share/dotnet/dotnet" "$@"
 WRAPPER
     chmod 0755 ${D}${bindir}/dotnet
