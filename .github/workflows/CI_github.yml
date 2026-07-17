@@ -154,7 +154,8 @@ jobs:
         case "$YOCTO_RELEASE" in
           wrynose)
             # cve-check was removed in wrynose; use sbom-cve-check fragment.
-            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check\"" >> conf/local.conf
+            # root-login fragment matches test-image-mono IMAGE_FEATURES for qemu testimage.
+            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/root-login-with-empty-password\"" >> conf/local.conf
             echo "INHERIT += \"rm_work\"" >> conf/local.conf
             # Use the project sstate mirror without BB_HASHSERVE_UPSTREAM:
             # the CDN fragment's wss hashserv needs Python websockets, which
