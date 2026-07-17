@@ -47,8 +47,8 @@ export DOTNET_NOLOGO = "1"
 # Override DOTNET_HTTP_PROXY and DOTNET_HTTPS_PROXY in layer.conf or local.conf if needed
 DOTNET_HTTP_PROXY ?= ""
 DOTNET_HTTPS_PROXY ?= ""
-export http_proxy="${DOTNET_HTTP_PROXY}"
-export https_proxy="${DOTNET_HTTPS_PROXY}"
+export http_proxy = "${DOTNET_HTTP_PROXY}"
+export https_proxy = "${DOTNET_HTTPS_PROXY}"
 
 do_configure:prepend() {
     if ! grep -Fq __version__ ${S}/clr_loader/__init__.py
