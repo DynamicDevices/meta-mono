@@ -31,19 +31,14 @@ jobs:
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       max-parallel: 1
-      # Keep going through the matrix after one cell fails so a flaky arch
-      # does not hide results from the others.
       fail-fast: false
-      # x86-64 first: native builds validate recipes quickly; arm64 cross
-      # builds are slower and have hung the runner when disk/RAM is tight.
+      # arm64 (qemuarm64 cross on this X64 runner) previously wedged for 10h+
+      # in do_package with no log output, pinning the only self-hosted runner.
+      # Re-enable once the runner has enough disk/RAM headroom for cross builds.
       matrix:
-        include:
-          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: x86-64}
-          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: x86-64}
-          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: x86-64}
-          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: arm64}
-          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: arm64}
-          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: arm64}
+        dotnet_version: ["10.0.100", "8.0.406", "6.0.428"]
+        mono_version: ["6.12.0.206"]
+        arch: [x86-64]
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
