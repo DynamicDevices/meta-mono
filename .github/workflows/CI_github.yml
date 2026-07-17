@@ -23,7 +23,9 @@ concurrency:
 jobs:
   build-and-test:
     runs-on: [self-hosted, linux, X64]
-    timeout-minutes: 960
+    # Keep bounded so a wedged bitbake/container cannot pin the sole
+    # self-hosted runner for a full day (seen with arm64 do_package).
+    timeout-minutes: 480
     container:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
@@ -32,10 +34,16 @@ jobs:
       # Keep going through the matrix after one cell fails so a flaky arch
       # does not hide results from the others.
       fail-fast: false
+      # x86-64 first: native builds validate recipes quickly; arm64 cross
+      # builds are slower and have hung the runner when disk/RAM is tight.
       matrix:
-        dotnet_version: [10.0.100, 8.0.406, 6.0.428]
-        mono_version: [6.12.0.206]
-        arch: [x86-64, arm64]
+        include:
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: arm64}
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
@@ -201,8 +209,18 @@ jobs:
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
 
-        echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
-        echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
+        # Share hash equivalency DB with SSTATE_DIR on the persistent runner.
+        echo "BB_HASHSERVE_DB_DIR = \"\${SSTATE_DIR}\"" >> conf/local.conf
+
+        # Cross-building qemuarm64 on the X64 runner has wedged under full
+        # parallelism (silent multi-hour stall in do_package). Cap threads.
+        if [ "$ARCH" = "arm64" ]; then
+          echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count(at_least=1, at_most=4)}\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count(at_least=1, at_most=4)}\"" >> conf/local.conf
+        else
+          echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
+        fi
     - name: Building Mono Test Image
       run: |
         case "$YOCTO_RELEASE" in
@@ -213,7 +231,37 @@ jobs:
             . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
             ;;
         esac
-        bitbake test-image-mono
+        # Heartbeat: surface disk pressure and fail if bitbake stops writing
+        # cooker logs for too long (the previous arm64 hang produced no output
+        # for hours while still holding the runner).
+        IDLE_LIMIT_SEC=3600
+        bitbake test-image-mono &
+        bbpid=$!
+        last_activity=$(date +%s)
+        last_sig=""
+        while kill -0 "$bbpid" 2>/dev/null; do
+          sleep 120
+          echo "=== build heartbeat $(date -u +%H:%M:%S) ==="
+          df -h . || true
+          sig=$(find "${WORK_ROOT}/build/tmp/log" -type f 2>/dev/null \
+            | xargs ls -lt 2>/dev/null | head -1 | awk '{print $5,$6,$7,$8,$9}')
+          now=$(date +%s)
+          if [ -n "$sig" ] && [ "$sig" != "$last_sig" ]; then
+            last_sig="$sig"
+            last_activity=$now
+          fi
+          if [ $((now - last_activity)) -ge "$IDLE_LIMIT_SEC" ]; then
+            echo "No bitbake log activity for ${IDLE_LIMIT_SEC}s; aborting hung build" >&2
+            kill -TERM "$bbpid" 2>/dev/null || true
+            sleep 10
+            kill -KILL "$bbpid" 2>/dev/null || true
+            # Also stop any leftover bitbake/cooker children.
+            pkill -TERM -P "$bbpid" 2>/dev/null || true
+            wait "$bbpid" 2>/dev/null || true
+            exit 1
+          fi
+        done
+        wait "$bbpid"
     - name: CVE Check Mono / dotNet
       run: |
         case "$YOCTO_RELEASE" in
