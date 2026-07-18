@@ -185,10 +185,12 @@ jobs:
             # root-login fragment matches test-image-mono IMAGE_FEATURES for qemu testimage.
             echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/root-login-with-empty-password\"" >> conf/local.conf
             echo "INHERIT += \"rm_work\"" >> conf/local.conf
-            # Use the project sstate mirror without BB_HASHSERVE_UPSTREAM:
-            # the CDN fragment's wss hashserv needs Python websockets, which
-            # this container does not provide in bitbake's runtime.
+            # Use the project sstate mirror. Do not enable a local hash
+            # equivalence server alongside it: that prevents sstate matches
+            # from the mirror. The CDN hashserv (wss) needs Python websockets,
+            # which this container does not provide in bitbake's runtime.
             echo "SSTATE_MIRRORS ?= \"file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH\"" >> conf/local.conf
+            echo "BB_HASHSERVE = \"\"" >> conf/local.conf
             # IMAGE_VERSION_SUFFIX excludes DATETIME from task hashes, but
             # do_create_image_sbom_spdx deploys ${IMAGE_NAME}.spdx.json (which
             # includes DATETIME). Setscene can restore a previous filename while
@@ -203,9 +205,6 @@ jobs:
         esac
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
-
-        # Share hash equivalency DB with SSTATE_DIR on the persistent runner.
-        echo "BB_HASHSERVE_DB_DIR = \"\${SSTATE_DIR}\"" >> conf/local.conf
 
         # Cross-building qemuarm64 on the X64 runner has wedged under full
         # parallelism (silent multi-hour stall in do_package). Cap threads.
@@ -226,35 +225,15 @@ jobs:
             . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
             ;;
         esac
-        # Heartbeat: surface disk pressure and fail if bitbake stops writing
-        # cooker logs for too long (the previous arm64 hang produced no output
-        # for hours while still holding the runner).
-        IDLE_LIMIT_SEC=3600
+        # Disk heartbeat only. An earlier idle-log watchdog looked at the wrong
+        # path after oe-init-build-env (cwd is already the build dir) and killed
+        # a healthy build during long do_compile tasks. Job timeout covers hangs.
         bitbake test-image-mono &
         bbpid=$!
-        last_activity=$(date +%s)
-        last_sig=""
         while kill -0 "$bbpid" 2>/dev/null; do
-          sleep 120
+          sleep 300
           echo "=== build heartbeat $(date -u +%H:%M:%S) ==="
           df -h . || true
-          sig=$(find "${WORK_ROOT}/build/tmp/log" -type f 2>/dev/null \
-            | xargs ls -lt 2>/dev/null | head -1 | awk '{print $5,$6,$7,$8,$9}')
-          now=$(date +%s)
-          if [ -n "$sig" ] && [ "$sig" != "$last_sig" ]; then
-            last_sig="$sig"
-            last_activity=$now
-          fi
-          if [ $((now - last_activity)) -ge "$IDLE_LIMIT_SEC" ]; then
-            echo "No bitbake log activity for ${IDLE_LIMIT_SEC}s; aborting hung build" >&2
-            kill -TERM "$bbpid" 2>/dev/null || true
-            sleep 10
-            kill -KILL "$bbpid" 2>/dev/null || true
-            # Also stop any leftover bitbake/cooker children.
-            pkill -TERM -P "$bbpid" 2>/dev/null || true
-            wait "$bbpid" 2>/dev/null || true
-            exit 1
-          fi
         done
         wait "$bbpid"
     - name: CVE Check Mono / dotNet
