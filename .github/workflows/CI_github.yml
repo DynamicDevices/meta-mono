@@ -32,13 +32,16 @@ jobs:
     strategy:
       max-parallel: 1
       fail-fast: false
-      # arm64 (qemuarm64 cross on this X64 runner) previously wedged for 10h+
-      # in do_package with no log output, pinning the only self-hosted runner.
-      # Re-enable once the runner has enough disk/RAM headroom for cross builds.
+      # x86-64 first so native builds validate recipes before slower qemuarm64
+      # cross builds on this X64 runner.
       matrix:
-        dotnet_version: ["10.0.100", "8.0.406", "6.0.428"]
-        mono_version: ["6.12.0.206"]
-        arch: [x86-64]
+        include:
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: arm64}
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
