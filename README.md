@@ -6,11 +6,12 @@ meta-mono is an OpenEmbedded layer that builds dotNet, the mono runtime and mono
 
 | Branch | Version | Support Status* | Status of Build & Tests |
 | ------ | ------- | --------------- | ----------------------- |
+| wrynose (master) | 6.0 | Long Term Support (until Apr. 2030) | [![wrynose](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=master&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | whinlatter | 5.3 | Support for 6 months (until May 2026) | [![whinlatter](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=whinlatter&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | scarthgap | 5.0 | Long Term Support (until Apr. 2028) | [![scarthgap](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=scarthgap&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 | kirkstone | 4.0 | Long Term Support (until Apr. 2026) | [![kirkstone](https://img.shields.io/github/actions/workflow/status/dynamicdevices/meta-mono/CI_github.yml?branch=kirkstone&label=build%20%26%20test)](https://github.com/DynamicDevices/meta-mono/actions/workflows/CI_github.yml) |
 
-*support status as of Feb 2026, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
+*support status as of Jul 2026, follows main Yocto release support schedule [here](https://wiki.yoctoproject.org/wiki/Releases)
 
 ## Limitations
 
@@ -28,7 +29,7 @@ This layer depends on:
 
 URI: git://git.openembedded.org/openembedded-core
 layers: meta
-branch: master
+branch: wrynose
 
 ## Detail
 
