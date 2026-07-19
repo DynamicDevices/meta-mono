@@ -3,42 +3,75 @@ name: meta-mono
 on:
   push:
     branches:
-      - master
-      - master-next
       - kirkstone
+    paths-ignore:
+      - "**.md"
   pull_request:
+    branches:
+      - kirkstone
+    paths-ignore:
+      - "**.md"
+
+# Self-hosted runner is singular; cancel superseded runs.
+concurrency:
+  group: meta-mono-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-test:
+    # Honor [skip ci] on push (e.g. documentation merges).
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: [self-hosted, linux, X64]
-    timeout-minutes: 600
+    timeout-minutes: 480
     container:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
+      max-parallel: 1
+      fail-fast: false
       matrix:
-        dotnet_version: [8.0.201, 6.0.419]
-        mono_version: [6.12.0.161]
-        branch: [kirkstone]
-        arch: [x86-64, arm, arm64]
+        include:
+          - {dotnet_version: "8.0.201", mono_version: "6.12.0.161", arch: x86-64}
+          - {dotnet_version: "6.0.419", mono_version: "6.12.0.161", arch: x86-64}
+          - {dotnet_version: "8.0.201", mono_version: "6.12.0.161", arch: arm64}
+          - {dotnet_version: "6.0.419", mono_version: "6.12.0.161", arch: arm64}
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
       DOTNET_VERSION: ${{ matrix.dotnet_version }}
       ARCH: ${{ matrix.arch }}
-      BRANCH: ${{ matrix.branch }}
+      BRANCH: kirkstone
     steps:
+    - name: Free disk space
+      run: |
+        echo "=== disk before cleanup ==="
+        df -h
+        for path in styhead whinlatter wrynose scarthgap nanbield styhead-test feature \
+                    "${BRANCH}/build/tmp" "${BRANCH}/build/cache" "${BRANCH}/build/tmp-glibc" \
+                    "${BRANCH}/build/deploy"; do
+          if [ -e "$path" ]; then
+            echo "Removing $path"
+            rm -rf "$path"
+          fi
+        done
+        echo "=== disk after cleanup ==="
+        df -h
     - name: Checkout meta-mono
       uses: actions/checkout@v4
       with:
         clean: false
-        path: ${{ matrix.branch }}/meta-mono
+        path: ${{ env.BRANCH }}/meta-mono
     - name: Update repo poky
       run: |
+        # HTTPS: git.yoctoproject.org is behind Cloudflare; git:// (9418) is unreliable.
         if [ ! -d ${BRANCH}/poky ]; then
-          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
+          git clone https://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
         else
           cd ${BRANCH}/poky
+          git fetch origin ${BRANCH}
+          git checkout ${BRANCH}
           git pull origin ${BRANCH}
           cd ../..
         fi
@@ -48,16 +81,17 @@ jobs:
           git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
         else
           cd ${BRANCH}/meta-openembedded
+          git fetch origin ${BRANCH}
+          git checkout ${BRANCH}
           git pull origin ${BRANCH}
           cd ../..
-        fi 
+        fi
     - name: Configuring
       run: |
         rm -f ${BRANCH}/build/conf/local.conf
         rm -f ${BRANCH}/build/conf/bblayers.conf
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
 
-        # Append custom variables for regenerated local.conf and bblayers.conf samples
         echo "### Starting to configure local.conf and bblayers.conf ###"
         echo "mono version: $MONO_VERSION"
         echo "dotnet version: $DOTNET_VERSION"
@@ -65,25 +99,30 @@ jobs:
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
         echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
 
-        echo "MACHINE=\"qemu${ARCH}\"" >> conf/local.conf
-        echo "DL_DIR=\"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
+        echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
+        echo "DL_DIR = \"$GITHUB_WORKSPACE/downloads\"" >> conf/local.conf
+        echo "SSTATE_DIR = \"$GITHUB_WORKSPACE/sstate\"" >> conf/local.conf
 
-        echo "PREFERRED_VERSION_mono=\"${MONO_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_mono-native=\"${MONO_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_mono = \"${MONO_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_mono-native = \"${MONO_VERSION}\"" >> conf/local.conf
 
-        echo "PREFERRED_VERSION_dotnet=\"${DOTNET_VERSION}\"" >> conf/local.conf
-        echo "PREFERRED_VERSION_dotnet-native=\"${DOTNET_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_dotnet = \"${DOTNET_VERSION}\"" >> conf/local.conf
+        echo "PREFERRED_VERSION_dotnet-native = \"${DOTNET_VERSION}\"" >> conf/local.conf
 
         echo "INHERIT += \" rm_work \"" >> conf/local.conf
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
-    - name: Cleaning
+
+        if [ "$ARCH" = "arm64" ]; then
+          echo "BB_NUMBER_THREADS ?= \"4\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j 4\"" >> conf/local.conf
+        else
+          echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
+        fi
+    - name: Building Mono Test Image
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -c cleanall test-image-mono dotnet dotnet-native
-    - name: Building
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -k test-image-mono
+        bitbake test-image-mono
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
@@ -92,5 +131,5 @@ jobs:
     - name: Store artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
+        name: test-image-mono-${{ env.BRANCH }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ env.BRANCH }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
