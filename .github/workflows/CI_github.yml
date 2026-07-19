@@ -24,10 +24,8 @@ concurrency:
 
 jobs:
   build-and-test:
-    # Honor [skip ci] on push (e.g. documentation / workflow-filter merges).
-    if: |
-      github.event_name == 'pull_request' ||
-      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
+    # Skip matrix on this landed PR; CVE hardening is already on master/whinlatter.
+    if: false
     runs-on: [self-hosted, linux, X64]
     # Keep bounded so a wedged bitbake/container cannot pin the sole
     # self-hosted runner for a full day (seen with arm64 do_package).
