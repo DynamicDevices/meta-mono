@@ -11,8 +11,6 @@ SRC_URI = " \
 	gitsm://github.com/mono/libgdiplus.git;protocol=https;branch=${BRANCH} \
 "
 
-S = "${UNPACKDIR}/git"
-
 inherit autotools pkgconfig
 
 FILES:${PN} += "${libdir}/libgdiplus.so"
