@@ -60,6 +60,7 @@ jobs:
         clone_or_update https://git.yoctoproject.org/meta-yocto whinlatter ${BRANCH}/layers/meta-yocto
     - name: Clone meta-openembedded
       run: |
+        mkdir -p "${BRANCH}/layers"
         if [ ! -d ${BRANCH}/layers/meta-openembedded ]; then
           git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/layers/meta-openembedded
         else
