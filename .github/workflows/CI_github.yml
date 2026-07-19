@@ -24,6 +24,11 @@ concurrency:
 
 jobs:
   build-and-test:
+    # Skip full Yocto builds for doc-only PR #284, and honor [skip ci] on push
+    # (e.g. markdown / workflow-filter merges).
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.number != 284) ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: [self-hosted, linux, X64]
     # Keep bounded so a wedged bitbake/container cannot pin the sole
     # self-hosted runner for a full day (seen with arm64 do_package).
