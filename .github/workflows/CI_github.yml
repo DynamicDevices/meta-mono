@@ -282,13 +282,26 @@ jobs:
         case "$YOCTO_RELEASE" in
           wrynose)
             # Image-level sbom-cve-check runs during bitbake test-image-mono.
+            # OE writes ${IMAGE_NAME}.sbom-cve-check.yocto.json and
+            # ${IMAGE_NAME}.sbom-cve-check.spdx.json into DEPLOY_DIR_IMAGE
+            # (see meta/classes/sbom-cve-check-common.bbclass). Also accept
+            # legacy cve-check names and the docstring alias .sbom-cve-check.json.
             deploy="$GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/deploy/images/qemu${ARCH}"
-            found=$(ls "$deploy"/*.sbom-cve-check*.json 2>/dev/null | wc -l)
-            if [ "$found" -eq 0 ]; then
-              echo "No sbom-cve-check reports in $deploy" >&2
+            shopt -s nullglob
+            files=(
+              "$deploy"/*.sbom-cve-check.yocto.json
+              "$deploy"/*.sbom-cve-check.spdx.json
+              "$deploy"/*.sbom-cve-check.json
+              "$deploy"/*.cve-check.json
+              "$deploy"/*.cve-check.spdx.json
+            )
+            shopt -u nullglob
+            if [ "${#files[@]}" -eq 0 ]; then
+              echo "No sbom-cve-check / cve-check JSON reports in $deploy" >&2
+              ls -la "$deploy" >&2 || true
               exit 1
             fi
-            cp "$deploy"/*.sbom-cve-check*.json "$cve_dir/"
+            cp -a "${files[@]}" "$cve_dir/"
             ls -la "$cve_dir"
             ;;
           *)
