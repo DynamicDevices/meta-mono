@@ -1,0 +1,43 @@
+name: cancel-queued-runs
+
+# Runs on GitHub-hosted runners so it is not blocked by the self-hosted
+# Yocto queue. Used to clear stale matrix runs when the App token cannot.
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: "Comma-separated workflow run IDs to cancel"
+        required: true
+        type: string
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/cancel-queued-runs.yml"
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: cancel-queued-runs
+  cancel-in-progress: true
+
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel requested runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_IDS: ${{ github.event.inputs.run_ids || '29683184967' }}
+        run: |
+          set -euo pipefail
+          echo "Cancelling run IDs: $RUN_IDS"
+          IFS=',' read -r -a ids <<< "$RUN_IDS"
+          for id in "${ids[@]}"; do
+            id=$(echo "$id" | tr -d ' ')
+            [ -n "$id" ] || continue
+            echo "Cancel $id"
+            gh api -X POST "repos/${{ github.repository }}/actions/runs/${id}/cancel" || true
+            gh run view "$id" --repo "${{ github.repository }}" || true
+          done
