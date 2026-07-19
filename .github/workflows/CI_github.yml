@@ -24,10 +24,9 @@ concurrency:
 
 jobs:
   build-and-test:
-    # Skip full Yocto builds for doc-only PR #284, and honor [skip ci] on push
-    # (e.g. markdown / workflow-filter merges).
+    # Honor [skip ci] on push (e.g. documentation / workflow-filter merges).
     if: |
-      (github.event_name == 'pull_request' && github.event.pull_request.number != 284) ||
+      github.event_name == 'pull_request' ||
       (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: [self-hosted, linux, X64]
     # Keep bounded so a wedged bitbake/container cannot pin the sole
@@ -89,7 +88,7 @@ jobs:
           exit 1
         fi
     - name: Checkout meta-mono
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         clean: false
         path: work/meta-mono
@@ -195,12 +194,12 @@ jobs:
             # root-login fragment matches test-image-mono IMAGE_FEATURES for qemu testimage.
             echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/root-login-with-empty-password\"" >> conf/local.conf
             echo "INHERIT += \"rm_work\"" >> conf/local.conf
-            # HTTP sstate mirror only: the CDN hashserv (wss) needs Python
-            # websockets, which this container does not provide to bitbake.
-            # wrynose defaults to OEEquivHash, which requires BB_HASHSERVE;
-            # use a local server with the DB on the shared SSTATE_DIR so
-            # persistent-runner reuse works across matrix cells.
-            echo "SSTATE_MIRRORS ?= \"file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH\"" >> conf/local.conf
+            # wrynose defaults to OEEquivHash, which requires BB_HASHSERVE.
+            # Use a local hashserve DB on the shared SSTATE_DIR for reuse across
+            # matrix cells on this persistent runner. Do NOT also set
+            # SSTATE_MIRRORS: BitBake warns that local hashserve + mirrors
+            # means mirror objects almost never match.
+            echo "SSTATE_MIRRORS = \"\"" >> conf/local.conf
             echo "BB_HASHSERVE = \"auto\"" >> conf/local.conf
             echo "BB_HASHSERVE_DB_DIR = \"\${SSTATE_DIR}\"" >> conf/local.conf
             # IMAGE_VERSION_SUFFIX excludes DATETIME from task hashes, but
@@ -217,6 +216,12 @@ jobs:
         esac
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
+
+        # Poky/meta-poky templates may enable SSTATE_MIRRORS alongside a local
+        # BB_HASHSERVE; that combination triggers a BitBake warning and makes
+        # mirror sstate ineffective. Prefer runner-local sstate only.
+        sed -i '/^SSTATE_MIRRORS/d' conf/local.conf || true
+        echo "SSTATE_MIRRORS = \"\"" >> conf/local.conf
 
         # Cross-building qemuarm64 on the X64 runner has wedged under full
         # parallelism (silent multi-hour stall in do_package). Cap threads.
