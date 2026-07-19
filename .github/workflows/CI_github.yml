@@ -24,10 +24,14 @@ concurrency:
 
 jobs:
   build-and-test:
-    # Honor [skip ci] on push (e.g. documentation / workflow-filter merges).
+    # Honor [skip ci] / [no matrix] on push. Prefer [no matrix] when the goal
+    # is only to cancel a queued master run via concurrency: GitHub's native
+    # [skip ci] suppresses workflow creation entirely, so it cannot cancel.
     if: |
       github.event_name == 'pull_request' ||
-      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
+      (github.event_name == 'push' &&
+       !contains(github.event.head_commit.message, '[skip ci]') &&
+       !contains(github.event.head_commit.message, '[no matrix]'))
     runs-on: [self-hosted, linux, X64]
     # Keep bounded so a wedged bitbake/container cannot pin the sole
     # self-hosted runner for a full day (seen with arm64 do_package).
