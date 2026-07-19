@@ -1,3 +1,5 @@
+Upstream-Status: Inappropriate [Yocto specific]
+
 diff -ur git.org/configure.ac git/configure.ac
 --- git.org/configure.ac	2015-07-20 11:50:50.151627671 +0100
 +++ git/configure.ac	2015-07-20 11:51:28.275628204 +0100

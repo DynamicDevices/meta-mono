@@ -10,5 +10,8 @@ IMAGE_INSTALL += "msbuild \
                   dotnet-helloworld \
 "
 
+# Required for qemu testimage (serial/ssh root login) on wrynose+.
+IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
+
 IMAGE_BASENAME = "${PN}"
 

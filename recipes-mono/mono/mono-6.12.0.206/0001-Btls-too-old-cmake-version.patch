@@ -1,0 +1,30 @@
+From ba1b408ff40e3770785a7774f2bf88758a33a49d Mon Sep 17 00:00:00 2001
+From: Marian Cingel <cingel.marian@gmail.com>
+Date: Mon, 18 May 2026 20:12:28 +0000
+Subject: [PATCH] Btls - too old cmake version
+
+Upstream-Status: Pending
+---
+ mono/btls/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mono/btls/CMakeLists.txt b/mono/btls/CMakeLists.txt
+index 992f41e4c7f..012b6d12669 100644
+--- a/mono/btls/CMakeLists.txt
++++ b/mono/btls/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required (VERSION 2.8.10)
++cmake_minimum_required (VERSION 4.0)
+ 
+ project (mono-btls)
+ 
+@@ -129,4 +129,4 @@ endif ()
+ 
+ if (CYGWIN)
+ 	target_link_libraries (mono-btls-shared wsock32 ws2_32)
+-endif ()
+\ No newline at end of file
++endif ()
+-- 
+2.53.0
+

@@ -17,3 +17,6 @@ FILES:${PN} += "\
   ${libdir}/mono/gac/*/*/*.optdata \
   ${libdir}/mono/gac/*/*/*.sigdata \
 "
+
+# suppress: SRC_URI uses unstable GitHub/GitLab archives
+INSANE_SKIP += "src-uri-bad"

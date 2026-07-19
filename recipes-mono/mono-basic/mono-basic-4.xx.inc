@@ -19,3 +19,6 @@ do_install:append() {
  install -d "${D}${libdir}/mono/4.5"
  ln -sf ${libdir}/mono/4.0/Microsoft.VisualBasic.dll  ${D}${libdir}/mono/4.5/Microsoft.VisualBasic.dll
 }
+
+# suppress: SRC_URI uses unstable GitHub/GitLab archives
+INSANE_SKIP += "src-uri-bad"

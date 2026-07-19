@@ -9,3 +9,6 @@ inherit pkgconfig
 inherit mono
 
 SRC_URI = "https://github.com/mono/dbus-sharp/archive/v${PV}.tar.gz"
+
+# suppress: SRC_URI uses unstable GitHub/GitLab archives
+INSANE_SKIP += "src-uri-bad"

@@ -25,3 +25,5 @@ do_configure:prepend() {
   export DBUS_SHARP_LIBS="/r:${STAGING_LIBDIR}/mono/dbus-sharp-2.0/dbus-sharp.dll"
 }
 
+# suppress: SRC_URI uses unstable GitHub/GitLab archives
+INSANE_SKIP += "src-uri-bad"

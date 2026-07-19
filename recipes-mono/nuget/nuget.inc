@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://Apache-LICENSE-2.0.txt;md5=3b83ef96387f14655fc854ddc3
 HOMEPAGE = "http://nuget.org/"
 
 # This package ships Mono EXE and a shell script
-PACKAGE_ARCH="all"
+PACKAGE_ARCH = "all"
 
 # Fully updated Fedora 33 and 34 say that dist.nuget.org cert is untrusted
 BB_CHECK_SSL_CERTS = "0"

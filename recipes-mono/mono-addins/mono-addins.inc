@@ -9,12 +9,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4e024d772d8266e3ff9747185842ca82"
 DEPENDS = "gtk-sharp"
 
 SRCREV = "64a45d96f39d4714ec85adf0fe04b68ec7273ae1"
-SRCBRANCH = "master"
+SRCBRANCH = "main"
 
 SRC_URI = "git://github.com/mono/mono-addins.git;protocol=https;branch=${SRCBRANCH} \
 	   file://0001-configure-mcs.patch"
 
-S = "${UNPACKDIR}/git"
+S = "${UNPACKDIR}/${BP}"
 
 inherit autotools-brokensep pkgconfig
 inherit mono

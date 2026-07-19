@@ -1,3 +1,3 @@
-S = "${UNPACKDIR}/git"
+S = "${UNPACKDIR}/${BP}"
 
 DEPENDS += " cmake-native"

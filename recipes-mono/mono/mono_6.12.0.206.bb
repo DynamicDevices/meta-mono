@@ -12,6 +12,8 @@ SRC_URI = "gitsm://github.com/mono/mono.git;protocol=https;branch=2020-02 \
            file://disable-mmap-MAP_32BIT-support.patch \
            file://0001-Allow-passing-external-mapfile-C-build-options.patch \
            file://0001-Add-libusb-1.0-mapping.patch \
+           file://0001-Btls-too-old-cmake-version.patch \
+           file://boringssl-cmake-version.diff \
 "
 
 
