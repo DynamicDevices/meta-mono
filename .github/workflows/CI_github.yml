@@ -5,74 +5,178 @@ on:
     branches:
       - master
       - whinlatter
+      - wrynose
+    paths-ignore:
+      - "**.md"
   pull_request:
     branches:
       - master
       - whinlatter
+      - wrynose
     paths-ignore:
       - "**.md"
+
+# Self-hosted runner is singular; cancel superseded PR/push runs so a hung
+# matrix cell cannot pin the runner until the job timeout elapses.
+concurrency:
+  group: meta-mono-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-test:
+    # Honor [skip ci] on push (e.g. documentation / workflow-filter merges).
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: [self-hosted, linux, X64]
-    timeout-minutes: 960
+    # Keep bounded so a wedged bitbake/container cannot pin the sole
+    # self-hosted runner for a full day (seen with arm64 do_package).
+    timeout-minutes: 480
     container:
       image: dynamicdevices/yocto-ci-build:latest
       options: --privileged --platform linux/amd64  -v /dev/net/tun:/dev/net/tun -v /dev/kvm:/dev/kvm
     strategy:
       max-parallel: 1
+      fail-fast: false
+      # x86-64 first so native builds validate recipes before slower qemuarm64
+      # cross builds on this X64 runner.
       matrix:
-        dotnet_version: [10.0.100, 8.0.406, 6.0.428]
-        mono_version: [6.12.0.206]
-        branch: [whinlatter]
-        arch: [x86-64, arm, arm64]
-        exclude:
-          # GCC build broken for ARM32 - see README and discussions/234
-          - branch: whinlatter
-            arch: arm
+        include:
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: x86-64}
+          - {dotnet_version: "10.0.100", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "8.0.406", mono_version: "6.12.0.206", arch: arm64}
+          - {dotnet_version: "6.0.428", mono_version: "6.12.0.206", arch: arm64}
     env:
       name: build-and-test
       MONO_VERSION: ${{ matrix.mono_version }}
       DOTNET_VERSION: ${{ matrix.dotnet_version }}
       ARCH: ${{ matrix.arch }}
-      BRANCH: ${{ matrix.branch }}
+      WORK_ROOT: work
     steps:
+    - name: Free disk space
+      run: |
+        echo "=== disk before cleanup ==="
+        df -h
+        # Prior CI layouts left per-release trees (styhead/, whinlatter/, …)
+        # on the persistent self-hosted workspace. A fresh wrynose build of
+        # clang/llvm/rust needs that space back. Also drop stale deploy/work
+        # trees from other MACHINE values so arm64/x86-64 matrix cells do not
+        # starve each other mid-build (hangs with no further bitbake output).
+        for path in styhead whinlatter scarthgap kirkstone nanbield styhead-test \
+                    feature \
+                    "${WORK_ROOT}/build/tmp" \
+                    "${WORK_ROOT}/build/cache" \
+                    "${WORK_ROOT}/build/tmp-glibc" \
+                    "${WORK_ROOT}/build/deploy"; do
+          if [ -e "$path" ]; then
+            echo "Removing $path"
+            rm -rf "$path"
+          fi
+        done
+        # Remove any alternate TMPDIR layouts left by older CI configs.
+        if [ -d "${WORK_ROOT}/build" ]; then
+          find "${WORK_ROOT}/build" -maxdepth 1 -type d -name 'tmp-*' -exec rm -rf {} +
+        fi
+        echo "=== disk after cleanup ==="
+        df -h
+        # Fail early if the runner is already too tight for a sato+mono image.
+        avail_kb=$(df -Pk . | awk 'NR==2 {print $4}')
+        if [ "$avail_kb" -lt 20971520 ]; then
+          echo "Only ${avail_kb}KB free; need at least 20GiB" >&2
+          exit 1
+        fi
     - name: Checkout meta-mono
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         clean: false
-        path: ${{ matrix.branch }}/meta-mono
-    - name: Update repo poky
+        path: work/meta-mono
+    - name: Detect Yocto release
       run: |
-        if [ ! -d ${BRANCH}/poky ]; then
-          git clone git://git.yoctoproject.org/poky -b ${BRANCH} ${BRANCH}/poky
-        else
-          cd ${BRANCH}/poky
-          git pull origin ${BRANCH}
-          cd ../..
+        compat=$(grep '^LAYERSERIES_COMPAT_mono' "${WORK_ROOT}/meta-mono/conf/layer.conf" | sed 's/.*"\([^"]*\)".*/\1/')
+        if [ -z "$compat" ]; then
+          echo "Could not read LAYERSERIES_COMPAT_mono from conf/layer.conf" >&2
+          exit 1
         fi
-    - name: Update repo meta-openembedded
+        echo "YOCTO_RELEASE=${compat}" >> "$GITHUB_ENV"
+        echo "Detected Yocto release: ${compat}"
+    - name: Setup base layers
       run: |
-        if [ ! -d ${BRANCH}/meta-openembedded ]; then
-          git clone https://github.com/openembedded/meta-openembedded.git -b ${BRANCH} ${BRANCH}/meta-openembedded
-        else
-          cd ${BRANCH}/meta-openembedded
-          git pull origin ${BRANCH}
-          cd ../..
-        fi
+        clone_or_update() {
+          local url="$1" branch="$2" dest="$3"
+          if [ ! -d "$dest" ]; then
+            git clone "$url" -b "$branch" "$dest"
+          else
+            cd "$dest"
+            git fetch origin "$branch"
+            git checkout "$branch"
+            git pull origin "$branch"
+            cd "$GITHUB_WORKSPACE"
+          fi
+        }
+
+        case "$YOCTO_RELEASE" in
+          whinlatter)
+            mkdir -p "${WORK_ROOT}/layers"
+            clone_or_update https://git.openembedded.org/bitbake 2.16 "${WORK_ROOT}/layers/bitbake"
+            clone_or_update https://git.openembedded.org/openembedded-core whinlatter "${WORK_ROOT}/layers/openembedded-core"
+            clone_or_update https://git.yoctoproject.org/meta-yocto whinlatter "${WORK_ROOT}/layers/meta-yocto"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git whinlatter "${WORK_ROOT}/layers/meta-openembedded"
+            ;;
+          wrynose)
+            mkdir -p "${WORK_ROOT}/layers"
+            clone_or_update https://git.openembedded.org/bitbake 2.18 "${WORK_ROOT}/layers/bitbake"
+            clone_or_update https://git.openembedded.org/openembedded-core wrynose "${WORK_ROOT}/layers/openembedded-core"
+            clone_or_update https://git.yoctoproject.org/meta-yocto wrynose "${WORK_ROOT}/layers/meta-yocto"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git wrynose "${WORK_ROOT}/layers/meta-openembedded"
+            ;;
+          *)
+            # Legacy releases still use the poky monorepo. Use HTTPS:
+            # git.yoctoproject.org is behind Cloudflare, which does not
+            # carry the native git:// protocol (port 9418) reliably.
+            clone_or_update https://git.yoctoproject.org/poky "$YOCTO_RELEASE" "${WORK_ROOT}/poky"
+            clone_or_update https://github.com/openembedded/meta-openembedded.git "$YOCTO_RELEASE" "${WORK_ROOT}/meta-openembedded"
+            ;;
+        esac
     - name: Configuring
       run: |
-        rm -f ${BRANCH}/build/conf/local.conf
-        rm -f ${BRANCH}/build/conf/bblayers.conf
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        rm -f ${WORK_ROOT}/build/conf/local.conf
+        rm -f ${WORK_ROOT}/build/conf/bblayers.conf
 
-        # Append custom variables for regenerated local.conf and bblayers.conf samples
+        case "$YOCTO_RELEASE" in
+          whinlatter)
+            # meta-poky still ships conf/templates/default on whinlatter
+            TEMPLATECONF=$GITHUB_WORKSPACE/${WORK_ROOT}/layers/meta-yocto/meta-poky/conf/templates/default \
+              . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/layers/meta-openembedded"
+            meta_yocto="${WORK_ROOT}/layers/meta-yocto"
+            ;;
+          wrynose)
+            # wrynose meta-poky dropped conf/templates; use oe-core defaults
+            # and add poky layers + DISTRO explicitly.
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/layers/meta-openembedded"
+            meta_yocto="${WORK_ROOT}/layers/meta-yocto"
+            echo "POKY_BBLAYERS_CONF_VERSION = \"2\"" >> conf/bblayers.conf
+            echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_yocto}/meta-poky'" >> conf/bblayers.conf
+            echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_yocto}/meta-yocto-bsp'" >> conf/bblayers.conf
+            echo "DISTRO = \"poky\"" >> conf/local.conf
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            meta_oe="${WORK_ROOT}/meta-openembedded"
+            ;;
+        esac
+
         echo "### Starting to configure local.conf and bblayers.conf ###"
+        echo "yocto release: $YOCTO_RELEASE"
         echo "mono version: $MONO_VERSION"
         echo "dotnet version: $DOTNET_VERSION"
 
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-mono'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-oe'" >> conf/bblayers.conf
-        echo "BBLAYERS += '$GITHUB_WORKSPACE/${BRANCH}/meta-openembedded/meta-python'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${WORK_ROOT}/meta-mono'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_oe}/meta-oe'" >> conf/bblayers.conf
+        echo "BBLAYERS += '$GITHUB_WORKSPACE/${meta_oe}/meta-python'" >> conf/bblayers.conf
 
         echo "BB_DEFAULT_EVENTLOG = \"\"" >> conf/local.conf
         echo "MACHINE = \"qemu${ARCH}\"" >> conf/local.conf
@@ -84,43 +188,124 @@ jobs:
         echo "PREFERRED_VERSION_dotnet = \"${DOTNET_VERSION}\"" >> conf/local.conf
         echo "PREFERRED_VERSION_dotnet-native = \"${DOTNET_VERSION}\"" >> conf/local.conf
 
-        echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
+        case "$YOCTO_RELEASE" in
+          wrynose)
+            # cve-check was removed in wrynose; use sbom-cve-check fragment.
+            # root-login fragment matches test-image-mono IMAGE_FEATURES for qemu testimage.
+            echo "OE_FRAGMENTS += \"core/yocto/sbom-cve-check core/yocto/root-login-with-empty-password\"" >> conf/local.conf
+            echo "INHERIT += \"rm_work\"" >> conf/local.conf
+            # HTTP sstate mirror only: the CDN hashserv (wss) needs Python
+            # websockets, which this container does not provide to bitbake.
+            # wrynose defaults to OEEquivHash, which requires BB_HASHSERVE;
+            # use a local server with the DB on the shared SSTATE_DIR so
+            # persistent-runner reuse works across matrix cells.
+            echo "SSTATE_MIRRORS ?= \"file://.* http://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH\"" >> conf/local.conf
+            echo "BB_HASHSERVE = \"auto\"" >> conf/local.conf
+            echo "BB_HASHSERVE_DB_DIR = \"\${SSTATE_DIR}\"" >> conf/local.conf
+            # IMAGE_VERSION_SUFFIX excludes DATETIME from task hashes, but
+            # do_create_image_sbom_spdx deploys ${IMAGE_NAME}.spdx.json (which
+            # includes DATETIME). Setscene can restore a previous filename while
+            # do_sbom_cve_check looks for the current one. Force that one task to
+            # re-run each CI build without invalidating the rest of image sstate.
+            echo "META_MONO_CI_BUILD_ID = \"${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}\"" >> conf/local.conf
+            echo "do_create_image_sbom_spdx[vardeps] += \"META_MONO_CI_BUILD_ID\"" >> conf/local.conf
+            ;;
+          *)
+            echo "INHERIT += \" create-spdx cve-check rm_work \"" >> conf/local.conf
+            ;;
+        esac
         sed -i 's/#IMAGE_CLASSES += "testimage testsdk"/IMAGE_CLASSES += "testimage "/' conf/local.conf
         echo "SPDX_PRETTY = \"1\"" >> conf/local.conf
 
-        echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
-        echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
-    # Flush stale sstate/sysroot to ensure fresh builds with corrected
-    # host/fxr layout and dotnet wrapper.
-    # TODO: remove this step once all matrix jobs have rebuilt successfully.
-    - name: Clean stale sstate
-      run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake -c cleansstate dotnet dotnet-native python3-clr-loader python3-clr-loader-native dotnet-helloworld python3-pythonnet
+        # Cross-building qemuarm64 on the X64 runner has wedged under full
+        # parallelism (silent multi-hour stall in do_package). Cap threads.
+        if [ "$ARCH" = "arm64" ]; then
+          echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count(at_least=1, at_most=4)}\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count(at_least=1, at_most=4)}\"" >> conf/local.conf
+        else
+          echo "BB_NUMBER_THREADS ?= \"\${@oe.utils.cpu_count()}\"" >> conf/local.conf
+          echo "PARALLEL_MAKE ?= \"-j \${@oe.utils.cpu_count()} -l \${@oe.utils.cpu_count()*2}\"" >> conf/local.conf
+        fi
     - name: Building Mono Test Image
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake test-image-mono
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
+        # Disk heartbeat in the background; wait on bitbake so failures
+        # surface immediately (a foreground sleep loop delayed exit by 5m).
+        bitbake test-image-mono &
+        bbpid=$!
+        (
+          while kill -0 "$bbpid" 2>/dev/null; do
+            sleep 300
+            echo "=== build heartbeat $(date -u +%H:%M:%S) ==="
+            df -h . || true
+          done
+        ) &
+        hb=$!
+        set +e
+        wait "$bbpid"
+        rc=$?
+        set -e
+        kill "$hb" 2>/dev/null || true
+        wait "$hb" 2>/dev/null || true
+        exit "$rc"
     - name: CVE Check Mono / dotNet
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         export TERM=linux
-        bitbake mono -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-mono.json
-        bitbake dotnet -c cve_check
-        mv $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary.json $GITHUB_WORKSPACE/${BRANCH}/build/tmp/log/cve/cve-summary-dotnet.json
+        cve_dir="$GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/log/cve"
+        mkdir -p "$cve_dir"
+        case "$YOCTO_RELEASE" in
+          wrynose)
+            # Image-level sbom-cve-check runs during bitbake test-image-mono.
+            deploy="$GITHUB_WORKSPACE/${WORK_ROOT}/build/tmp/deploy/images/qemu${ARCH}"
+            found=$(ls "$deploy"/*.sbom-cve-check*.json 2>/dev/null | wc -l)
+            if [ "$found" -eq 0 ]; then
+              echo "No sbom-cve-check reports in $deploy" >&2
+              exit 1
+            fi
+            cp "$deploy"/*.sbom-cve-check*.json "$cve_dir/"
+            ls -la "$cve_dir"
+            ;;
+          *)
+            bitbake mono -c cve_check
+            mv "$cve_dir/cve-summary.json" "$cve_dir/cve-summary-mono.json"
+            bitbake dotnet -c cve_check
+            mv "$cve_dir/cve-summary.json" "$cve_dir/cve-summary-dotnet.json"
+            ;;
+        esac
     - name: Testing
       run: |
-        . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
+        case "$YOCTO_RELEASE" in
+          whinlatter|wrynose)
+            . ./${WORK_ROOT}/layers/openembedded-core/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+          *)
+            . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
+            ;;
+        esac
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
-        name: test-image-mono-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
+        name: test-image-mono-${{ env.YOCTO_RELEASE }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ env.WORK_ROOT }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
     - name: Store CVEs
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
-        name: cve-summary-${{ matrix.branch }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
-        path: ./${{ matrix.branch }}/build/tmp/log/cve/*.json
+        name: cve-summary-${{ env.YOCTO_RELEASE }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
+        path: ./${{ env.WORK_ROOT }}/build/tmp/log/cve/*.json
