@@ -59,7 +59,7 @@ jobs:
         echo "=== disk after cleanup ==="
         df -h
     - name: Checkout meta-mono
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         clean: false
         path: ${{ env.BRANCH }}/meta-mono
@@ -129,7 +129,7 @@ jobs:
         export TERM=linux
         bitbake test-image-mono -c testimage
     - name: Store artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: test-image-mono-${{ env.BRANCH }}-${{ matrix.mono_version }}-${{ matrix.dotnet_version }}-${{ github.sha }}-${{ matrix.arch }}
         path: ./${{ env.BRANCH }}/build/tmp/deploy/images/qemu${{ matrix.arch }}/
