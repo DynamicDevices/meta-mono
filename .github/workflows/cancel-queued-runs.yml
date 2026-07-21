@@ -29,7 +29,7 @@ jobs:
       - name: Cancel requested runs
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_IDS: ${{ github.event.inputs.run_ids || '29819000874' }}
+          RUN_IDS: ${{ github.event.inputs.run_ids || '29824791069,29824791140' }}
         run: |
           set -euo pipefail
           echo "Cancelling run IDs: $RUN_IDS"
