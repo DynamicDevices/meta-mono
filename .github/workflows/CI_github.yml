@@ -242,6 +242,7 @@ jobs:
             . ./${WORK_ROOT}/poky/oe-init-build-env ${WORK_ROOT}/build
             ;;
         esac
+        # runner-nudge: requeue after self-hosted cancel stall
         # Disk heartbeat in the background; wait on bitbake so failures
         # surface immediately (a foreground sleep loop delayed exit by 5m).
         bitbake test-image-mono &
