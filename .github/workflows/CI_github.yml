@@ -122,7 +122,25 @@ jobs:
     - name: Building Mono Test Image
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
-        bitbake test-image-mono
+        # Disk heartbeat in the background; wait on bitbake so failures
+        # surface immediately (a foreground sleep loop delayed exit by 5m).
+        bitbake test-image-mono &
+        bbpid=$!
+        (
+          while kill -0 "$bbpid" 2>/dev/null; do
+            sleep 300
+            echo "=== build heartbeat $(date -u +%H:%M:%S) ==="
+            df -h . || true
+          done
+        ) &
+        hb=$!
+        set +e
+        wait "$bbpid"
+        rc=$?
+        set -e
+        kill "$hb" 2>/dev/null || true
+        wait "$hb" 2>/dev/null || true
+        exit "$rc"
     - name: Testing
       run: |
         . ./${BRANCH}/poky/oe-init-build-env ${BRANCH}/build
